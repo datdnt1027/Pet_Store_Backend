@@ -1,0 +1,196 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {}
+  },
+  "projects": {
+    "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+        "projectName": "pet_store_backend.application",
+        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+        "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\dntda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
+                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+        "projectName": "pet_store_backend.domain",
+        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+        "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\dntda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
+        "projectName": "pet_store_backend.infrastructure",
+        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
+        "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\dntda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
+                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
