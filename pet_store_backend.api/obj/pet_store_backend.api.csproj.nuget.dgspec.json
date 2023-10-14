@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj": {}
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj": {}
   },
   "projects": {
-    "D:\\C#\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj",
         "projectName": "pet_store_backend.api",
-        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.api\\pet_store_backend.api.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.api\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
@@ -33,14 +33,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
-                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj"
+              "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
+                "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj"
               },
-              "D:\\C#\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
-                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj"
+              "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
+                "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj"
               },
-              "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {
-                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj"
+              "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {
+                "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj"
               }
             }
           }
@@ -83,14 +83,14 @@
         }
       }
     },
-    "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
         "projectName": "pet_store_backend.application",
-        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
@@ -112,8 +112,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
-                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj"
+              "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
+                "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj"
               }
             }
           }
@@ -127,6 +127,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -147,14 +153,14 @@
         }
       }
     },
-    "D:\\C#\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
         "projectName": "pet_store_backend.contracts",
-        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.contracts\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
@@ -207,14 +213,14 @@
         }
       }
     },
-    "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
         "projectName": "pet_store_backend.domain",
-        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
@@ -267,14 +273,14 @@
         }
       }
     },
-    "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
         "projectName": "pet_store_backend.infrastructure",
-        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
@@ -296,8 +302,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
-                "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj"
+              "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
+                "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj"
               }
             }
           }
@@ -311,6 +317,20 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
