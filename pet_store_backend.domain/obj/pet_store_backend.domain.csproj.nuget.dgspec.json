@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {}
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {}
   },
   "projects": {
-    "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
         "projectName": "pet_store_backend.domain",
-        "projectPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"

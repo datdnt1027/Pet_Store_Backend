@@ -1,8 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "h0hu0o4ZIJAm52l2DaUI8xYRImNCD5rEBg29PZoPqQHz42nJo5ALBYEIaKNLM6gUe1cZx54XfvI9YC5Hvbax9A==",
+  "dgSpecHash": "OxPyICIbdGktMurgDBN3i9E+PhbnChYESP+6OiRqmwpg5hocACScizBjLiQx3bXZcU/UrF7z2uHukFbfNn4f6A==",
   "success": true,
-  "projectFilePath": "D:\\C#\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.configuration.binder\\7.0.0\\microsoft.extensions.configuration.binder.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\7.0.0\\microsoft.extensions.options.configurationextensions.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.0.2\\microsoft.identitymodel.abstractions.7.0.2.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.0.2\\microsoft.identitymodel.jsonwebtokens.7.0.2.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.identitymodel.logging\\7.0.2\\microsoft.identitymodel.logging.7.0.2.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.0.2\\microsoft.identitymodel.tokens.7.0.2.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.0.2\\system.identitymodel.tokens.jwt.7.0.2.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

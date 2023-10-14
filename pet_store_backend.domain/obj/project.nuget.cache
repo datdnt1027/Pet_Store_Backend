@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tXiu8CaNLwGJT+nribsirmTyB8eHMHbc62RwD5kQ8kfbcHdS/swD32VkBUyLRrfvi9EzaumaZf1eXQYX4p+erg==",
+  "dgSpecHash": "r3qTQU3mQ7ADpbPZkE1mkbB3Hpy3nMzRvFSySrCnjRReiHmgsPHCZ5QDJJQ3LZfDaFOLMLz+58JWjh1xS0PcNA==",
   "success": true,
-  "projectFilePath": "D:\\C#\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
+  "projectFilePath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "3sBO5IR3l++TTr0t1yexcLjybi94uJ32T4hJesKa7GODSJ3+eQ1sKGLkene6maDUgtp38mtkp9PkrFP3W58Oyw==",
+  "dgSpecHash": "r22Bwbp3MpO/H0qm+I+Ag6gBTIrbq8/eCzAeQ4r3olfmfVwSNzyHUJJPEJ6SlHtLkEk2qzWJlwXRJ101jOIeOw==",
   "success": true,
-  "projectFilePath": "D:\\C#\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
