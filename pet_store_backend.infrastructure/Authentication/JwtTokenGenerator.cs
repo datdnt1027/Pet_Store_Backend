@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Services;
+using pet_store_backend.domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,7 +18,7 @@ namespace pet_store_backend.infrastructure.Authentication
             _dateTimeProvider = dateTimeProvider;
             _jwtSettings = jwtOptions.Value; 
         }
-        public string GenerateToken(Guid userId, string firstName, string lastName)
+        public string GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
@@ -25,10 +26,10 @@ namespace pet_store_backend.infrastructure.Authentication
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(JwtRegisteredClaimNames.GivenName, firstName),
-                new Claim(JwtRegisteredClaimNames.GivenName, lastName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.LastName),
+                new Claim(JwtRegisteredClaimNames.Jti, user.UserId.ToString())
 
             };
 

@@ -1,28 +1,33 @@
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using pet_store_backend.api.Errors;
+using pet_store_backend.api.Filter;
 using pet_store_backend.application;
 using pet_store_backend.infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     // Add services to the container.
-    builder.Services.AddApplication().AddInfrastructure(builder.Configuration);
+    builder.Services.AddApplication()
+        .AddInfrastructure(builder.Configuration);
+
+    //builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+
+    builder.Services.AddSingleton<ProblemDetailsFactory, PetStoreProblemDetailsFactory>();
 }
 var app = builder.Build();
 {
+    //app.UseMiddleware<ErrorHandlingMiddleware>();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+    // app.Map("/error", (HttpContext httpContext) => {
+    //     Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+    //     return Results.Problem(title: exception?.Message);
+    // });
+
+    app.UseExceptionHandler("/error");
 
     app.UseHttpsRedirection();
-
-    app.UseAuthorization();
 
     app.MapControllers();
 

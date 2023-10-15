@@ -1,0 +1,9 @@
+@host= https://localhost:7206
+
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "20110629@student.hcmute.edu.vn",
+    "password": "Test123@!"
+}
