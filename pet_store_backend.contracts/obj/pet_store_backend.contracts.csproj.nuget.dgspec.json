@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {}
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {}
   },
   "projects": {
-    "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
+    "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
+        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
         "projectName": "pet_store_backend.contracts",
-        "projectPath": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
+        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\obj\\",
+        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
