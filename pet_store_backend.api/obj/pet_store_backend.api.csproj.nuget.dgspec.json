@@ -36,8 +36,8 @@
               "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj": {
                 "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj"
               },
-              "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
-                "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj"
+              "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
+                "projectPath": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj"
               },
               "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj": {
                 "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.infrastructure\\pet_store_backend.infrastructure.csproj"
@@ -58,6 +58,14 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "mapster": {
+              "target": "Package",
+              "version": "[7.4.0, )"
+            },
+            "mapster.dependencyinjection": {
+              "target": "Package",
+              "version": "[1.0.1, )"
             }
           },
           "imports": [
@@ -128,6 +136,18 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.8.0, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -153,14 +173,14 @@
         }
       }
     },
-    "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
+    "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
+        "projectUniqueName": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
         "projectName": "pet_store_backend.contracts",
-        "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
+        "projectPath": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\pet_store_backend.contracts.csproj",
         "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\obj\\",
+        "outputPath": "d:\\GitHub\\pet_store_backend\\pet_store_backend.contracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
@@ -253,6 +273,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "ErrorOr": {
+              "target": "Package",
+              "version": "[1.3.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -318,6 +344,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.23, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[7.0.0, )"

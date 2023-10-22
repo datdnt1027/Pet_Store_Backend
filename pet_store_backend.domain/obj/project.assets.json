@@ -1,11 +1,44 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "ErrorOr/1.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/ErrorOr.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ErrorOr.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "ErrorOr/1.3.0": {
+      "sha512": "Pr7fPsggiTauAXbxp8D2z/5wZvhgB1zgQ5ScsUeHrRCMT5Rzw3W6k6l1KzJPf8c0ExSSMJBLaaYiCF0hDs3EIw==",
+      "type": "package",
+      "path": "erroror/1.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "erroror.1.3.0.nupkg.sha512",
+        "erroror.nuspec",
+        "icon-square.png",
+        "lib/net6.0/ErrorOr.dll",
+        "lib/net6.0/ErrorOr.xml",
+        "lib/netstandard2.0/ErrorOr.dll",
+        "lib/netstandard2.0/ErrorOr.xml"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "ErrorOr >= 1.3.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\dntda\\.nuget\\packages\\": {},
@@ -51,6 +84,12 @@
     "frameworks": {
       "net6.0": {
         "targetAlias": "net6.0",
+        "dependencies": {
+          "ErrorOr": {
+            "target": "Package",
+            "version": "[1.3.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

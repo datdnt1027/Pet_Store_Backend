@@ -1,9 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "r22Bwbp3MpO/H0qm+I+Ag6gBTIrbq8/eCzAeQ4r3olfmfVwSNzyHUJJPEJ6SlHtLkEk2qzWJlwXRJ101jOIeOw==",
+  "dgSpecHash": "SKIB7iZWhm2zwBuaxpkjVYMQjK6wMh1Ca6ogSQxEiq4SRS1mJQdu4YrgYlBNSJ94TdYETUeJyDo9R57b5QZD/A==",
   "success": true,
   "projectFilePath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\dntda\\.nuget\\packages\\erroror\\1.3.0\\erroror.1.3.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\fluentvalidation\\11.8.0\\fluentvalidation.11.8.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\mediatr\\12.0.0\\mediatr.12.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\mediatr.contracts\\2.0.0\\mediatr.contracts.2.0.0.nupkg.sha512",
+    "C:\\Users\\dntda\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\dntda\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
   ],
   "logs": []

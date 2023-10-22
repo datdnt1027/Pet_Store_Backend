@@ -1,54 +1,56 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ErrorOr;
+using MapsterMapper;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using pet_store_backend.api.Filter;
+using pet_store_backend.application.Authentication.Commands.Register;
+using pet_store_backend.application.Authentication.Queries.Login;
 using pet_store_backend.application.Services.Authentication;
 using pet_store_backend.contracts.Authentication;
+using pet_store_backend.domain.Common.Errors;
 
-namespace pet_store_backend.api.Controllers
+namespace pet_store_backend.api.Controllers;
+
+[Route("auth")]
+[AllowAnonymous]
+public class AuthenticationController : ApiController
 {
-    [Route("auth")]
-    [ApiController]
-    public class AuthenticationController : ControllerBase
+    private readonly ISender _mediator;
+    private readonly IMapper _mapper;
+    public AuthenticationController(ISender mediator, IMapper mapper)
     {
-        private readonly IAuthenticationService _authenticationService;
-        public AuthenticationController(IAuthenticationService authenticationService)
+        _mediator = mediator;
+        _mapper = mapper;
+    }
+
+    [HttpPost]
+    [Route("register")]
+    public async Task<IActionResult> Register(RegisterRequest request)
+    {
+        var command = _mapper.Map<RegisterCommand>(request);
+        var authResult = await _mediator.Send(command);
+
+        return authResult.Match(authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+            errors => Problem(errors));
+    }
+
+
+    [HttpPost]
+    [Route("login")]
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        var query = _mapper.Map<LoginQuery>(request);
+
+        var authResult = await _mediator.Send(query);
+
+        if (authResult.IsError && authResult.FirstError == Errors.Authentication.IvalidCredentials)
         {
-            _authenticationService = authenticationService;
+            return Problem(statusCode: StatusCodes.Status401Unauthorized, title: authResult.FirstError
+                    .Description);
         }
 
-        [HttpPost]
-        [Route("register")]
-        public IActionResult Register(RegisterRequest request)
-        {
-            var authResult = _authenticationService.Register(request.FirstName,
-                request.LastName,
-                request.Email,
-                request.Password);
-
-            var authResponse = new AuthenticationResponse(
-                authResult.user.UserId,
-                authResult.user.FirstName,
-                authResult.user.LastName,
-                authResult.user.Email,
-                authResult.Token);
-
-            return Ok(authResponse);
-        }
-
-        [HttpPost]
-        [Route("login")]
-        public IActionResult Login(LoginRequest request)
-        {
-            var authResult = _authenticationService.Login(request.Email, request.Password);
-
-            var authResponse = new AuthenticationResponse(
-                authResult.user.UserId,
-                authResult.user.FirstName,
-                authResult.user.LastName,
-                authResult.user.Email,
-                authResult.Token);
-
-            return Ok(authResponse);
-        }
+        return authResult.Match(authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+            errors => Problem(errors));
     }
 }
+

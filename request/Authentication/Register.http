@@ -4,8 +4,8 @@ POST {{host}}/auth/register
 Content-Type: application/json
 
 {
-    "firstName": "Dang Nguyen Thien",
-    "lastName": "Dat",
+    "firstName": "Dat",
+    "lastName": "Dang Nguyen Thien",
     "email": "20110629@student.hcmute.edu.vn",
     "password": "Test123@!"
 }

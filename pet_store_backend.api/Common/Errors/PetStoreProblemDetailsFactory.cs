@@ -1,11 +1,15 @@
 using System.Diagnostics;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
+using pet_store_backend.api.Common.Http;
 
-namespace pet_store_backend.api.Errors{
-    public class PetStoreProblemDetailsFactory : ProblemDetailsFactory{
+namespace pet_store_backend.api.Common.Errors
+{
+    public class PetStoreProblemDetailsFactory : ProblemDetailsFactory
+    {
         private readonly ApiBehaviorOptions _options;
         public PetStoreProblemDetailsFactory(IOptions<ApiBehaviorOptions> options)
         {
@@ -14,8 +18,9 @@ namespace pet_store_backend.api.Errors{
 
         public override ProblemDetails CreateProblemDetails(HttpContext httpContext, int? statusCode = null, string? title = null, string? type = null, string? detail = null, string? instance = null)
         {
-            statusCode ??=500;
-            var problemDetails = new ProblemDetails{
+            statusCode ??= 500;
+            var problemDetails = new ProblemDetails
+            {
                 Status = statusCode,
                 Title = title,
                 Type = type,
@@ -31,7 +36,8 @@ namespace pet_store_backend.api.Errors{
         private void ApplyProblemDetailsDefaults(HttpContext httpContext, ProblemDetails problemDetails, int statusCode)
         {
             problemDetails.Status ??= statusCode;
-            if(_options.ClientErrorMapping.TryGetValue(statusCode, out var clientErrorData)){
+            if (_options.ClientErrorMapping.TryGetValue(statusCode, out var clientErrorData))
+            {
                 problemDetails.Title ??= clientErrorData.Title;
                 problemDetails.Type ??= clientErrorData.Link;
             }
@@ -41,7 +47,12 @@ namespace pet_store_backend.api.Errors{
             //     problemDetails.Extensions["traceId"] = traceId;
             // }
 
-            // problemDetails.Extensions.Add("customProperty", "customValue");
+            var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+
+            if (errors != null)
+            {
+                problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code));
+            }
         }
 
         public override ValidationProblemDetails CreateValidationProblemDetails(
@@ -54,7 +65,7 @@ namespace pet_store_backend.api.Errors{
             string? instance = null)
         {
             ArgumentNullException.ThrowIfNull(modelStateDictionary);
-            
+
             statusCode ??= 400;
             var problemDetails = new ValidationProblemDetails(modelStateDictionary)
             {

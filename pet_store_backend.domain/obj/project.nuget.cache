@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "r3qTQU3mQ7ADpbPZkE1mkbB3Hpy3nMzRvFSySrCnjRReiHmgsPHCZ5QDJJQ3LZfDaFOLMLz+58JWjh1xS0PcNA==",
+  "dgSpecHash": "ksd838tb3vDOYBkz91yCIdoz5GIdgBs/RFTWdk4EWlYTGuKdGKa8fpwXn25tg1B/DMtjYxUD38Z/fgZpw3XBEQ==",
   "success": true,
   "projectFilePath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dntda\\.nuget\\packages\\erroror\\1.3.0\\erroror.1.3.0.nupkg.sha512"
+  ],
   "logs": []
 }
