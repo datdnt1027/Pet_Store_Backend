@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Services;
-using pet_store_backend.domain.Entities;
+using pet_store_backend.domain.Entities.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -26,10 +26,10 @@ namespace pet_store_backend.infrastructure.Authentication
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
-                new Claim(JwtRegisteredClaimNames.Jti, user.UserId.ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, user.Id.Value.ToString())
 
             };
 

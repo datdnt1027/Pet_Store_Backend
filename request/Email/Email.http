@@ -1,0 +1,4 @@
+@host= https://localhost:7206
+
+GET {{host}}/email
+Content-Type: application/json

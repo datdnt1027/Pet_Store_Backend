@@ -4,7 +4,7 @@ using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Services.Authentication;
 using pet_store_backend.domain.Common.Errors;
-using pet_store_backend.domain.Entities;
+using pet_store_backend.domain.Entities.User;
 
 namespace pet_store_backend.application.Authentication.Queries.Login;
 

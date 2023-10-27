@@ -4,7 +4,7 @@ using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Services.Authentication;
 using pet_store_backend.domain.Common.Errors;
-using pet_store_backend.domain.Entities;
+using pet_store_backend.domain.Entities.User;
 
 namespace pet_store_backend.application.Authentication.Commands.Register;
 
@@ -29,13 +29,13 @@ public class RegisterCommadHandler : IRequestHandler<RegisterCommand, ErrorOr<Au
         }
 
         // Create user (generate unique Id) & Persist to DB
-        var user = new User
-        {
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Email = command.Email,
-            Password = command.Password
-        };
+        var user = User.Create
+        (
+            command.FirstName,
+            command.LastName,
+            command.Email,
+            command.Password
+        );
         _userRepository.Add(user);
 
         // Create JWT Token

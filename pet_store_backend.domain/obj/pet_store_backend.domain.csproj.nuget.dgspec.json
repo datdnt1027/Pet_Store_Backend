@@ -48,6 +48,10 @@
             "ErrorOr": {
               "target": "Package",
               "version": "[1.3.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.2.0, )"
             }
           },
           "imports": [

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.Authentication.Commands.Register;
 using pet_store_backend.application.Authentication.Queries.Login;
-using pet_store_backend.application.Services.Authentication;
 using pet_store_backend.contracts.Authentication;
 using pet_store_backend.domain.Common.Errors;
 

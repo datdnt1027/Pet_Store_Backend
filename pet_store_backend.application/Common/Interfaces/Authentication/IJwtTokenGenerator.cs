@@ -1,4 +1,4 @@
-﻿using pet_store_backend.domain.Entities;
+﻿using pet_store_backend.domain.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
