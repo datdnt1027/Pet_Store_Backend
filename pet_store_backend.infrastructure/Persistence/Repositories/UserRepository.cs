@@ -1,11 +1,6 @@
-﻿using pet_store_backend.application.Common.Interfaces.Persistence;
-using pet_store_backend.domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Entities.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories
 {
@@ -18,26 +13,34 @@ namespace pet_store_backend.infrastructure.Persistence.Repositories
             _dbContext = dbcontext;
         }
 
-        public void Add(User user)
+        public async Task Add(User user)
         {
-            _dbContext.Add(user);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public User? GetUserByEmail(string email)
+        public async Task Update(User user)
         {
-            return _dbContext.Users.SingleOrDefault(u => u.Email == email);
+            _dbContext.Update(user);
+            await _dbContext.SaveChangesAsync();
         }
 
-        // private static readonly List<User> _users = new List<User>();
-        // public void Add(User user)
-        // {
-        //     _users.Add(user);
-        // }
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
 
-        // public User? GetUserByEmail(string email)
-        // {
-        //     return _users.SingleOrDefault(u => u.Email == email);
-        // }
+        public async Task<User?> GetUserByVerificationToken(string verificationToken)
+        {
+            var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.VerificationToken == verificationToken);
+            return user;
+        }
+
+        public async Task<User?> GetUserByResetPasswordToken(string resetPasswordToken)
+        {
+            var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.PasswordResetToken == resetPasswordToken);
+            return user;
+        }
     }
 }

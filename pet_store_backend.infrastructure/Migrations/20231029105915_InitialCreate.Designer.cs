@@ -12,7 +12,7 @@ using pet_store_backend.infrastructure.Persistence;
 namespace pet_store_backend.infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231024123654_InitialCreate")]
+    [Migration("20231029105915_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -45,10 +45,27 @@ namespace pet_store_backend.infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PasswordResetToken")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime?>("TokenExpires")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("VerificationToken")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("VerifiedAt")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 

@@ -1,12 +1,14 @@
-﻿using ErrorOr;
-using MapsterMapper;
+﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using pet_store_backend.application.Authentication.Commands.ForgotPassword;
 using pet_store_backend.application.Authentication.Commands.Register;
+using pet_store_backend.application.Authentication.Commands.ResetPassword;
+using pet_store_backend.application.Authentication.Commands.Verify;
 using pet_store_backend.application.Authentication.Queries.Login;
+using pet_store_backend.contracts;
 using pet_store_backend.contracts.Authentication;
-using pet_store_backend.domain.Common.Errors;
 
 namespace pet_store_backend.api.Controllers;
 
@@ -27,12 +29,12 @@ public class AuthenticationController : ApiController
     public async Task<IActionResult> Register(RegisterRequest request)
     {
         var command = _mapper.Map<RegisterCommand>(request);
+
         var authResult = await _mediator.Send(command);
 
-        return authResult.Match(authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+        return authResult.Match(authResult => Ok(_mapper.Map<MessageResponse>(authResult)),
             errors => Problem(errors));
     }
-
 
     [HttpPost]
     [Route("login")]
@@ -42,13 +44,41 @@ public class AuthenticationController : ApiController
 
         var authResult = await _mediator.Send(query);
 
-        if (authResult.IsError && authResult.FirstError == Errors.Authentication.IvalidCredentials)
-        {
-            return Problem(statusCode: StatusCodes.Status401Unauthorized, title: authResult.FirstError
-                    .Description);
-        }
-
         return authResult.Match(authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+            errors => Problem(errors));
+    }
+
+    [HttpPost]
+    [Route("verify")]
+    public async Task<IActionResult> Verify([FromQuery] string verificationToken)
+    {
+        var query = new VerifyCommand(verificationToken);
+
+        var verifyResult = await _mediator.Send(query);
+
+        return verifyResult.Match(verifyResult => Ok(_mapper.Map<MessageResponse>(verifyResult)),
+            errors => Problem(errors));
+    }
+
+    [HttpPost]
+    [Route("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromQuery] string email)
+    {
+        var command = new ForgotPasswordCommand(email);
+        var resetPasswordResult = await _mediator.Send(command);
+
+        return resetPasswordResult.Match(resetResult => Ok(_mapper.Map<MessageResponse>(resetResult)),
+            errors => Problem(errors));
+    }
+
+    [HttpPost]
+    [Route("reset-password")]
+    public async Task<IActionResult> ResetPassword(PasswordResetRequest request)
+    {
+        var command = _mapper.Map<ResetPasswordCommand>(request);
+        var resetPasswordResult = await _mediator.Send(command);
+
+        return resetPasswordResult.Match(resetResult => Ok(_mapper.Map<MessageResponse>(resetResult)),
             errors => Problem(errors));
     }
 }

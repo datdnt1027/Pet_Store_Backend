@@ -7,5 +7,6 @@ Content-Type: application/json
     "firstName": "Dat",
     "lastName": "Dang Nguyen Thien",
     "email": "20110629@student.hcmute.edu.vn",
-    "password": "Test123@!"
+    "password": "Test123@!",
+    "confirmPassword":"Test123@!"
 }

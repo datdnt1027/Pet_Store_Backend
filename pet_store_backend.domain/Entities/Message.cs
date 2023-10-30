@@ -4,11 +4,11 @@ namespace pet_store_backend.domain.Entities;
 
 public class Message
 {
-    public List<MailboxAddress>? To { get; set; }
+    public List<MailboxAddress>? To { get; private set; }
 
-    public string? Subject { get; set; }
+    public string? Subject { get; private set; }
 
-    public string? Content { get; set; }
+    public string? Content { get; private set; }
 
     public Message(IEnumerable<string> to, string subject, string content)
     {

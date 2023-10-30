@@ -10,5 +10,10 @@ public static partial class Errors
             code: "User.DuplicateEmail",
             description: "Email is already in use");
 
+        public static Error UserNotExist => Error.Conflict(
+           code: "User.NotExist",
+           description: "User Not Exist");
+
+
     }
 }

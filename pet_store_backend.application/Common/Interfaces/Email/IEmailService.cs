@@ -1,4 +1,3 @@
-using MimeKit;
 using pet_store_backend.domain.Entities;
 
 namespace pet_store_backend.application.Common.Interfaces.Email;

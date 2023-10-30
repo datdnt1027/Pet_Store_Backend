@@ -49,6 +49,7 @@ namespace pet_store_backend.infrastructure
             ConfigurationManager configuration)
         {
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddSingleton<IPasswordConfiguration, PasswordConfiguration>();
             var jwtSetting = new JwtSetting();
             configuration.Bind(JwtSetting.SectionName, jwtSetting);
             services.AddSingleton(Options.Create(jwtSetting));

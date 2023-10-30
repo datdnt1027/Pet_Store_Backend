@@ -1,15 +1,14 @@
 using FluentValidation;
+using pet_store_backend.application.Authentication.Commands.ResetPassword;
 
 namespace pet_store_backend.application.Authentication.Commands.Register;
 
 
-public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
 {
-    public RegisterCommandValidator()
+    public ResetPasswordCommandValidator()
     {
-        RuleFor(x => x.FirstName).NotEmpty();
-        RuleFor(x => x.LastName).NotEmpty();
-        RuleFor(x => x.Email).NotEmpty().EmailAddress();
+        RuleFor(x => x.Token).NotEmpty();
         RuleFor(x => x.Password).NotEmpty();
         RuleFor(x => x.ConfirmPassword)
             .NotEmpty()

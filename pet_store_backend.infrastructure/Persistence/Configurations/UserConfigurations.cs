@@ -35,9 +35,23 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
                 .HasMaxLength(255)
                 .IsRequired(); // Đánh dấu là bắt buộc
 
-            builder.Property(m => m.Password)
-                .HasMaxLength(255)
-                .IsRequired(); // Đánh dấu là bắt buộc
+            builder.Property(m => m.PasswordHash)
+                .IsRequired();
+
+            builder.Property(m => m.PasswordSalt)
+                .IsRequired();
+
+            builder.Property(m => m.VerificationToken)
+                .HasMaxLength(255);
+
+            builder.Property(m => m.VerifiedAt)
+                .HasColumnType("datetime");
+
+            builder.Property(m => m.PasswordResetToken)
+                .HasMaxLength(255);
+
+            builder.Property(m => m.TokenExpires)
+                .HasColumnType("datetime");
         }
     }
 }

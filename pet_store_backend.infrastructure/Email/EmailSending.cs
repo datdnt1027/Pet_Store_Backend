@@ -31,9 +31,8 @@ public class EmailSending : IEmailService
         {
             var emailMessage = CreateEmailMessage(message);
             client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, true);
-            client.AuthenticationMechanisms.Remove("XOAUTH2");
+            //client.AuthenticationMechanisms.Remove("XOAUTH2");
             client.Authenticate(_emailSettings.Username, _emailSettings.Password);
-
             client.Send(emailMessage);
         }
         catch

@@ -1,6 +1,6 @@
 using ErrorOr;
 using MediatR;
-using pet_store_backend.application.Services.Authentication;
+using pet_store_backend.application.Authentication.Common;
 
 namespace pet_store_backend.application.Authentication.Queries.Login;
 
