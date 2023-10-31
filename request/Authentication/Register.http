@@ -1,0 +1,12 @@
+@host= https://localhost:7206
+
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Dat",
+    "lastName": "Dang Nguyen Thien",
+    "email": "20110629@student.hcmute.edu.vn",
+    "password": "Test123@!",
+    "confirmPassword":"Test123@!"
+}
