@@ -50,9 +50,9 @@ public class AuthenticationController : ApiController
 
     [HttpPost]
     [Route("verify")]
-    public async Task<IActionResult> Verify([FromQuery] string verificationToken)
+    public async Task<IActionResult> Verify(VerifyRequest request)
     {
-        var query = new VerifyCommand(verificationToken);
+        var query = _mapper.Map<VerifyCommand>(request);
 
         var verifyResult = await _mediator.Send(query);
 
@@ -62,9 +62,9 @@ public class AuthenticationController : ApiController
 
     [HttpPost]
     [Route("forgot-password")]
-    public async Task<IActionResult> ForgotPassword([FromQuery] string email)
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
     {
-        var command = new ForgotPasswordCommand(email);
+        var command = _mapper.Map<ForgotPasswordCommand>(request);
         var resetPasswordResult = await _mediator.Send(command);
 
         return resetPasswordResult.Match(resetResult => Ok(_mapper.Map<MessageResponse>(resetResult)),

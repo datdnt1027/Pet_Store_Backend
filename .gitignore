@@ -397,4 +397,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-pet_store_backend.api/obj/Debug/net6.0/pet_store_backend.api.csproj.AssemblyReference.cache
+pet_store_backend.api/obj/Debug
+pet_store_backend.infrastructure/Migrations
