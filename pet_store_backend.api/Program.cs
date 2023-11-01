@@ -28,6 +28,8 @@ var app = builder.Build();
 
     app.UseExceptionHandler("/error");
 
+    app.UseCors("corspolicy");
+
     app.UseHttpsRedirection();
 
     app.UseAuthentication();
