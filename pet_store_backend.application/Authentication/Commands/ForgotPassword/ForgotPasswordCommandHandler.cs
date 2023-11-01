@@ -35,8 +35,8 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
         await _userRepository.Update(user);
         var message = new Message(new string[] {
             user.Email },
-            "Pet Store Verfication Email",
-            $"Your verfication link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{user.PasswordResetToken}");
+            "Pet Store Reset Password Email",
+            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{user.PasswordResetToken}");
         _emailService.SendEmail(message);
 
         return new MessageResult("Your Reset Token has been sent to your email");

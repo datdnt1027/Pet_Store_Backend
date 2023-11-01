@@ -11,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
         .AddInfrastructure(builder.Configuration);
 
     //builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
+    builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+    {
+        build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+    }));
 
 }
 var app = builder.Build();
@@ -23,6 +27,8 @@ var app = builder.Build();
     // });
 
     app.UseExceptionHandler("/error");
+
+    app.UseCors("corspolicy");
 
     app.UseHttpsRedirection();
 
