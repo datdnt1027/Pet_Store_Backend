@@ -659,24 +659,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dntda\\.nuget\\packages\\": {},
-    "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages": {}
+    "C:\\Users\\lephu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+      "projectUniqueName": "D:\\Pet_Store_Backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
       "projectName": "pet_store_backend.application",
-      "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
-      "packagesPath": "C:\\Users\\dntda\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.application\\obj\\",
+      "projectPath": "D:\\Pet_Store_Backend\\pet_store_backend.application\\pet_store_backend.application.csproj",
+      "packagesPath": "C:\\Users\\lephu\\.nuget\\packages\\",
+      "outputPath": "D:\\Pet_Store_Backend\\pet_store_backend.application\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\dntda\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+        "C:\\Users\\lephu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -684,15 +679,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
-              "projectPath": "D:\\GitHub\\pet_store_backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj"
+            "D:\\Pet_Store_Backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj": {
+              "projectPath": "D:\\Pet_Store_Backend\\pet_store_backend.domain\\pet_store_backend.domain.csproj"
             }
           }
         }
@@ -740,7 +734,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

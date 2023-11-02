@@ -10,7 +10,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("3d0ed76d-e838-4cc0-b1c7-fc88ba0d9495")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("273bf758-2cd5-48e9-bb63-54e3a6dd30e2")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("pet_store_backend.api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
