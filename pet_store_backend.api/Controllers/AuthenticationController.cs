@@ -50,9 +50,9 @@ public class AuthenticationController : ApiController
 
     [HttpPost]
     [Route("verify")]
-    public async Task<IActionResult> Verify([FromQuery] string verificationToken)
+    public async Task<IActionResult> Verify(VerifyRequest request)
     {
-        var query = new VerifyCommand(verificationToken);
+        var query = _mapper.Map<VerifyCommand>(request);
 
         var verifyResult = await _mediator.Send(query);
 
