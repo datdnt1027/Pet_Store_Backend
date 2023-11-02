@@ -6,6 +6,6 @@ public class VerifyQueryValidator : AbstractValidator<VerifyCommand>
 {
     public VerifyQueryValidator()
     {
-        RuleFor(x => x.VerficationToken).NotEmpty();
+        RuleFor(x => x.VerificationToken).NotEmpty();
     }
 }
