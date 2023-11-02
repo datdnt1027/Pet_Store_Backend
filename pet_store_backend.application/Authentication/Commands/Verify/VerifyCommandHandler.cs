@@ -19,7 +19,7 @@ public class VerifyQueryHandler : IRequestHandler<VerifyCommand, ErrorOr<Message
     public async Task<ErrorOr<MessageResult>> Handle(VerifyCommand query, CancellationToken cancellationToken)
     {
         // Check if user registered
-        if (await _userRepository.GetUserByVerificationToken(query.VerficationToken) is not User user)
+        if (await _userRepository.GetUserByVerificationToken(query.VerificationToken) is not User user)
         {
             return Errors.Authentication.InvalidToken;
         }

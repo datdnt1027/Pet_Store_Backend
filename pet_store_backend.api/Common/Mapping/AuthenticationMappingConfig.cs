@@ -14,7 +14,6 @@ public class AuthenticationMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<VerifyRequest, VerifyCommand>();
         config.NewConfig<ForgotPasswordRequest, ForgotPasswordCommand>();
         config.NewConfig<RegisterRequest, RegisterCommand>();
         config.NewConfig<PasswordResetRequest, ResetPasswordCommand>();
