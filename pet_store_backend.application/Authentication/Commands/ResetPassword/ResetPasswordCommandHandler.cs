@@ -1,6 +1,6 @@
 using ErrorOr;
 using MediatR;
-using pet_store_backend.application.Authentication.Common;
+using pet_store_backend.application.Common;
 using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Common.Errors;

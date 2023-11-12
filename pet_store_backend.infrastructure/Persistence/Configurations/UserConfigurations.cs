@@ -12,7 +12,7 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
             ConfigureUsersTable(builder);
         }
 
-        private void ConfigureUsersTable(EntityTypeBuilder<User> builder)
+        private static void ConfigureUsersTable(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users");
 
@@ -33,7 +33,10 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
 
             builder.Property(m => m.Email)
                 .HasMaxLength(255)
-                .IsRequired(); // Đánh dấu là bắt buộc
+                .IsRequired();
+
+            builder.HasIndex(m => m.Email)
+                .IsUnique();
 
             builder.Property(m => m.PasswordHash)
                 .IsRequired();
@@ -44,11 +47,17 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
             builder.Property(m => m.VerificationToken)
                 .HasMaxLength(255);
 
+            builder.HasIndex(m => m.VerificationToken)
+                .IsUnique();
+
             builder.Property(m => m.VerifiedAt)
                 .HasColumnType("datetime");
 
             builder.Property(m => m.PasswordResetToken)
                 .HasMaxLength(255);
+
+            builder.HasIndex(m => m.PasswordResetToken)
+                .IsUnique();
 
             builder.Property(m => m.TokenExpires)
                 .HasColumnType("datetime");

@@ -15,7 +15,13 @@ namespace pet_store_backend.domain.Entities.User
         public string? PasswordResetToken { get; private set; }
         public DateTime? TokenExpires { get; private set; }
 
-        private User(UserId userId, string firstName, string lastName, string email, byte[] passwordHash, byte[] passwordSalt) : base(userId)
+        private User(
+            UserId userId,
+            string firstName,
+            string lastName,
+            string email,
+            byte[] passwordHash,
+            byte[] passwordSalt) : base(userId)
         {
             FirstName = firstName;
             LastName = lastName;

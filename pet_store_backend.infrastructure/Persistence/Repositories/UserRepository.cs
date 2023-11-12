@@ -4,7 +4,7 @@ using pet_store_backend.domain.Entities.User;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DataContext _dbContext;
 
