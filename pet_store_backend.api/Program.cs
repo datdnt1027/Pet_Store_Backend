@@ -25,6 +25,7 @@ var app = builder.Build();
     //     Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
     //     return Results.Problem(title: exception?.Message);
     // });
+    app.UseResponseCompression();
 
     app.UseExceptionHandler("/error");
 

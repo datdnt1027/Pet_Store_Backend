@@ -13,7 +13,5 @@ public static partial class Errors
         public static Error UserNotExist => Error.Conflict(
            code: "User.NotExist",
            description: "User Not Exist");
-
-
     }
 }

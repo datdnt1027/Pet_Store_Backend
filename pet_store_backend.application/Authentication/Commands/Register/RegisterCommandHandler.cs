@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using ErrorOr;
 using MediatR;
-using pet_store_backend.application.Authentication.Common;
+using pet_store_backend.application.Common;
 using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Email;
 using pet_store_backend.application.Common.Interfaces.Persistence;
