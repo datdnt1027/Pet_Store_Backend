@@ -1,0 +1,8 @@
+@host= https://localhost:7206
+
+GET {{host}}/collections/category?page=1
+Content-Type: application/json
+
+{
+    "categoryId": "8b6f01c2-81a3-457e-bfea-90c313a773b5"
+}

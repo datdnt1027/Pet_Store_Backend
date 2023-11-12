@@ -6,7 +6,7 @@
 ![Alt text](image-1.png)
 
 * First needs to add migration
-`dotnet ef migrations add InitialCreate --project .\pet_store_backend.infrastructure\ --startup-project .\pet_store_backend.api\` `
+`dotnet ef migrations add InitialCreate --project .\pet_store_backend.infrastructure\ --startup-project .\pet_store_backend.api\`
 
 * Second you need to update your connection string
 Example: My ConnectionString is "Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"
