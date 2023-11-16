@@ -53,7 +53,7 @@ jobs:
 
       - name: Apply Database Migrations
         run:
-            dotnet ef database update --project ./pet_store_backend.infrastructure/ --startup-project ./pet_store_backend.api/ --connection "Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"
+            dotnet ef database update --project ./pet_store_backend.infrastructure/ --startup-project ./pet_store_backend.api/ --connection "Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false;Integrated Security=true;"
 
       - name: Run POSTMAN collection
         run: |
