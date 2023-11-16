@@ -26,6 +26,9 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
     
       - name: Build App 🚀
         run:
@@ -34,12 +37,6 @@ jobs:
       - name: Test App 🚀
         run:
             dotnet test -c Release
-
-      - name: Run project
-        run: dotnet watch run --project ./pet_store_backend.api/
-
-      - name: Test dotnet
-        run: dotnet test
 
       - name: Install Node
         uses: actions/setup-node@v3
