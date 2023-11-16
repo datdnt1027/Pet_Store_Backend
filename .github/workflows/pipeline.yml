@@ -28,8 +28,8 @@ jobs:
         with:
             dotnet-version: 6.0.x
 
-      - name: Build
-        run: dotnet build -c Release
+      - name: Run project
+        run: dotnet watch run --project .\pet_store_backend.api 
 
       - name: Test dotnet
         run: dotnet test
@@ -48,7 +48,9 @@ jobs:
         run: dotnet tool install --global dotnet-ef --version 6.0.0-*
 
       - name: Apply Database Migrations
-        run: dotnet ef database update --project YourProjectName --startup-project YourStartupProjectName --context YourDbContextName --verbose
+        run:
+            dotnet ef migrations add InitialCreate --project .\pet_store_backend.infrastructure\ --startup-project .\pet_store_backend.api\ 
+            dotnet ef database update -p .\pet_store_backend.infrastructure\ -s .\pet_store_backend.api\ --connection "Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"
 
       - name: Run POSTMAN collection
         run: |
