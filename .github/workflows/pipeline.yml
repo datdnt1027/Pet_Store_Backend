@@ -25,16 +25,15 @@ jobs:
       - name: Install .NET Core ⚙
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '7.0.403'
-      
+          dotnet-version: '6.0.x'
     
-      - name: Restore Dependencies 🔧
-        run:
-          dotnet restore --project ./pet_store_backend.api/
-
       - name: Build App 🚀
         run:
-            dotnet build -c Release --no-restore --project ./pet_store_backend.api/
+            dotnet build -c Release
+
+      - name: Test App 🚀
+        run:
+            dotnet test -c Release
 
       - name: Run project
         run: dotnet watch run --project ./pet_store_backend.api/
