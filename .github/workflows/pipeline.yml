@@ -29,11 +29,11 @@ jobs:
     
       - name: Restore Dependencies 🔧
         run:
-          dotnet restore
+          dotnet restore --project ./pet_store_backend.api/
 
       - name: Build App 🚀
         run:
-            dotnet build -c Release --no-restore
+            dotnet build -c Release --no-restore --project ./pet_store_backend.api/
 
       - name: Run project
         run: dotnet watch run --project ./pet_store_backend.api/
