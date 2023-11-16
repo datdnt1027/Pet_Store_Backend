@@ -1,0 +1,61 @@
+name: Testing Web API
+
+on:
+  push:
+    branches:
+      - main
+      - datdnt
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run the action
+        uses: potatoqualitee/mssqlsuite@v1.7
+        with:
+          install: sqlengine, sqlpackage
+
+      - name: Run sqlclient
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+    # Install the .NET Core workload
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+            dotnet-version: 6.0.x
+
+      - name: Build
+        run: dotnet build -c Release
+
+      - name: Test dotnet
+        run: dotnet test
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "17.x"
+
+      - name: Install newman
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      - name: Install EF Core Tools
+        run: dotnet tool install --global dotnet-ef --version 6.0.0-*
+
+      - name: Apply Database Migrations
+        run: dotnet ef database update --project YourProjectName --startup-project YourStartupProjectName --context YourDbContextName --verbose
+
+      - name: Run POSTMAN collection
+        run: |
+          newman run .github/workflows/PetStore.postman_collection.json --environment .github/workflows/Pet_Store_Environment.postman_environment.json --timeout-request 20000 -n 5 --bail --insecure -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html || true
+
+      - name: Output the run Test API
+        uses: actions/upload-artifact@v3
+        with:
+          name: APITestReport
+          path: testResults
