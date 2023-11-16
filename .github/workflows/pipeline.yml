@@ -22,14 +22,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-    # Install the .NET Core workload
       - name: Install .NET Core
         uses: actions/setup-dotnet@v3
         with:
-            dotnet-version: 6.0.x
+          dotnet-version: 6.0.x
 
       - name: Run project
-        run: dotnet watch run --project .\pet_store_backend.api 
+        run: dotnet watch run --project ./pet_store_backend.api/
 
       - name: Test dotnet
         run: dotnet test
@@ -49,8 +48,8 @@ jobs:
 
       - name: Apply Database Migrations
         run:
-            dotnet ef migrations add InitialCreate --project .\pet_store_backend.infrastructure\ --startup-project .\pet_store_backend.api\ 
-            dotnet ef database update -p .\pet_store_backend.infrastructure\ -s .\pet_store_backend.api\ --connection "Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"
+          dotnet ef migrations add InitialCreate --project ./pet_store_backend.infrastructure/ --startup-project ./pet_store_backend.api/
+          dotnet ef database update -p ./pet_store_backend.infrastructure/ -s ./pet_store_backend.api/ --connection "Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"
 
       - name: Run POSTMAN collection
         run: |
