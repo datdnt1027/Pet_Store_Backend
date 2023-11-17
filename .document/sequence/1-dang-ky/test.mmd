@@ -1,0 +1,14 @@
+# Đăng ký tài khoản người dùng dựa trên email và mật khẩu
+
+```mermaid
+
+sequenceDiagram
+    Client->>Protocol: Gửi request
+    Protocol->>Controller: Nhận request, điều phối manager
+    Controller->>Service: Xử lý biz
+    Service->>Model: Lưu trữ gì đó
+    Model->>Service: Trả về kết quả
+    Service->>Controller: Trả về kết quả
+    Controller->>Protocol: Gửi tới người dùng
+    
+```
