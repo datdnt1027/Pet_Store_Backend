@@ -1,0 +1,9 @@
+jobs:
+  test-backend:
+    triggers:
+      paths:
+        - "src/backend/**"
+    step:
+      - pull dotnet
+      - dotnet build
+      - build image
