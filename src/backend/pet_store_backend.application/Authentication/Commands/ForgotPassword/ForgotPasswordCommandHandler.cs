@@ -1,7 +1,7 @@
-using System.Security.Cryptography;
 using ErrorOr;
 using MediatR;
 using pet_store_backend.application.Common;
+using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Email;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Utils;
@@ -15,28 +15,26 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
 {
     private readonly IUserRepository _userRepository;
     private readonly IEmailService _emailService;
-    public ForgotPasswordCommandHandler(IUserRepository userRepository, IEmailService emailService)
+    private readonly IPasswordConfiguration _passwordConfiguration;
+    public ForgotPasswordCommandHandler(IUserRepository userRepository, IEmailService emailService, IPasswordConfiguration passwordConfiguration)
     {
         _userRepository = userRepository;
         _emailService = emailService;
-    }
-    private string CreateRandomToken()
-    {
-        return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        _passwordConfiguration = passwordConfiguration;
     }
     public async Task<ErrorOr<MessageResult>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
         // Validate User doesn't exist
-        if (await _userRepository.GetUserByEmail(request.Email) is not User user)
+        if (await _userRepository.GetUserByEmail(request.Email) is not UserRole user)
         {
             return Errors.User.UserNotExist;
         }
-        user.CreatePasswordResetToken(CreateRandomToken());
-        await _userRepository.Update(user);
+        user.User.CreatePasswordResetToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
+        await _userRepository.Update(user.User);
         var message = new Message(new string[] {
-            user.Email },
+            user.User.Email },
             "Pet Store Reset Password Email",
-            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{user.PasswordResetToken}");
+            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{user.User.PasswordResetToken}");
         _emailService.SendEmail(message);
 
         return new MessageResult("Your Reset Token has been sent to your email");

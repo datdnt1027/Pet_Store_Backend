@@ -6,6 +6,9 @@ using pet_store_backend.domain.Entities.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Newtonsoft.Json;
+using pet_store_backend.infrastructure.Persistence.Common;
+
 
 namespace pet_store_backend.infrastructure.Authentication
 {
@@ -18,20 +21,39 @@ namespace pet_store_backend.infrastructure.Authentication
             _dateTimeProvider = dateTimeProvider;
             _jwtSettings = jwtOptions.Value;
         }
-        public string GenerateToken(User user)
+        public string GenerateToken(UserRole user, List<UserPermission> permissions)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
                 SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
-                new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
-                new Claim(JwtRegisteredClaimNames.Jti, user.Id.Value.ToString())
-
+                new(JwtRegisteredClaimNames.Sub, user.User.Id.Value.ToString()),
+                new(JwtRegisteredClaimNames.GivenName, user.User.FirstName),
+                new(JwtRegisteredClaimNames.FamilyName, user.User.LastName),
+                new(JwtRegisteredClaimNames.Jti, user.Id.Value.ToString()),
+                new(ClaimTypes.Role, user.UserRoleName)
             };
+
+            if (user.UserRoleName != UserRoleKey.UserRoleName)
+            {
+                var tablePermissions = new Dictionary<string, TablePermission>();
+
+                foreach (var permission in permissions)
+                {
+                    // Add the table permission to the dictionary
+                    tablePermissions[permission.TableName] = new TablePermission
+                    {
+                        Create = permission.Create,
+                        Read = permission.Read,
+                        Update = permission.Update,
+                        Deactivate = permission.Deactive
+                    };
+                }
+                // Add a single claim for all table permissions in key-value format
+                claims.Add(new Claim("permissions", JsonConvert.SerializeObject(tablePermissions)));
+            }
 
             var securityToken = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,

@@ -7,9 +7,9 @@ using pet_store_backend.domain.Common.Errors;
 
 public class CategoryByProductsQueryHandler : IRequestHandler<CategoryByProductsQuery, ErrorOr<CategoryResult>>
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly ICollectionRepository _categoryRepository;
 
-    public CategoryByProductsQueryHandler(ICategoryRepository categoryRepository)
+    public CategoryByProductsQueryHandler(ICollectionRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }

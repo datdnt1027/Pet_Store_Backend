@@ -2,9 +2,8 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.application.PetProducts.PetCategory.Queries.CategoryByProducts;
-using pet_store_backend.contracts;
+using pet_store_backend.application.PetProducts.PetCategory.Queries.ProductDetail;
 using pet_store_backend.contracts.PetProducts;
 namespace pet_store_backend.api.Controllers;
 
@@ -21,24 +20,14 @@ public class CollectionsController : ApiController
         _mediator = mediator;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateCatory(CreateCategoryRequest request)
-    {
-        var command = _mapper.Map<CreateCategoryCommand>(request);
-        var createCategoryRequest = await _mediator.Send(command);
-
-        return createCategoryRequest.Match(category => Ok(_mapper.Map<MessageResponse>(category)),
-            errors => Problem(errors));
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetAllCategoriesWithCountProducts()
     {
-        var query = new CategoryQuery(); // Create a new CategoryQuery
-        var categoriesWithProducts = await _mediator.Send(query); // Send the query to the handler
+        var query = new CategoryQuery();
+        var categoriesWithProducts = await _mediator.Send(query);
 
         return categoriesWithProducts.Match(
-            categories => Ok(_mapper.Map<IEnumerable<CategoryWithProductCountResponse>>(categories)), // Map and return successful result
+            categories => Ok(_mapper.Map<IEnumerable<CategoryWithProductCountResponse>>(categories)),
             errors => Problem(errors)
         );
     }
@@ -47,13 +36,26 @@ public class CollectionsController : ApiController
     [Route("category")]
     public async Task<IActionResult> GetProductsByCategories([FromBody] CategoryIdRequest categoryQuery, [FromQuery] int page = 1)
     {
-        var query = new CategoryByProductsQuery(categoryQuery.CategoryId, page); // Create a new CategoryQuery
-        var categoriesWithProducts = await _mediator.Send(query); // Send the query to the handler
+        var query = new CategoryByProductsQuery(categoryQuery.CategoryId, page);
+        var categoriesWithProducts = await _mediator.Send(query);
 
         return categoriesWithProducts.Match(
-            categories => Ok(_mapper.Map<CategoryResponse>(categories)), // Map and return successful result
+            categories => Ok(_mapper.Map<CategoryResponse>(categories)),
             errors => Problem(errors)
         );
+    }
+
+    [HttpGet]
+    [Route("product")]
+    public async Task<IActionResult> GetProductDetail(ProductIdRequest productQuery)
+    {
+        var query = new ProductDetailQuery(productQuery.ProductId);
+        var productDetail = await _mediator.Send(query);
+
+        return productDetail.Match(
+           product => Ok(_mapper.Map<ProductResponse>(product)),
+           errors => Problem(errors)
+       );
     }
 
 }

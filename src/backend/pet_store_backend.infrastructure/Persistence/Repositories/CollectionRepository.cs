@@ -6,10 +6,10 @@ using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories;
 
-public class CategoryRepository : ICategoryRepository
+public class CollectionRepository : ICollectionRepository
 {
     private readonly DataContext _dbContext;
-    public CategoryRepository(DataContext dbcontext)
+    public CollectionRepository(DataContext dbcontext)
     {
         _dbContext = dbcontext;
     }
@@ -46,23 +46,20 @@ public class CategoryRepository : ICategoryRepository
 
         // Filter and select the products for the current page
         var productsInBatch = category.Products
+            .Where(p => p.Status == true)
             .Skip(productsToSkip)
             .Take(pageSize)
-            .Select(product => new ProductResult(
-                product.Id?.ToString() ?? "",
+            .Select(product => new ProductBriefResult(
+                product.Id.Value,
                 product.ProductName,
-                product.ProductDetail,
-                product.ProductQuantity,
                 product.ProductPrice.Value,
-                product.ImageData ?? Array.Empty<byte>(),
-                product.CreatedDateTime,
-                product.UpdatedDateTime
+                product.ImageData ?? Array.Empty<byte>()
             ))
             .ToList();
 
         // Create the CategoryResult
         var categoryResult = new CategoryResult(
-            category.Id.Value.ToString(),
+            category.Id.Value,
             category.CategoryName,
             productsInBatch,
             DateTime.Now, // You can adjust the created date as needed
@@ -70,6 +67,25 @@ public class CategoryRepository : ICategoryRepository
         );
 
         return categoryResult;
+    }
+
+    public async Task<ProductResult?> GetProductDetail(string productId)
+    {
+        var productDetail = await _dbContext.Products
+            .AsNoTracking() // Make the query non-tracking
+            .Where(p => p.Id == ProductId.Create(new Guid(productId)))
+            .Select(product => new ProductResult(
+                product.Id.Value,
+                product.ProductName,
+                product.ProductDetail,
+                product.ProductQuantity,
+                product.ProductPrice.Value,
+                product.ImageData ?? Array.Empty<byte>(),
+                product.CreatedDateTime,
+                product.UpdatedDateTime))
+            .FirstOrDefaultAsync();
+
+        return productDetail;
     }
 
     public async Task<List<CategoryWithProductCount>> GetAllCategoriesWithNumberOfProducts()
