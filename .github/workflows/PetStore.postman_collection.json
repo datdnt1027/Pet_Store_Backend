@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "e5de6b9a-16b6-437e-aee9-f38fac70a1c4",
+		"name": "PetStore",
+		"description": "**This is the API using for Project Pet Store Web Api using ASP.NET Core**\n\n_Author:_\n\n- 20110629 - Đặng Nguyễn Thiên Đạt\n    \n- 20110624 - Nguyễn Khắc Duy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26385262",
+		"_collection_link": "https://grey-escape-627582.postman.co/workspace/TLCN~78479216-03b2-4d4e-9641-9312271c3dbf/collection/26385262-e5de6b9a-16b6-437e-aee9-f38fac70a1c4?action=share&source=collection_link&creator=26385262"
+	},
+	"item": [
+		{
+			"name": "Get Collections Pet Store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON array\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should have a category with categoryId, categoryName, and productCount\", function () {\r",
+							"    pm.response.to.have.jsonBody(\"0\");\r",
+							"    pm.response.to.have.jsonBody(\"0.categoryId\");\r",
+							"    pm.response.to.have.jsonBody(\"0.categoryName\");\r",
+							"    pm.response.to.have.jsonBody(\"0.productCount\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Category ID should be a valid UUID\", function () {\r",
+							"    pm.expect(pm.response.json()[0].categoryId).to.match(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/);\r",
+							"    pm.environment.set(\"categoryId\", pm.response.json()[0].categoryId);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Category Name should be a string\", function () {\r",
+							"    pm.expect(pm.response.json()[0].categoryName).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product Count should be a number\", function () {\r",
+							"    pm.expect(pm.response.json()[0].productCount).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/collections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections"
+					]
+				},
+				"description": "This API will get your list category by products"
+			},
+			"response": [
+				{
+					"name": "Show Number Of Product In Category",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7206/collections",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7206",
+							"path": [
+								"collections"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 12 Nov 2023 07:34:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"categoryId\": \"8b6f01c2-81a3-457e-bfea-90c313a773b5\",\n        \"categoryName\": \"Food\",\n        \"productCount\": 2\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Products By Category With Page Number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be a JSON object\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should have categoryId, categoryName, products, createdDateTime, and updatedDateTime\", function () {\r",
+							"    pm.response.to.have.jsonBody(\"categoryId\");\r",
+							"    pm.response.to.have.jsonBody(\"categoryName\");\r",
+							"    pm.response.to.have.jsonBody(\"products\");\r",
+							"    pm.response.to.have.jsonBody(\"createdDateTime\");\r",
+							"    pm.response.to.have.jsonBody(\"updatedDateTime\");\r",
+							"});\r",
+							"pm.test(\"Category ID should be a valid UUID\", function () {\r",
+							"    pm.expect(pm.response.json().categoryId).to.match(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Category Name should be 'Food'\", function () {\r",
+							"    pm.expect(pm.response.json().categoryName).to.eql(\"Food\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products should be an array with at least one item\", function () {\r",
+							"    pm.expect(pm.response.json().products).to.be.an('array');\r",
+							"    pm.expect(pm.response.json().products.length).to.be.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each product should have required properties\", function () {\r",
+							"    pm.response.json().products.forEach(function (product) {\r",
+							"        pm.expect(product.productId).to.be.a('string');\r",
+							"        pm.expect(product.productName).to.be.a('string');\r",
+							"        pm.expect(product.productDetail).to.be.a('string');\r",
+							"        pm.expect(product.productQuantity).to.be.a('number');\r",
+							"        pm.expect(product.productPrice).to.be.a('number');\r",
+							"        pm.expect(product.imageData).to.be.a('string');\r",
+							"        pm.expect(product.createdDateTime).to.be.a('string');\r",
+							"        pm.expect(product.updatedDateTime).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date and Time format should be valid\", function () {\r",
+							"    pm.expect(pm.response.json().createdDateTime).to.match(/\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d+\\+\\d{2}:\\d{2}/);\r",
+							"    pm.expect(pm.response.json().updatedDateTime).to.match(/\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d+\\+\\d{2}:\\d{2}/);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"categoryId\": \"8b6f01c2-81a3-457e-bfea-90c313a773b5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/collections/category?page=1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections",
+						"category"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "The API will retrive the product by categoryId and page number, you will get 5 products per page"
+			},
+			"response": [
+				{
+					"name": "Get Products By CategoryID With Page Number",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryId\": \"8b6f01c2-81a3-457e-bfea-90c313a773b5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7206/collections/category?page=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7206",
+							"path": [
+								"collections",
+								"category"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 12 Nov 2023 13:24:43 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"categoryId\": \"8b6f01c2-81a3-457e-bfea-90c313a773b5\",\n    \"categoryName\": \"Food\",\n    \"products\": [\n        {\n            \"productId\": \"pet_store_backend.domain.Entities.PetProducts.ValueObjects.ProductId\",\n            \"productName\": \"Banana Flavor\",\n            \"productDetail\": \"This food have flavor is Banana\",\n            \"productQuantity\": 65,\n            \"productPrice\": 120000,\n            \"imageData\": \"System.Byte[]\",\n            \"createdDateTime\": \"2023-11-11T20:32:41.97\",\n            \"updatedDateTime\": \"2023-11-11T20:32:41.97\"\n        },\n        {\n            \"productId\": \"pet_store_backend.domain.Entities.PetProducts.ValueObjects.ProductId\",\n            \"productName\": \"Chocolate Flavor\",\n            \"productDetail\": \"This food have flavor is Banana\",\n            \"productQuantity\": 100,\n            \"productPrice\": 150000,\n            \"imageData\": \"System.Byte[]\",\n            \"createdDateTime\": \"2023-11-11T20:32:41.97\",\n            \"updatedDateTime\": \"2023-11-11T20:32:41.97\"\n        }\n    ],\n    \"createdDateTime\": \"2023-11-12T20:24:44.0213433+07:00\",\n    \"updatedDateTime\": \"2023-11-12T20:24:44.0213449+07:00\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://localhost:7206",
+			"type": "string"
+		}
+	]
+}
