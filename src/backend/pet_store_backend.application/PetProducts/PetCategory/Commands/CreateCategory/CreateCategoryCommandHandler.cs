@@ -10,9 +10,9 @@ namespace pet_store_backend.application.PetProducts.PetCategory.Commands.CreateC
 
 public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ErrorOr<MessageResult>>
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly ICollectionRepository _categoryRepository;
 
-    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository)
+    public CreateCategoryCommandHandler(ICollectionRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }

@@ -20,7 +20,11 @@ public static partial class Errors
         );
         public static Error TokenExpire => Error.Unauthorized(
             code: "Auth.TokenExpire",
-            description: "Token Expired."
+            description: "Token Expired. New Token is sending for you"
+        );
+        public static Error ForbidenPermission => Error.Unauthorized(
+            code: "Auth.Permission",
+            description: "User Don't Have Any Permission Or Permission Not Exist"
         );
 
     }

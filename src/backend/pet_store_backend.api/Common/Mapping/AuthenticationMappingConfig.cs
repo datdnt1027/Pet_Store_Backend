@@ -19,7 +19,7 @@ public class AuthenticationMappingConfig : IRegister
         config.NewConfig<PasswordResetRequest, ResetPasswordCommand>();
         config.NewConfig<LoginRequest, LoginQuery>();
         config.NewConfig<AuthenticationResult, AuthenticationResponse>()
-            .Map(dest => dest.UserId, src => src.user.Id.Value)
-            .Map(dest => dest, src => src.user);
+            .Map(dest => dest.UserId, src => src.userRole.User.Id.Value)
+            .Map(dest => dest, src => src.userRole.User);
     }
 }

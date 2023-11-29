@@ -3,8 +3,9 @@ using pet_store_backend.domain.Entities.User.ValueObjects;
 
 namespace pet_store_backend.domain.Entities.User
 {
-    public sealed class User : AggregateRoot<UserId>
+    public sealed class User : Entity<UserId>
     {
+        public UserRoleId UserRoleId { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
@@ -15,25 +16,40 @@ namespace pet_store_backend.domain.Entities.User
         public string? PasswordResetToken { get; private set; }
         public DateTime? TokenExpires { get; private set; }
 
+
         private User(
             UserId userId,
             string firstName,
             string lastName,
             string email,
             byte[] passwordHash,
-            byte[] passwordSalt) : base(userId)
+            byte[] passwordSalt,
+            UserRoleId userRoleId) : base(userId)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             PasswordHash = passwordHash;
             PasswordSalt = passwordSalt;
+            UserRoleId = userRoleId;
         }
 
-        public static User Create(string firstName, string lastName, string email, byte[] passwordHash, byte[] passwordSalt)
+        public static User Create(
+            string firstName,
+            string lastName,
+            string email,
+            byte[] passwordHash,
+            byte[] passwordSalt,
+            UserRoleId userRoleId)
         {
-            var user = new User(UserId.CreatUnique(), firstName, lastName, email, passwordHash, passwordSalt);
-            user.TokenExpires = DateTime.Now.AddMinutes(5);
+            var user = new User(
+                UserId.CreatUnique(),
+                firstName,
+                lastName,
+                email,
+                passwordHash,
+                passwordSalt,
+                userRoleId);
             return user;
         }
 
@@ -51,16 +67,21 @@ namespace pet_store_backend.domain.Entities.User
             PasswordSalt = passwordSalt;
         }
 
-        public void CreateVerificationToken(string verificationToken)
+        public void CreateVerificationToken(string verificationToken, DateTime tokenExpire)
         {
             VerificationToken = verificationToken;
-            TokenExpires = DateTime.Now.AddMinutes(5);
+            TokenExpires = tokenExpire;
         }
 
-        public void CreatePasswordResetToken(string passwordResetToken)
+        public void CreatePasswordResetToken(string passwordResetToken, DateTime tokenExpire)
         {
             PasswordResetToken = passwordResetToken;
-            TokenExpires = DateTime.Now.AddMinutes(5);
+            TokenExpires = tokenExpire;
+        }
+
+        public void UpdateUserRoleId(UserRoleId userRoleId)
+        {
+            UserRoleId = userRoleId;
         }
 
 #pragma warning disable CS8618

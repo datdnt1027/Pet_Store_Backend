@@ -8,11 +8,11 @@ public class CategoryQuery : IRequest<ErrorOr<List<CategoryWithProductCount>>>
     // No specific request data needed
 }
 
-public class CategoryQueryHandler : IRequestHandler<CategoryQuery, ErrorOr<List<CategoryWithProductCount>>>
+public class CategoryWithNumberOfProductsHandler : IRequestHandler<CategoryQuery, ErrorOr<List<CategoryWithProductCount>>>
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly ICollectionRepository _categoryRepository;
 
-    public CategoryQueryHandler(ICategoryRepository categoryRepository)
+    public CategoryWithNumberOfProductsHandler(ICollectionRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }
