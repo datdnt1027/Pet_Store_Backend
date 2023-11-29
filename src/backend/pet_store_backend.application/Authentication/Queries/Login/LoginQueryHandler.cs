@@ -25,25 +25,30 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
     }
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
         // Check if user already exists
-        if (await _userRepository.GetUserByEmail(query.Email) is not User user)
+        if (await _userRepository.GetUserByEmail(query.Email) is not UserRole user)
         {
             return Errors.Authentication.IvalidCredentials;
         }
         // Check User Password
-        if (!_passwordConfiguration.VerifyPasswordHash(query.Password, user.PasswordHash, user.PasswordSalt))
+        if (!_passwordConfiguration.VerifyPasswordHash(query.Password, user.User.PasswordHash, user.User.PasswordSalt))
         {
             return Errors.Authentication.IvalidCredentials;
         }
-
-        if (user.VerifiedAt == null)
+        // Check user have permission
+        if (user.User.UserRoleId is null)
+        {
+            return Errors.Authentication.ForbidenPermission;
+        }
+        // Check user verified
+        if (user.User.VerifiedAt == null)
         {
             return Errors.Authentication.NotVerified;
         }
-
+        // Get permissions for user in JWT
+        var permissions = await _userRepository.GetUserPermissionsAsync(user.Id);
         //Create JWT Token
-        var token = _jwtTokenGenerator.GenerateToken(user);
+        var token = _jwtTokenGenerator.GenerateToken(user, permissions);
         return new AuthenticationResult(
             user,
             token);

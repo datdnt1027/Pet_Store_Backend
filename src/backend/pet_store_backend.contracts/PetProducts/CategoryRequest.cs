@@ -15,3 +15,7 @@ public record ProductRequest(
 public record CategoryIdRequest(
     string CategoryId
 );
+
+public record ProductIdRequest(
+    string ProductId
+);

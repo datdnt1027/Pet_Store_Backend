@@ -42,7 +42,8 @@ namespace pet_store_backend.infrastructure
                 options.UseSqlServer("Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"));
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICollectionRepository, CollectionRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
             return services;
         }
         public static IServiceCollection AddAuth(

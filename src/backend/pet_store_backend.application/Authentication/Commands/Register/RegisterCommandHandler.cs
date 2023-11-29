@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using ErrorOr;
 using MediatR;
 using pet_store_backend.application.Common;
@@ -25,11 +24,6 @@ public class RegisterCommadHandler : IRequestHandler<RegisterCommand, ErrorOr<Me
         _emailService = emailService;
     }
 
-    private string CreateRandomToken()
-    {
-        return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-    }
-
     public async Task<ErrorOr<MessageResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
         // Validate User doesn't exist
@@ -46,10 +40,12 @@ public class RegisterCommadHandler : IRequestHandler<RegisterCommand, ErrorOr<Me
             command.LastName,
             command.Email,
             passwordHash,
-            passwordSalt
+            passwordSalt,
+            null!
         );
-        user.CreateVerificationToken(CreateRandomToken());
+        user.CreateVerificationToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
         await _userRepository.Add(user);
+
         var message = new Message(new string[] {
             user.Email },
             "Pet Store Verfication Email",

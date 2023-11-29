@@ -4,6 +4,6 @@ namespace pet_store_backend.application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(User user);
+        string GenerateToken(UserRole userRole, List<UserPermission> permissions);
     }
 }

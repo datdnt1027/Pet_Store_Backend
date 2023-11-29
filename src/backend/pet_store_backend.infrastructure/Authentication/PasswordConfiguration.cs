@@ -5,6 +5,11 @@ namespace pet_store_backend.infrastructure.Authentication;
 
 public class PasswordConfiguration : IPasswordConfiguration
 {
+    public string CreateRandomToken()
+    {
+        return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+    }
+
     public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using (var hmac = new HMACSHA512())

@@ -12,7 +12,12 @@ public sealed class Category : AggregateRoot<CategoryId>
     public DateTime CreatedDateTime { get; private set; }
     public DateTime UpdatedDateTime { get; private set; }
 
-    private Category(CategoryId categoryId, string categoryName, List<Product> products, DateTime createdDateTime, DateTime updatedDateTime) : base(categoryId)
+    private Category(
+        CategoryId categoryId,
+        string categoryName,
+        List<Product> products,
+        DateTime createdDateTime,
+        DateTime updatedDateTime) : base(categoryId)
     {
         CategoryName = categoryName;
         CreatedDateTime = createdDateTime;
@@ -27,7 +32,6 @@ public sealed class Category : AggregateRoot<CategoryId>
     {
         return new(CategoryId.CreatUnique(), categoryName, products ?? new(), DateTime.Now, DateTime.Now);
     }
-
 #pragma warning disable CS8618
     private Category()
     {

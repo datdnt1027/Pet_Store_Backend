@@ -5,6 +5,7 @@ namespace pet_store_backend.domain.Entities.PetProducts.PetProduct;
 
 public sealed class Product : Entity<ProductId>
 {
+    public CategoryId? CategoryId { get; private set; }
     public string ProductName { get; private set; }
     public string ProductDetail { get; private set; }
     public int ProductQuantity { get; private set; }
@@ -36,6 +37,30 @@ public sealed class Product : Entity<ProductId>
         Status = status;
     }
 
+    private Product(
+        ProductId productId,
+        string productName,
+        string productDetail,
+        int productQuantity,
+        Price productPrice,
+        byte[]? imageData,
+        DateTime createdDateTime,
+        DateTime updatedDateTime,
+        bool status,
+        CategoryId categoryId)
+        : base(productId)
+    {
+        ProductName = productName;
+        ProductDetail = productDetail;
+        ProductQuantity = productQuantity;
+        ProductPrice = productPrice;
+        ImageData = imageData;
+        CreatedDateTime = createdDateTime;
+        UpdatedDateTime = updatedDateTime;
+        Status = status;
+        CategoryId = categoryId;
+    }
+
     public static Product Create(string productName,
         string productDetail,
         int productQuantity,
@@ -51,6 +76,25 @@ public sealed class Product : Entity<ProductId>
             DateTime.Now,
             DateTime.Now,
             true);
+    }
+
+    public static Product Create(string productName,
+    string productDetail,
+    int productQuantity,
+    double productPrice,
+    CategoryId categoryId,
+    byte[]? imageData = null)
+    {
+        return new Product(ProductId.CreatUnique(),
+            productName,
+            productDetail,
+            productQuantity,
+            Price.CreateNew(productPrice),
+            imageData,
+            DateTime.Now,
+            DateTime.Now,
+            true,
+            categoryId);
     }
 
 #pragma warning disable CS8618

@@ -3,6 +3,6 @@
 namespace pet_store_backend.application.Authentication.Common
 {
     public record AuthenticationResult(
-       User user,
+       UserRole userRole,
         string Token);
 }
