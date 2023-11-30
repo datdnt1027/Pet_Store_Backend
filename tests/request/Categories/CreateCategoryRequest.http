@@ -1,0 +1,25 @@
+@host= https://localhost:7206
+
+POST {{host}}/admin/collections
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZjY4NTE0YS05ZmM2LTRkZjQtOThiYi1iOTU3MTQ5YmJhODMiLCJnaXZlbl9uYW1lIjoiRGF0IiwiZmFtaWx5X25hbWUiOiJUaGllbiIsImp0aSI6ImZiNWY4NDczLTljOTAtNDhlZS1hNWQ5LTdmZjNkNGUzYjRhMCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOiJ7XCJVc2VyUGVybWlzc2lvbnNcIjp7XCJDcmVhdGVcIjp0cnVlLFwiUmVhZFwiOnRydWUsXCJVcGRhdGVcIjp0cnVlLFwiRGVhY3RpdmF0ZVwiOnRydWV9LFwiUHJvZHVjdHNcIjp7XCJDcmVhdGVcIjp0cnVlLFwiUmVhZFwiOnRydWUsXCJVcGRhdGVcIjp0cnVlLFwiRGVhY3RpdmF0ZVwiOnRydWV9LFwiVXNlcnNcIjp7XCJDcmVhdGVcIjp0cnVlLFwiUmVhZFwiOnRydWUsXCJVcGRhdGVcIjp0cnVlLFwiRGVhY3RpdmF0ZVwiOnRydWV9LFwiQ2F0ZWdvcmllc1wiOntcIkNyZWF0ZVwiOnRydWUsXCJSZWFkXCI6dHJ1ZSxcIlVwZGF0ZVwiOnRydWUsXCJEZWFjdGl2YXRlXCI6dHJ1ZX0sXCJVc2VyUm9sZXNcIjp7XCJDcmVhdGVcIjp0cnVlLFwiUmVhZFwiOnRydWUsXCJVcGRhdGVcIjp0cnVlLFwiRGVhY3RpdmF0ZVwiOnRydWV9fSIsImV4cCI6MTcwMDkxMTYxNywiaXNzIjoiUGV0X1N0b3JlIiwiYXVkIjoiUGV0X1N0b3JlIn0.d4t60wVeZ3CbHSabAvohiLd_iNmfzSS03kaS43wy42I
+Content-Type: application/json
+
+{
+    "categoryName": "Food",
+    "products":[
+        {
+            "productName":"Banana Flavor",
+            "productDetail":"This food have flavor is Banana",
+            "productQuantity": 65,
+            "productPrice": 120000,
+            "imageData":"./../../../resources/image/1.png"
+        },
+        {
+            "productName":"Chocolate Flavor",
+            "productDetail":"This food have flavor is Banana",
+            "productQuantity": 100,
+            "productPrice": 150000,
+            "imageData":"./../../../resources/image/2.png"
+        }
+    ]
+}

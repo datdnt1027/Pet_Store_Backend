@@ -1,0 +1,1 @@
+namespace pet_store_backend.contracts.Admin;
