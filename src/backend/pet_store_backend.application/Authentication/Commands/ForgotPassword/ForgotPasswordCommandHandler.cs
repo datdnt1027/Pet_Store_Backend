@@ -7,7 +7,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Utils;
 using pet_store_backend.domain.Common.Errors;
 using pet_store_backend.domain.Entities;
-using pet_store_backend.domain.Entities.User;
+using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Commands.ForgotPassword;
 
@@ -25,16 +25,16 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
     public async Task<ErrorOr<MessageResult>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
         // Validate User doesn't exist
-        if (await _userRepository.GetUserByEmail(request.Email) is not UserRole user)
+        if (await _userRepository.GetUserByEmail(request.Email) is not UserRole customer)
         {
             return Errors.User.UserNotExist;
         }
-        user.User.CreatePasswordResetToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
-        await _userRepository.Update(user.User);
+        customer.User.CreatePasswordResetToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
+        await _userRepository.Update(customer.Customer);
         var message = new Message(new string[] {
-            user.User.Email },
+            customer.User.Email },
             "Pet Store Reset Password Email",
-            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{user.User.PasswordResetToken}");
+            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{customer.Customer.PasswordResetToken}");
         _emailService.SendEmail(message);
 
         return new MessageResult("Your Reset Token has been sent to your email");

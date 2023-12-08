@@ -22,6 +22,62 @@ namespace pet_store_backend.infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Orders.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("OrderId");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders", (string)null);
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Orders.OrderProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("OrderProductId");
+
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("OrderProductStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts", (string)null);
+                });
+
             modelBuilder.Entity("pet_store_backend.domain.Entities.PetProducts.PetProduct.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -85,7 +141,86 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
-            modelBuilder.Entity("pet_store_backend.domain.Entities.User.User", b =>
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CustomerId");
+
+                    b.Property<Guid?>("CustomerRoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime?>("TokenExpires")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("VerificationToken")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("VerifiedAt")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerRoleId")
+                        .IsUnique()
+                        .HasFilter("[CustomerRoleId] IS NOT NULL");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("PasswordResetToken")
+                        .IsUnique()
+                        .HasFilter("[PasswordResetToken] IS NOT NULL");
+
+                    b.HasIndex("VerificationToken")
+                        .IsUnique()
+                        .HasFilter("[VerificationToken] IS NOT NULL");
+
+                    b.ToTable("Customers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a65bda30-abb0-493e-906a-4d2887dc816c"),
+                            CustomerRoleId = new Guid("77d315f9-5dd8-43a9-be03-2c9c9187c6ea"),
+                            Email = "20110629@student.hcmute.edu.vn",
+                            FirstName = "Dat",
+                            LastName = "Thien",
+                            PasswordHash = new byte[] { 65, 18, 130, 3, 48, 127, 240, 75, 204, 38, 193, 199, 193, 30, 233, 199, 178, 48, 77, 92, 94, 54, 16, 53, 59, 205, 86, 121, 131, 125, 225, 146, 179, 171, 56, 104, 211, 241, 193, 38, 76, 67, 175, 9, 152, 214, 156, 94, 133, 23, 231, 107, 41, 28, 227, 169, 240, 212, 146, 170, 64, 28, 213, 250 },
+                            PasswordSalt = new byte[] { 131, 171, 100, 194, 26, 52, 31, 109, 118, 51, 46, 64, 147, 189, 234, 215, 53, 126, 251, 180, 144, 67, 223, 208, 127, 170, 134, 226, 211, 197, 46, 158, 114, 41, 3, 162, 8, 9, 194, 130, 130, 190, 160, 3, 17, 201, 42, 167, 131, 253, 211, 114, 148, 45, 244, 55, 251, 170, 39, 228, 233, 32, 23, 232, 139, 240, 67, 23, 247, 15, 211, 242, 164, 0, 154, 215, 155, 29, 86, 183, 254, 52, 48, 60, 34, 248, 254, 174, 225, 228, 168, 214, 40, 236, 91, 199, 226, 31, 181, 174, 186, 109, 190, 226, 7, 235, 247, 21, 126, 153, 125, 224, 199, 239, 71, 66, 239, 170, 33, 62, 224, 249, 204, 107, 30, 195, 213, 194 },
+                            VerifiedAt = new DateTime(2023, 12, 7, 16, 50, 2, 436, DateTimeKind.Local).AddTicks(3008)
+                        });
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -153,18 +288,18 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f68514a-9fc6-4df4-98bb-b957149bba83"),
+                            Id = new Guid("a1b3d67c-3fa8-4332-89bf-6552049d5882"),
                             Email = "dntdat09@gmail.com",
                             FirstName = "Dat",
                             LastName = "Thien",
-                            PasswordHash = new byte[] { 118, 72, 136, 234, 190, 194, 76, 66, 162, 237, 64, 32, 8, 245, 255, 132, 52, 211, 19, 5, 44, 82, 120, 61, 116, 45, 213, 254, 126, 233, 12, 248, 252, 105, 4, 190, 198, 188, 230, 140, 214, 40, 192, 223, 105, 249, 62, 88, 161, 108, 68, 76, 253, 179, 183, 117, 172, 12, 150, 218, 20, 188, 242, 5 },
-                            PasswordSalt = new byte[] { 200, 131, 170, 132, 209, 192, 174, 149, 107, 207, 69, 112, 92, 1, 23, 44, 137, 197, 148, 211, 211, 45, 84, 169, 132, 254, 157, 0, 209, 221, 138, 49, 218, 193, 54, 36, 32, 151, 208, 156, 52, 189, 184, 180, 110, 134, 91, 72, 149, 160, 248, 32, 11, 217, 201, 195, 139, 217, 197, 114, 114, 128, 157, 67, 24, 46, 26, 246, 189, 4, 228, 2, 161, 131, 85, 50, 209, 188, 161, 34, 248, 48, 161, 32, 81, 153, 245, 104, 63, 37, 215, 64, 77, 188, 10, 5, 105, 85, 103, 159, 62, 153, 0, 42, 48, 242, 78, 208, 241, 249, 70, 133, 128, 151, 12, 197, 81, 143, 220, 41, 30, 165, 20, 125, 198, 234, 162, 203 },
-                            UserRoleId = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0"),
-                            VerifiedAt = new DateTime(2023, 11, 25, 12, 12, 29, 687, DateTimeKind.Local).AddTicks(71)
+                            PasswordHash = new byte[] { 4, 117, 104, 153, 6, 41, 175, 54, 72, 252, 99, 105, 69, 134, 138, 68, 23, 0, 103, 23, 55, 157, 15, 63, 81, 30, 217, 110, 110, 98, 97, 109, 136, 173, 42, 152, 41, 179, 8, 205, 11, 27, 115, 212, 12, 64, 242, 126, 109, 248, 78, 188, 58, 8, 170, 50, 146, 239, 214, 127, 251, 186, 46, 98 },
+                            PasswordSalt = new byte[] { 182, 194, 165, 151, 73, 213, 197, 185, 243, 44, 178, 78, 251, 243, 108, 135, 116, 100, 127, 186, 44, 72, 93, 109, 60, 4, 133, 222, 171, 226, 99, 42, 143, 219, 20, 103, 164, 111, 52, 85, 151, 69, 130, 173, 135, 101, 160, 224, 251, 159, 155, 11, 222, 54, 213, 165, 24, 136, 116, 89, 222, 251, 132, 78, 227, 52, 194, 162, 137, 106, 156, 201, 185, 115, 191, 98, 125, 41, 206, 220, 187, 56, 55, 201, 137, 255, 166, 217, 73, 165, 75, 0, 106, 167, 248, 17, 54, 233, 42, 47, 231, 198, 191, 51, 184, 139, 195, 190, 28, 54, 255, 241, 19, 230, 39, 212, 6, 91, 249, 17, 16, 248, 121, 112, 210, 148, 253, 238 },
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9"),
+                            VerifiedAt = new DateTime(2023, 12, 7, 16, 50, 2, 436, DateTimeKind.Local).AddTicks(2734)
                         });
                 });
 
-            modelBuilder.Entity("pet_store_backend.domain.Entities.User.UserPermission", b =>
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.UserPermission", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -187,7 +322,7 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.Property<bool>("Update")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("UserRoleId")
+                    b.Property<Guid?>("UserRoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -199,67 +334,87 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3d5f15b8-ced3-4d87-b6d4-b61331ec1458"),
+                            Id = new Guid("8853350f-9cc5-4295-9d30-5f4ef1c94177"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Users",
                             Update = true,
-                            UserRoleId = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0")
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
                         },
                         new
                         {
-                            Id = new Guid("5d58ce28-eff0-488e-9b4b-c92ce7e899bf"),
+                            Id = new Guid("1b986893-6686-4a99-b629-963456801662"),
+                            Create = true,
+                            Deactive = true,
+                            Read = true,
+                            TableName = "Customers",
+                            Update = true,
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
+                        },
+                        new
+                        {
+                            Id = new Guid("43d49d3d-6d17-4399-a690-1271a3ef553f"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Categories",
                             Update = true,
-                            UserRoleId = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0")
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
                         },
                         new
                         {
-                            Id = new Guid("6f04a512-bf01-4870-87f8-b3a6b877ffa9"),
+                            Id = new Guid("476c48dd-4477-40c4-84d2-1324efe179e6"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Products",
                             Update = true,
-                            UserRoleId = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0")
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
                         },
                         new
                         {
-                            Id = new Guid("b4197904-856d-40af-a71d-cebe00e2c960"),
+                            Id = new Guid("9164c873-9639-44f2-9ab0-35dd17f9cbe8"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "UserRoles",
                             Update = true,
-                            UserRoleId = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0")
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
                         },
                         new
                         {
-                            Id = new Guid("7228ee6a-cdec-465e-9410-1ee481c503d2"),
+                            Id = new Guid("e988548f-6302-4693-8a79-c1c816042a5e"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "UserPermissions",
                             Update = true,
-                            UserRoleId = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0")
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
                         },
                         new
                         {
-                            Id = new Guid("84fcf437-b1e2-49ce-ba1b-acd9dda98846"),
+                            Id = new Guid("55298d74-9bdd-474b-abbf-0f69c355c47d"),
                             Create = true,
-                            Deactive = false,
-                            Read = false,
-                            TableName = "Products",
-                            Update = false,
-                            UserRoleId = new Guid("14227c76-a4f0-434d-bdbf-0f72b38a36b4")
+                            Deactive = true,
+                            Read = true,
+                            TableName = "Orders",
+                            Update = true,
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
+                        },
+                        new
+                        {
+                            Id = new Guid("6ae0c3f2-3d68-4152-9e83-c988d7fb1132"),
+                            Create = true,
+                            Deactive = true,
+                            Read = true,
+                            TableName = "OrderProducts",
+                            Update = true,
+                            UserRoleId = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9")
                         });
                 });
 
-            modelBuilder.Entity("pet_store_backend.domain.Entities.User.UserRole", b =>
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.UserRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier")
@@ -280,16 +435,69 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fb5f8473-9c90-48ee-a5d9-7ff3d4e3b4a0"),
+                            Id = new Guid("03dac767-c4d0-422d-a558-16d604a15bf9"),
                             Status = true,
                             UserRoleName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("14227c76-a4f0-434d-bdbf-0f72b38a36b4"),
+                            Id = new Guid("77d315f9-5dd8-43a9-be03-2c9c9187c6ea"),
                             Status = true,
                             UserRoleName = "User"
                         });
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Orders.Order", b =>
+                {
+                    b.HasOne("pet_store_backend.domain.Entities.Users.User", "User")
+                        .WithMany("UserProducts")
+                        .HasForeignKey("UserId");
+
+                    b.OwnsOne("pet_store_backend.domain.Entities.Orders.ValueObjects.DeliveryDate", "ExpectedDelivery", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("EndDate")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("ExpectedDeliveryEndDate");
+
+                            b1.Property<DateTime>("StartDate")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("ExpectedDeliveryStartDate");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.Navigation("ExpectedDelivery");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Orders.OrderProduct", b =>
+                {
+                    b.HasOne("pet_store_backend.domain.Entities.Users.Customer", "Customer")
+                        .WithMany("CustomerProducts")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("pet_store_backend.domain.Entities.Orders.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("pet_store_backend.domain.Entities.PetProducts.PetProduct.Product", "Product")
+                        .WithMany("UserProducts")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("pet_store_backend.domain.Entities.PetProducts.PetProduct.Product", b =>
@@ -328,22 +536,37 @@ namespace pet_store_backend.infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("pet_store_backend.domain.Entities.User.User", b =>
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.Customer", b =>
                 {
-                    b.HasOne("pet_store_backend.domain.Entities.User.UserRole", null)
-                        .WithOne("User")
-                        .HasForeignKey("pet_store_backend.domain.Entities.User.User", "UserRoleId");
+                    b.HasOne("pet_store_backend.domain.Entities.Users.UserRole", null)
+                        .WithOne("Customer")
+                        .HasForeignKey("pet_store_backend.domain.Entities.Users.Customer", "CustomerRoleId");
                 });
 
-            modelBuilder.Entity("pet_store_backend.domain.Entities.User.UserPermission", b =>
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.User", b =>
                 {
-                    b.HasOne("pet_store_backend.domain.Entities.User.UserRole", "UserRole")
+                    b.HasOne("pet_store_backend.domain.Entities.Users.UserRole", null)
+                        .WithOne("User")
+                        .HasForeignKey("pet_store_backend.domain.Entities.Users.User", "UserRoleId");
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.UserPermission", b =>
+                {
+                    b.HasOne("pet_store_backend.domain.Entities.Users.UserRole", "UserRole")
                         .WithMany("UserPermissions")
-                        .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserRoleId");
 
                     b.Navigation("UserRole");
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Orders.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.PetProducts.PetProduct.Product", b =>
+                {
+                    b.Navigation("UserProducts");
                 });
 
             modelBuilder.Entity("pet_store_backend.domain.Entities.PetProducts.PetProductCategory.Category", b =>
@@ -351,8 +574,21 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("pet_store_backend.domain.Entities.User.UserRole", b =>
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.Customer", b =>
                 {
+                    b.Navigation("CustomerProducts");
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.User", b =>
+                {
+                    b.Navigation("UserProducts");
+                });
+
+            modelBuilder.Entity("pet_store_backend.domain.Entities.Users.UserRole", b =>
+                {
+                    b.Navigation("Customer")
+                        .IsRequired();
+
                     b.Navigation("User")
                         .IsRequired();
 

@@ -10,4 +10,5 @@ public interface ICollectionRepository
     Task<List<CategoryWithProductCount>> GetAllCategoriesWithNumberOfProducts();
     Task<CategoryResult?> GetCategoriesWithProductsInBatchAsync(string CategoryId, int page);
     Task<ProductResult?> GetProductDetail(string productId);
+    Task<bool> CheckProductIsValid(Guid productId);
 }

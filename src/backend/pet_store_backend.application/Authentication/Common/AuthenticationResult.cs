@@ -1,4 +1,4 @@
-﻿using pet_store_backend.domain.Entities.User;
+﻿using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Common
 {

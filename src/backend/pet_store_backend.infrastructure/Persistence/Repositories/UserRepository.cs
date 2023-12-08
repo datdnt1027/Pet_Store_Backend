@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using pet_store_backend.application.Common.Interfaces.Persistence;
-using pet_store_backend.domain.Entities.User;
-using pet_store_backend.domain.Entities.User.ValueObjects;
+using pet_store_backend.domain.Entities.Users.ValueObjects;
+using pet_store_backend.domain.Entities.Users;
 using pet_store_backend.infrastructure.Persistence.Common;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories
@@ -15,38 +15,53 @@ namespace pet_store_backend.infrastructure.Persistence.Repositories
             _dbContext = dbcontext;
         }
 
-        public async Task Add(User user)
+        // Add Customer
+        public async Task Add(Customer customer)
         {
-            await _dbContext.AddAsync(user);
+            await _dbContext.AddAsync(customer);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(User user)
+        //Update information for Customer
+        public async Task Update(Customer customer)
         {
-            _dbContext.Update(user);
+            _dbContext.Update(customer);
             await _dbContext.SaveChangesAsync();
         }
 
+        // This is User Email
         public async Task<UserRole?> GetUserByEmail(string email)
         {
             var userRole = await _dbContext.UserRoles
                 .Where(ur => ur.User.Email == email)
-                .Include(ur => ur.User)  // Include to eagerly load the related User
+                .Include(ur => ur.User)
                 .FirstOrDefaultAsync();
 
             return userRole;
         }
 
-        public async Task<User?> GetUserByVerificationToken(string verificationToken)
+        // This is Customer Email
+        public async Task<UserRole?> GetCustomerByEmail(string email)
         {
-            var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.VerificationToken == verificationToken);
-            return user;
+            var customerRole = await _dbContext.UserRoles
+                .Where(ur => ur.Customer.Email == email)
+                .Include(ur => ur.Customer)
+                .FirstOrDefaultAsync();
+
+            return customerRole;
         }
 
-        public async Task<User?> GetUserByResetPasswordToken(string resetPasswordToken)
+        public async Task<Customer?> GetCustomerByVerificationToken(string verificationToken)
         {
-            var user = await _dbContext.Users.SingleOrDefaultAsync(u => u.PasswordResetToken == resetPasswordToken);
-            return user;
+            var customer = await _dbContext.Customers.SingleOrDefaultAsync(u => u.VerificationToken == verificationToken);
+            return customer;
+        }
+
+        public async Task<Customer?> GetCustomerByResetPasswordToken(string resetPasswordToken)
+        {
+            var customer = await _dbContext.Customers
+                .SingleOrDefaultAsync(u => u.PasswordResetToken == resetPasswordToken);
+            return customer;
         }
 
         public async Task<List<UserPermission>> GetUserPermissionsAsync(UserRoleId userRoleId)

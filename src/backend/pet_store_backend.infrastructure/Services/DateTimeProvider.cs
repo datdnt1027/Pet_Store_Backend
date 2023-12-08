@@ -2,7 +2,7 @@
 
 namespace pet_store_backend.infrastructure.Services
 {
-    internal class DateTimeProvider : IDateTimeProvider
+    public class DateTimeProvider : IDateTimeProvider
     {
         public DateTime UtcNow => DateTime.UtcNow;
     }

@@ -4,7 +4,7 @@ using pet_store_backend.application.Common;
 using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Common.Errors;
-using pet_store_backend.domain.Entities.User;
+using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Commands.ResetPassword;
 
@@ -20,18 +20,18 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
     }
     public async Task<ErrorOr<MessageResult>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
-        if (await _userRepository.GetUserByResetPasswordToken(request.Token) is not User user)
+        if (await _userRepository.GetCustomerByResetPasswordToken(request.Token) is not Customer customer)
         {
             return Errors.Authentication.InvalidToken;
         }
-        if (user.TokenExpires < DateTime.Now)
+        if (customer.TokenExpires < DateTime.Now)
         {
             return Errors.Authentication.TokenExpire;
         }
         _passwordConfiguration.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-        user.UpdatePassword(passwordHash, passwordSalt);
-        user.UpdateVerifiedAt(DateTime.Now);
-        await _userRepository.Update(user);
+        customer.UpdatePassword(passwordHash, passwordSalt);
+        customer.UpdateVerifiedAt(DateTime.Now);
+        await _userRepository.Update(customer);
 
         return new MessageResult("Password successfully changed");
 

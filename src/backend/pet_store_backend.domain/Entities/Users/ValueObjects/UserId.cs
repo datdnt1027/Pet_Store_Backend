@@ -1,24 +1,24 @@
 using pet_store_backend.domain.Common.Models;
 
-namespace pet_store_backend.domain.Entities.User.ValueObjects;
+namespace pet_store_backend.domain.Entities.Users.ValueObjects;
 
-public class UserRoleId : ValueObject
+public sealed class UserId : ValueObject
 {
     public Guid Value { get; }
 
-    private UserRoleId(Guid value)
+    private UserId(Guid value)
     {
         Value = value;
     }
 
-    public static UserRoleId CreatUnique()
+    public static UserId CreatUnique()
     {
         return new(Guid.NewGuid());
     }
 
-    public static UserRoleId Create(Guid value)
+    public static UserId Create(Guid value)
     {
-        return new UserRoleId(value);
+        return new UserId(value);
     }
 
     public override IEnumerable<object> GetEqualityComponents()

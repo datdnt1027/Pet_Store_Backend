@@ -7,7 +7,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Utils;
 using pet_store_backend.domain.Common.Errors;
 using pet_store_backend.domain.Entities;
-using pet_store_backend.domain.Entities.User;
+using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Commands.Register;
 
@@ -34,7 +34,7 @@ public class RegisterCommadHandler : IRequestHandler<RegisterCommand, ErrorOr<Me
 
         _passwordConfiguration.CreatePasswordHash(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
         // Create user (generate unique Id) & Persist to DB
-        var user = User.Create
+        var customer = Customer.Create
         (
             command.FirstName,
             command.LastName,
@@ -43,13 +43,13 @@ public class RegisterCommadHandler : IRequestHandler<RegisterCommand, ErrorOr<Me
             passwordSalt,
             null!
         );
-        user.CreateVerificationToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
-        await _userRepository.Add(user);
+        customer.CreateVerificationToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
+        await _userRepository.Add(customer);
 
         var message = new Message(new string[] {
-            user.Email },
+            customer.Email },
             "Pet Store Verfication Email",
-            $"Your verfication link {HttpContextItemKeys.UrlFrontEndRegisterToken}/{user.VerificationToken}");
+            $"Your verfication link {HttpContextItemKeys.UrlFrontEndRegisterToken}/{customer.VerificationToken}");
         _emailService.SendEmail(message);
 
         return new MessageResult("User successfully created. Please verfication !");

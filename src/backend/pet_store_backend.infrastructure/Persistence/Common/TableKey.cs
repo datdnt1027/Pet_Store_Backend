@@ -6,6 +6,10 @@ public class TableKey
     public const string Users = "Users";
     public const string UserId = "UserId";
 
+    // Table Customers
+    public const string Customers = "Customers";
+    public const string CustomerId = "CustomerId";
+
     // Table Categories
     public const string Categories = "Categories";
     public const string CategoryId = "CategoryId";
@@ -21,5 +25,13 @@ public class TableKey
     // Table User Permissions
     public const string UserPermissions = "UserPermissions";
     public const string UserPermissionId = "UserPermissionId";
+
+    // Table Order
+    public const string Orders = "Orders";
+    public const string OrderId = "OrderId";
+
+    // OrderProduct
+    public const string OrderProducts = "OrderProducts";
+    public const string OrderProductId = "OrderProductId";
 
 }

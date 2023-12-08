@@ -1,7 +1,7 @@
 using pet_store_backend.domain.Common.Models;
-using pet_store_backend.domain.Entities.User.ValueObjects;
+using pet_store_backend.domain.Entities.Users.ValueObjects;
 
-namespace pet_store_backend.domain.Entities.User;
+namespace pet_store_backend.domain.Entities.Users;
 
 public class UserPermission : Entity<UserPermissionId>
 {
