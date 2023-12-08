@@ -12,6 +12,15 @@ public record ProductRequest(
     string ImageData
 );
 
+public record UpdateProductRequest(
+    string ProductName,
+    string ProductDetail,
+    int ProductQuantity,
+    double ProductPrice,
+    string ImageData,
+    bool Status
+);
+
 public record CategoryIdRequest(
     string CategoryId
 );
