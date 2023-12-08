@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.PetProducts.PetCategory.Queries.CategoryByProducts;
 using pet_store_backend.application.PetProducts.PetCategory.Queries.ProductDetail;
+using pet_store_backend.application.PetProducts.PetProduct.Queries;
 using pet_store_backend.contracts.PetProducts;
 namespace pet_store_backend.api.Controllers;
 
@@ -41,6 +42,19 @@ public class CollectionsController : ApiController
 
         return categoriesWithProducts.Match(
             categories => Ok(_mapper.Map<CategoryResponse>(categories)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpGet]
+    [Route("products")]
+    public async Task<IActionResult> GetProductsByPage([FromQuery] int page = 1)
+    {
+        var query = new ProductByBatchQuery(page);
+        var productsByBatch = await _mediator.Send(query);
+
+        return productsByBatch.Match(
+            products => Ok(_mapper.Map<List<ProductResponse>>(products)),
             errors => Problem(errors)
         );
     }

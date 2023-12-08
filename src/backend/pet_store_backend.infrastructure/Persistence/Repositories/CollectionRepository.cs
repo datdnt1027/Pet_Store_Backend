@@ -69,11 +69,36 @@ public class CollectionRepository : ICollectionRepository
         return categoryResult;
     }
 
-    public async Task<ProductResult?> GetProductDetail(string productId)
+    public async Task<List<ProductResult>> GetProductsWithPage(int page)
+    {
+        int pageSize = 5;
+        int productsToSkip = (page - 1) * pageSize;
+
+        var productsInBatch = await _dbContext.Products
+            .AsNoTracking()
+            .Where(p => p.Status == true)
+            .OrderBy(p => p.Id) // Add an OrderBy clause based on your sorting criteria
+            .Skip(productsToSkip)
+            .Take(pageSize)
+            .Select(product => new ProductResult(
+                product.Id.Value,
+                product.ProductName,
+                product.ProductDetail,
+                product.ProductQuantity,
+                product.ProductPrice.Value,
+                product.ImageData ?? Array.Empty<byte>(),
+                product.CreatedDateTime,
+                product.UpdatedDateTime
+            )).ToListAsync();
+        return productsInBatch;
+    }
+
+
+    public async Task<ProductResult?> GetProductDetail(string productId, bool status = true)
     {
         var productDetail = await _dbContext.Products
             .AsNoTracking() // Make the query non-tracking
-            .Where(p => p.Id == ProductId.Create(new Guid(productId)))
+            .Where(p => p.Id == ProductId.Create(new Guid(productId)) && p.Status == status)
             .Select(product => new ProductResult(
                 product.Id.Value,
                 product.ProductName,
@@ -88,12 +113,12 @@ public class CollectionRepository : ICollectionRepository
         return productDetail;
     }
 
-    public async Task<List<CategoryWithProductCount>> GetAllCategoriesWithNumberOfProducts()
+    public async Task<List<CategoryWithProductCount>> GetAllCategoriesWithNumberOfProducts(bool status = true)
     {
         var categoriesWithCounts = await _dbContext.Categories
             .Select(category => new CategoryWithProductCount(
-            category,
-            category.Products.Count
+                category,
+                category.Products.Count(p => p.Status == status)
             ))
             .ToListAsync();
 

@@ -1,4 +1,5 @@
 using Mapster;
+using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.application.PetProducts.PetCategory.Queries.ProductDetail;
@@ -27,5 +28,7 @@ public class CollectionMappingConfig : IRegister
         config.NewConfig<ProductResult, ProductResponse>()
             .Map(dest => dest.ProductId, src => src.ProductId)
             .Map(dest => dest.ImageData, src => src.ImageData.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.ImageData)}" : null);
+
+        config.NewConfig<UpdateProductRequest, UpdateProductCommand>();
     }
 }
