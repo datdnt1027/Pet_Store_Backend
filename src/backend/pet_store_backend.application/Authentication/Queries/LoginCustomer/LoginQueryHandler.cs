@@ -8,7 +8,7 @@ using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Queries.Login;
 
-public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
+public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationCustomerResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
@@ -23,31 +23,31 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
         _userRepository = userRepository;
         _passwordConfiguration = passwordConfiguration;
     }
-    public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationCustomerResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
         // Check if user already exists
-        if (await _userRepository.GetCustomerByEmail(query.Email) is not UserRole customer)
+        if (await _userRepository.GetCustomerByEmail(query.Email) is not Customer customer)
         {
             return Errors.Authentication.IvalidCredentials;
         }
         // Check User Password
-        if (!_passwordConfiguration.VerifyPasswordHash(query.Password, customer.Customer.PasswordHash, customer.Customer.PasswordSalt))
+        if (!_passwordConfiguration.VerifyPasswordHash(query.Password, customer.PasswordHash, customer.PasswordSalt))
         {
             return Errors.Authentication.IvalidCredentials;
         }
         // Check user have permission
-        if (customer.Customer.CustomerRoleId is null)
+        if (customer.CustomerRoleId is null)
         {
             return Errors.Authentication.ForbidenPermission;
         }
         // Check user verified
-        if (customer.Customer.VerifiedAt == null)
+        if (customer.VerifiedAt == null)
         {
             return Errors.Authentication.NotVerified;
         }
         //Create JWT Token
         var token = _jwtTokenGenerator.GenerateTokenCustomer(customer);
-        return new AuthenticationResult(
+        return new AuthenticationCustomerResult(
             customer,
             token);
     }

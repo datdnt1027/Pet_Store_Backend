@@ -6,8 +6,8 @@ namespace pet_store_backend.application.Authentication.Queries.Login;
 
 public record LoginQuery(
     string Email,
-    string Password) : IRequest<ErrorOr<AuthenticationResult>>;
+    string Password) : IRequest<ErrorOr<AuthenticationCustomerResult>>;
 
 public record LoginQueryUser(
     string Email,
-    string Password) : IRequest<ErrorOr<AuthenticationResult>>;
+    string Password) : IRequest<ErrorOr<AuthenticationUserResult>>;

@@ -5,6 +5,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Order.Common;
 using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.Orders.ValueObjects;
+using pet_store_backend.domain.Entities.PetProducts.PetProduct;
 using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 
@@ -85,6 +86,28 @@ public class OrderRepository : IOrderRepository
         }
         return null;
     }
+
+    // public async Task<List<OrderProduct>?> RetrieveOrderedProductsForUser()
+    // {
+    //     var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    //     if (customerId != null)
+    //     {
+    //         var orderProducts = await _dbContext.OrderProducts
+    //             .Where(o => o.CustomerId == CustomerId.Create(Guid.Parse(customerId)) && o.OrderProductStatus == OrderProductStatus.Ordered)
+    //             .Include(o => o.Product) // Assuming there is a navigation property named "Product"
+    //             .Select(op => Product.ProductBrief(
+    //                 op.Product.ProductName,
+    //                 op.Product.ProductDetail,
+    //                 op.Product.ProductPrice.Value,
+    //                 op.Product.ImageData ?? Array.Empty<byte>()
+    //             ))
+    //             .ToListAsync();
+    //         return orderProducts;
+    //     }
+
+    //     return null;
+    // }
+
 
     public async Task<OrderProduct?> CheckOrderIsExist(Guid orderProductId)
     {

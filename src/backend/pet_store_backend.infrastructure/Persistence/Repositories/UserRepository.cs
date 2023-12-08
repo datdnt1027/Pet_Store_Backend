@@ -30,22 +30,23 @@ namespace pet_store_backend.infrastructure.Persistence.Repositories
         }
 
         // This is User Email
-        public async Task<UserRole?> GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
-            var userRole = await _dbContext.UserRoles
-                .Where(ur => ur.User.Email == email)
-                .Include(ur => ur.User)
+            var user = await _dbContext.Users
+                .Where(u => u.Email == email)
+                .Include(u => u.UserRole) // Include the UserRole navigation property
                 .FirstOrDefaultAsync();
 
-            return userRole;
+            return user;
         }
 
+
         // This is Customer Email
-        public async Task<UserRole?> GetCustomerByEmail(string email)
+        public async Task<Customer?> GetCustomerByEmail(string email)
         {
-            var customerRole = await _dbContext.UserRoles
-                .Where(ur => ur.Customer.Email == email)
-                .Include(ur => ur.Customer)
+            var customerRole = await _dbContext.Customers
+                .Where(u => u.Email == email)
+                .Include(u => u.CustomerRole) // Include the UserRole navigation property
                 .FirstOrDefaultAsync();
 
             return customerRole;

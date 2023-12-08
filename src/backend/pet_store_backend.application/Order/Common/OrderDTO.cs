@@ -20,3 +20,17 @@ public record PaymentResponse
     string DeepLink,
     string QrCodeUrl
 );
+
+public record ProductBriefResult(
+    Guid ProductId,
+    string ProductName,
+    double ProductPrice,
+    byte[] ImageData,
+    int Quantity
+);
+
+public record OrderProductResult(
+    int TotalQuantityProduct,
+    long TotalPrice,
+    List<ProductBriefResult> Products
+);

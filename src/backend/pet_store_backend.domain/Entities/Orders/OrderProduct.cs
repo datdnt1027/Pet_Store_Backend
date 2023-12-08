@@ -30,6 +30,15 @@ public sealed class OrderProduct : Entity<OrderProductId>
         OrderProductStatus = orderProductStatus;
     }
 
+    private OrderProduct(
+        Product Product,
+        int Quantity
+    )
+    {
+        this.Product = Product;
+        this.Quantity = Quantity;
+    }
+
     public static OrderProduct Create(
         CustomerId customerId,
         ProductId productId,

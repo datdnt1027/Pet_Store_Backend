@@ -32,7 +32,7 @@ public class CollectionsController : ApiController
         );
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("category")]
     public async Task<IActionResult> GetProductsByCategories([FromBody] CategoryIdRequest categoryQuery, [FromQuery] int page = 1)
     {
@@ -45,7 +45,7 @@ public class CollectionsController : ApiController
         );
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("product")]
     public async Task<IActionResult> GetProductDetail(ProductIdRequest productQuery)
     {

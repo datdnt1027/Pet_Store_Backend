@@ -5,8 +5,8 @@ namespace pet_store_backend.application.Common.Interfaces.Persistence
 {
     public interface IUserRepository
     {
-        Task<UserRole?> GetUserByEmail(string email);
-        Task<UserRole?> GetCustomerByEmail(string email);
+        Task<User?> GetUserByEmail(string email);
+        Task<Customer?> GetCustomerByEmail(string email);
         Task Add(Customer customer);
         Task Update(Customer customer);
         Task<Customer?> GetCustomerByVerificationToken(string verificationToken);
