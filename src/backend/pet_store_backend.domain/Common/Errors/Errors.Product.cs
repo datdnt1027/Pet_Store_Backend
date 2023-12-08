@@ -7,8 +7,8 @@ public static partial class Errors
     public static class Product
     {
         public static Error NullProduct => Error.Conflict(
-            code: "Category.IsNull",
-            description: "ProductId is not exist !");
+            code: "Product.IsNull",
+            description: "Product is not exist !");
 
         public static Error InvalidProductId => Error.Conflict(
             code: "ProductId.Invalid",

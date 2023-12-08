@@ -7,8 +7,8 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Utils;
 using pet_store_backend.domain.Common.Errors;
 using pet_store_backend.domain.Entities;
-using pet_store_backend.domain.Entities.User;
-using pet_store_backend.domain.Entities.User.ValueObjects;
+using pet_store_backend.domain.Entities.Users.ValueObjects;
+using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Commands.Verify;
 
@@ -28,18 +28,18 @@ public class VerifyQueryHandler : IRequestHandler<VerifyCommand, ErrorOr<Message
     public async Task<ErrorOr<MessageResult>> Handle(VerifyCommand query, CancellationToken cancellationToken)
     {
         // Check if user registered
-        if (await _userRepository.GetUserByVerificationToken(query.VerificationToken) is not User user)
+        if (await _userRepository.GetCustomerByVerificationToken(query.VerificationToken) is not Customer customer)
         {
             return Errors.Authentication.InvalidToken;
         }
-        else if (user.TokenExpires < DateTime.Now)
+        else if (customer.TokenExpires < DateTime.Now)
         {
-            user.CreateVerificationToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
-            await _userRepository.Update(user);
+            customer.CreateVerificationToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
+            await _userRepository.Update(customer);
             var message = new Message(new string[] {
-                user.Email },
+                customer.Email },
                 "Pet Store Verfication Email",
-                $"Your verfication link {HttpContextItemKeys.UrlFrontEndRegisterToken}/{user.VerificationToken}");
+                $"Your verfication link {HttpContextItemKeys.UrlFrontEndRegisterToken}/{customer.VerificationToken}");
             _emailService.SendEmail(message);
 
             return Errors.Authentication.TokenExpire;
@@ -49,10 +49,10 @@ public class VerifyQueryHandler : IRequestHandler<VerifyCommand, ErrorOr<Message
             return Errors.Authentication.ForbidenPermission;
         }
 
-        user.UpdateVerifiedAt(DateTime.Now); // If update verified date the VerficationToken is gone
-        user.UpdateUserRoleId(userRoleId);
+        customer.UpdateVerifiedAt(DateTime.Now); // If update verified date the VerficationToken is gone
+        customer.UpdateUserRoleId(userRoleId);
 
-        await _userRepository.Update(user);
+        await _userRepository.Update(customer);
 
         return new MessageResult(Message: "User Verified");
     }
