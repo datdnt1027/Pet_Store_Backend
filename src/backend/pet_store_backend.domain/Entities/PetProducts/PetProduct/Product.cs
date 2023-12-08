@@ -42,6 +42,18 @@ public sealed class Product : Entity<ProductId>
     }
 
     private Product(
+        string productName,
+        string productDetail,
+        Price productPrice,
+        byte[]? imageData)
+    {
+        ProductName = productName;
+        ProductPrice = productPrice;
+        ImageData = imageData;
+        ProductDetail = productDetail;
+    }
+
+    private Product(
         ProductId productId,
         string productName,
         string productDetail,
@@ -83,11 +95,11 @@ public sealed class Product : Entity<ProductId>
     }
 
     public static Product Create(string productName,
-    string productDetail,
-    int productQuantity,
-    double productPrice,
-    CategoryId categoryId,
-    byte[]? imageData = null)
+        string productDetail,
+        int productQuantity,
+        double productPrice,
+        CategoryId categoryId,
+        byte[]? imageData = null)
     {
         return new Product(ProductId.CreatUnique(),
             productName,
@@ -99,6 +111,20 @@ public sealed class Product : Entity<ProductId>
             DateTime.Now,
             true,
             categoryId);
+    }
+
+    public static Product ProductBrief(
+        string ProductName,
+        string ProductDetail,
+        double ProductPrice,
+        byte[] ProductImage)
+    {
+        return new Product(
+            ProductName,
+            ProductDetail,
+            Price.CreateNew(ProductPrice),
+            ProductImage
+        );
     }
 
 #pragma warning disable CS8618

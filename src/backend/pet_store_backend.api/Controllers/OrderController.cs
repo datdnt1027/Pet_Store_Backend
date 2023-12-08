@@ -34,6 +34,18 @@ public class OrderController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpGet]
+    [Route("customer")]
+    [Authorize(Roles = UserRoleKey.UserRoleName)]
+    public async Task<IActionResult> CustomerGetOrderProduct()
+    {
+        GetOrderProductCommand command = new();
+        var getOrderProduct = await _mediator.Send(command);
+
+        return getOrderProduct.Match(orderProduct => Ok(_mapper.Map<OrderProductResponse>(orderProduct)),
+            errors => Problem(errors));
+    }
+
     [HttpPost]
     [Route("payment/momo")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]

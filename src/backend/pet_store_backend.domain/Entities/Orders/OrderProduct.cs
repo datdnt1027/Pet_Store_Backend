@@ -30,6 +30,15 @@ public sealed class OrderProduct : Entity<OrderProductId>
         OrderProductStatus = orderProductStatus;
     }
 
+    private OrderProduct(
+        Product Product,
+        int Quantity
+    )
+    {
+        this.Product = Product;
+        this.Quantity = Quantity;
+    }
+
     public static OrderProduct Create(
         CustomerId customerId,
         ProductId productId,
@@ -50,7 +59,7 @@ public sealed class OrderProduct : Entity<OrderProductId>
        ProductId productId,
        int quantity,
        OrderProductStatus orderProductStatus
-   )
+    )
     {
         return new OrderProduct(
             orderProductId,
@@ -58,6 +67,17 @@ public sealed class OrderProduct : Entity<OrderProductId>
             productId,
             quantity,
             orderProductStatus
+        );
+    }
+
+    public static OrderProduct RetriveOrderProductBrief(
+        Product product,
+        int quantity
+    )
+    {
+        return new OrderProduct(
+            product,
+            quantity
         );
     }
 

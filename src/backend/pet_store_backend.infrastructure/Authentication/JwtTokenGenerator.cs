@@ -20,7 +20,7 @@ namespace pet_store_backend.infrastructure.Authentication
             _dateTimeProvider = dateTimeProvider;
             _jwtSettings = jwtOptions.Value;
         }
-        public string GenerateTokenCustomer(UserRole customer)
+        public string GenerateTokenCustomer(Customer customer)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
@@ -28,11 +28,11 @@ namespace pet_store_backend.infrastructure.Authentication
 
             var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, customer.Customer.Id.Value.ToString()),
-                new(JwtRegisteredClaimNames.GivenName, customer.Customer.FirstName),
-                new(JwtRegisteredClaimNames.FamilyName, customer.Customer.LastName),
+                new(JwtRegisteredClaimNames.Sub, customer.Id.Value.ToString()),
+                new(JwtRegisteredClaimNames.GivenName, customer.FirstName),
+                new(JwtRegisteredClaimNames.FamilyName, customer.LastName),
                 new(JwtRegisteredClaimNames.Jti, customer.Id.Value.ToString()),
-                new(ClaimTypes.Role, customer.UserRoleName)
+                new(ClaimTypes.Role, customer.CustomerRole.UserRoleName)
             };
 
             var securityToken = new JwtSecurityToken(
@@ -46,7 +46,7 @@ namespace pet_store_backend.infrastructure.Authentication
 
         }
 
-        public string GenerateTokenUser(UserRole userRole, List<UserPermission> permissions)
+        public string GenerateTokenUser(User user, List<UserPermission> permissions)
         {
             var signingCredentials = new SigningCredentials(
                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
@@ -54,11 +54,11 @@ namespace pet_store_backend.infrastructure.Authentication
 
             var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, userRole.User.Id.Value.ToString()),
-                new(JwtRegisteredClaimNames.GivenName, userRole.User.FirstName),
-                new(JwtRegisteredClaimNames.FamilyName, userRole.User.LastName),
-                new(JwtRegisteredClaimNames.Jti, userRole.Id.Value.ToString()),
-                new(ClaimTypes.Role, userRole.UserRoleName)
+                new(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
+                new(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                new(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                new(JwtRegisteredClaimNames.Jti, user.Id.Value.ToString()),
+                new(ClaimTypes.Role, user.UserRole.UserRoleName)
             };
 
             var tablePermissions = new Dictionary<string, TablePermission>();
