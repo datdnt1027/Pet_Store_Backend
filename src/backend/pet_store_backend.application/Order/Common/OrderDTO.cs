@@ -21,9 +21,9 @@ public record PaymentResponse
     string QrCodeUrl
 );
 
-public record ProductBriefResult(
-    Guid ProductId,
+public record ProductResultOrder(
     string ProductName,
+    string ProductDetail,
     double ProductPrice,
     byte[] ImageData,
     int Quantity
@@ -32,5 +32,5 @@ public record ProductBriefResult(
 public record OrderProductResult(
     int TotalQuantityProduct,
     long TotalPrice,
-    List<ProductBriefResult> Products
+    List<ProductResultOrder> Products
 );

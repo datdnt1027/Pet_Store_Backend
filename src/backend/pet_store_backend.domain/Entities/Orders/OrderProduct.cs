@@ -59,7 +59,7 @@ public sealed class OrderProduct : Entity<OrderProductId>
        ProductId productId,
        int quantity,
        OrderProductStatus orderProductStatus
-   )
+    )
     {
         return new OrderProduct(
             orderProductId,
@@ -67,6 +67,17 @@ public sealed class OrderProduct : Entity<OrderProductId>
             productId,
             quantity,
             orderProductStatus
+        );
+    }
+
+    public static OrderProduct RetriveOrderProductBrief(
+        Product product,
+        int quantity
+    )
+    {
+        return new OrderProduct(
+            product,
+            quantity
         );
     }
 

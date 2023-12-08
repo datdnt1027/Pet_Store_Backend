@@ -37,12 +37,12 @@ public class OrderController : ApiController
     [HttpGet]
     [Route("customer")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]
-    public async Task<IActionResult> CustomerGetOrderProduct(OrderProductRequest request)
+    public async Task<IActionResult> CustomerGetOrderProduct()
     {
-        var command = _mapper.Map<OrderProductCommand>(request);
-        var createOrderProduct = await _mediator.Send(command);
+        GetOrderProductCommand command = new();
+        var getOrderProduct = await _mediator.Send(command);
 
-        return createOrderProduct.Match(orderProduct => Ok(_mapper.Map<MessageResponse>(orderProduct)),
+        return getOrderProduct.Match(orderProduct => Ok(_mapper.Map<OrderProductResponse>(orderProduct)),
             errors => Problem(errors));
     }
 

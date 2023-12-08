@@ -87,26 +87,31 @@ public class OrderRepository : IOrderRepository
         return null;
     }
 
-    // public async Task<List<OrderProduct>?> RetrieveOrderedProductsForUser()
-    // {
-    //     var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    //     if (customerId != null)
-    //     {
-    //         var orderProducts = await _dbContext.OrderProducts
-    //             .Where(o => o.CustomerId == CustomerId.Create(Guid.Parse(customerId)) && o.OrderProductStatus == OrderProductStatus.Ordered)
-    //             .Include(o => o.Product) // Assuming there is a navigation property named "Product"
-    //             .Select(op => Product.ProductBrief(
-    //                 op.Product.ProductName,
-    //                 op.Product.ProductDetail,
-    //                 op.Product.ProductPrice.Value,
-    //                 op.Product.ImageData ?? Array.Empty<byte>()
-    //             ))
-    //             .ToListAsync();
-    //         return orderProducts;
-    //     }
-
-    //     return null;
-    // }
+    public async Task<List<OrderProduct>?> RetrieveOrderedProductsForUser()
+    {
+        var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (customerId != null)
+        {
+            var orderProducts = await _dbContext.OrderProducts
+                .AsNoTracking()
+                .Where(o => o.CustomerId == CustomerId.Create(Guid.Parse(customerId)) && o.OrderProductStatus == OrderProductStatus.Ordered)
+                .Include(o => o.Product)
+                .Select(op => OrderProduct.RetriveOrderProductBrief(
+                    Product.ProductBrief(
+                        op.Product.ProductName,
+                        op.Product.ProductDetail,
+                        op.Product.ProductPrice.Value,
+                        op.Product.ImageData ?? Array.Empty<byte>()
+                    ),
+                    op.Quantity
+                ))
+                .ToListAsync();
+            if (orderProducts.Count > 0)
+                return orderProducts;
+            return null;
+        }
+        return null!;
+    }
 
 
     public async Task<OrderProduct?> CheckOrderIsExist(Guid orderProductId)
