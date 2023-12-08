@@ -11,6 +11,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Common.Interfaces.Services;
 using pet_store_backend.infrastructure.Authentication;
 using pet_store_backend.infrastructure.Email;
+using pet_store_backend.infrastructure.Payment;
 using pet_store_backend.infrastructure.Persistence;
 using pet_store_backend.infrastructure.Persistence.Repositories;
 using pet_store_backend.infrastructure.Services;
@@ -25,6 +26,7 @@ namespace pet_store_backend.infrastructure
         {
             services.Configure<JwtSetting>(configuration.GetSection(JwtSetting.SectionName));
             services.Configure<EmailSetting>(configuration.GetSection(EmailSetting.SectionName));
+            services.Configure<MomoSetting>(configuration.GetSection(MomoSetting.SectionName));
 
             services
                 .AddAuth(configuration)
@@ -32,6 +34,7 @@ namespace pet_store_backend.infrastructure
 
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddSingleton<IEmailService, EmailSending>();
+            services.AddSingleton<IPaymentProvider, PaymentProvider>();
 
             return services;
         }
@@ -41,9 +44,11 @@ namespace pet_store_backend.infrastructure
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer("Data Source=.;Initial Catalog=PetStore;Trusted_Connection=True;Encrypt=false"));
 
+            services.AddHttpContextAccessor();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICollectionRepository, CollectionRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
         }
         public static IServiceCollection AddAuth(

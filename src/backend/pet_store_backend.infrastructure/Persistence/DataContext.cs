@@ -1,9 +1,10 @@
 using System.Reflection;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
+using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.PetProducts.PetProduct;
 using pet_store_backend.domain.Entities.PetProducts.PetProductCategory;
-using pet_store_backend.domain.Entities.User;
+using pet_store_backend.domain.Entities.Users;
 using pet_store_backend.infrastructure.Persistence.Common;
 
 namespace pet_store_backend.infrastructure.Persistence;
@@ -14,18 +15,19 @@ public class DataContext : DbContext
     {
 
     }
-
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<UserPermission> UserPermissions { get; set; } = null!;
     public DbSet<UserRole> UserRoles { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
-
+    public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<OrderProduct> OrderProducts { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
         SeedAdminData(modelBuilder);
-        SeedUserData(modelBuilder);
+        SeedGuestData(modelBuilder);
         base.OnModelCreating(modelBuilder);
     }
 
@@ -94,18 +96,25 @@ public class DataContext : DbContext
     }
 
 
-    private static void SeedUserData(ModelBuilder modelBuilder)
+    private static void SeedGuestData(ModelBuilder modelBuilder)
     {
+        CreatePasswordHash("Test123$@", out byte[] passwordHash, out byte[] passwordSalt);
+
+        var customer = Customer.Create(
+           firstName: "Dat",
+           lastName: "Thien",
+           email: "20110629@student.hcmute.edu.vn",
+           passwordHash: passwordHash,
+           passwordSalt: passwordSalt,
+           null!);
+
+        customer.UpdateVerifiedAt(DateTime.Now);
+
         var userRole = UserRole.Create(UserRoleKey.UserRoleName, null!, null!);
         modelBuilder.Entity<UserRole>().HasData(userRole);
 
-        modelBuilder.Entity<UserPermission>().HasData(UserPermission.CreatePermission(
-            TableKey.Products,
-            false,
-            true,
-            false,
-            false,
-            userRole.Id,
-            null!));
+        customer.UpdateUserRoleId(userRole.Id);
+        modelBuilder.Entity<Customer>().HasData(customer);
+
     }
 }

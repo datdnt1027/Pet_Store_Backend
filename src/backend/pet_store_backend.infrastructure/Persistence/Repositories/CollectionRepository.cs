@@ -99,4 +99,13 @@ public class CollectionRepository : ICollectionRepository
 
         return categoriesWithCounts;
     }
+
+    public async Task<bool> CheckProductIsValid(Guid productId)
+    {
+        var productExists = await _dbContext.Products
+            .AnyAsync(p => p.Id == ProductId.Create(productId));
+
+        return productExists;
+    }
+
 }

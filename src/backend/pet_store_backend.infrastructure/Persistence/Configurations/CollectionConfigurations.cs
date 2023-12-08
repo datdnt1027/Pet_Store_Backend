@@ -99,5 +99,10 @@ public class ProductConfigurations : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.UpdatedDateTime)
             .HasColumnType("datetime");
+
+        builder.HasMany(p => p.UserProducts)
+            .WithOne(p => p.Product)
+            .HasForeignKey(p => p.ProductId)
+            .IsRequired(false);
     }
 }

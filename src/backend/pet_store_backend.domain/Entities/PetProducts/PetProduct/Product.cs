@@ -1,4 +1,5 @@
 using pet_store_backend.domain.Common.Models;
+using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
 
 namespace pet_store_backend.domain.Entities.PetProducts.PetProduct;
@@ -14,6 +15,9 @@ public sealed class Product : Entity<ProductId>
     public bool Status { get; private set; }
     public DateTime CreatedDateTime { get; private set; }
     public DateTime UpdatedDateTime { get; private set; }
+    private readonly List<OrderProduct>? _userProducts = new();
+    public IReadOnlyList<OrderProduct>? UserProducts => _userProducts?.AsReadOnly();
+
 
     private Product(
         ProductId productId,

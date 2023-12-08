@@ -3,9 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.Admin.Queries;
+using pet_store_backend.application.Authentication.Queries.Login;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.contracts;
 using pet_store_backend.contracts.Admin;
+using pet_store_backend.contracts.Authentication;
 using pet_store_backend.contracts.PetProducts;
 using pet_store_backend.infrastructure.Authentication;
 using pet_store_backend.infrastructure.Persistence.Common;
@@ -24,6 +26,20 @@ public class AdminController : ApiController
         _mediator = mediator;
         _mapper = mapper;
     }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("login")]
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        var query = _mapper.Map<LoginQueryUser>(request);
+
+        var authResult = await _mediator.Send(query);
+
+        return authResult.Match(authResult => Ok(_mapper.Map<AdminResponse>(authResult)),
+            errors => Problem(errors));
+    }
+
 
     [HttpGet("roles")]
     [HasPermission(TableKey.UserRoles, PermissionType.Read)]
