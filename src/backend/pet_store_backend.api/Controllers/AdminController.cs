@@ -2,6 +2,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.Admin.Queries;
 using pet_store_backend.application.Authentication.Queries.Login;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
@@ -62,6 +63,18 @@ public class AdminController : ApiController
         var createCategoryRequest = await _mediator.Send(command);
 
         return createCategoryRequest.Match(category => Ok(_mapper.Map<MessageResponse>(category)),
+            errors => Problem(errors));
+    }
+
+    [HttpPatch]
+    [Route("products/{productId}")]
+    [HasPermission(TableKey.Products, PermissionType.Update)]
+    public async Task<IActionResult> UpdateStatusProduct(string productId, UpdateProductRequest request)
+    {
+        var command = _mapper.Map<UpdateProductCommand>(request);
+        var updateProduct = await _mediator.Send(command);
+
+        return updateProduct.Match(product => Ok(_mapper.Map<MessageResponse>(product)),
             errors => Problem(errors));
     }
 }
