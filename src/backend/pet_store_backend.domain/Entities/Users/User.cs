@@ -8,6 +8,7 @@ public sealed class User : Entity<UserId>
 {
 
     private readonly List<Order>? _userProducts = new();
+    public UserRole UserRole { get; private set; } = null!;
     public UserRoleId UserRoleId { get; private set; }
     public IReadOnlyList<Order>? UserProducts => _userProducts?.AsReadOnly();
     public string FirstName { get; private set; }
@@ -100,6 +101,7 @@ public sealed class Customer : Entity<CustomerId>
 {
 
     public List<OrderProduct> _customerProducts = new();
+    public UserRole CustomerRole { get; private set; } = null!;
     public UserRoleId CustomerRoleId { get; private set; }
     public IReadOnlyList<OrderProduct> CustomerProducts => _customerProducts.AsReadOnly();
     public string FirstName { get; private set; }

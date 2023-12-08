@@ -9,7 +9,7 @@ using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Queries.LoginUser;
 
-public class LoginQueryUserHandler : IRequestHandler<LoginQueryUser, ErrorOr<AuthenticationResult>>
+public class LoginQueryUserHandler : IRequestHandler<LoginQueryUser, ErrorOr<AuthenticationUserResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
@@ -24,33 +24,33 @@ public class LoginQueryUserHandler : IRequestHandler<LoginQueryUser, ErrorOr<Aut
         _userRepository = userRepository;
         _passwordConfiguration = passwordConfiguration;
     }
-    public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQueryUser query, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationUserResult>> Handle(LoginQueryUser query, CancellationToken cancellationToken)
     {
         // Check if user already exists
-        if (await _userRepository.GetUserByEmail(query.Email) is not UserRole user)
+        if (await _userRepository.GetUserByEmail(query.Email) is not User user)
         {
             return Errors.Authentication.IvalidCredentials;
         }
         // Check User Password
-        if (!_passwordConfiguration.VerifyPasswordHash(query.Password, user.User.PasswordHash, user.User.PasswordSalt))
+        if (!_passwordConfiguration.VerifyPasswordHash(query.Password, user.PasswordHash, user.PasswordSalt))
         {
             return Errors.Authentication.IvalidCredentials;
         }
         // Check user have permission
-        if (user.User.UserRoleId is null)
+        if (user.UserRoleId is null)
         {
             return Errors.Authentication.ForbidenPermission;
         }
         // Check user verified
-        if (user.User.VerifiedAt == null)
+        if (user.VerifiedAt == null)
         {
             return Errors.Authentication.NotVerified;
         }
         // Get permissions for user in JWT
-        var permissions = await _userRepository.GetUserPermissionsAsync(user.Id);
+        var permissions = await _userRepository.GetUserPermissionsAsync(user.UserRoleId);
         //Create JWT Token
         var token = _jwtTokenGenerator.GenerateTokenUser(user, permissions);
-        return new AuthenticationResult(
+        return new AuthenticationUserResult(
             user,
             token);
     }

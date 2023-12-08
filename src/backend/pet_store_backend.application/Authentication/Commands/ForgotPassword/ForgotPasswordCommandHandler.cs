@@ -25,16 +25,16 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
     public async Task<ErrorOr<MessageResult>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
         // Validate User doesn't exist
-        if (await _userRepository.GetUserByEmail(request.Email) is not UserRole customer)
+        if (await _userRepository.GetCustomerByEmail(request.Email) is not Customer customer)
         {
             return Errors.User.UserNotExist;
         }
-        customer.User.CreatePasswordResetToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
-        await _userRepository.Update(customer.Customer);
+        customer.CreatePasswordResetToken(_passwordConfiguration.CreateRandomToken(), DateTime.Now.AddMinutes(HttpContextItemKeys.ExpireTokenInMinutes));
+        await _userRepository.Update(customer);
         var message = new Message(new string[] {
-            customer.User.Email },
+            customer.Email },
             "Pet Store Reset Password Email",
-            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{customer.Customer.PasswordResetToken}");
+            $"Your Reset Password Link {HttpContextItemKeys.UrlFrontEndForgotPasswordToken}/{customer.PasswordResetToken}");
         _emailService.SendEmail(message);
 
         return new MessageResult("Your Reset Token has been sent to your email");

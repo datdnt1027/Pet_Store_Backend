@@ -2,7 +2,11 @@
 
 namespace pet_store_backend.application.Authentication.Common
 {
-    public record AuthenticationResult(
-       UserRole userRole,
+    public record AuthenticationUserResult(
+       User User,
+        string Token);
+
+    public record AuthenticationCustomerResult(
+       Customer Customer,
         string Token);
 }

@@ -33,17 +33,17 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
                 .HasColumnType("bit")
                 .IsRequired();
 
-            // Configure the UserRoleId as a foreign key to UserRole
-            builder.HasOne(r => r.User)
-                .WithOne()
-                .HasForeignKey<User>(u => u.UserRoleId)
-                .IsRequired(false);
+            // // Configure the UserRoleId as a foreign key to UserRole
+            // builder.HasMany(r => r.Users)
+            //     .WithOne(r => r.UserRole)
+            //     .HasForeignKey(u => u.UserRoleId)
+            //     .IsRequired(false);
 
-            // Configure the UserRoleId as a foreign key to UserRole
-            builder.HasOne(r => r.Customer)
-                .WithOne()
-                .HasForeignKey<Customer>(u => u.CustomerRoleId)
-                .IsRequired(false);
+            // // Configure the UserRoleId as a foreign key to UserRole
+            // builder.HasMany(r => r.Customers)
+            //     .WithOne(r => r.CustomerRole)
+            //     .HasForeignKey(u => u.CustomerRoleId)
+            //     .IsRequired(false);
 
             builder.HasMany(r => r.UserPermissions)
                 .WithOne(r => r.UserRole)
@@ -153,6 +153,14 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId)
                 .IsRequired(false);
+
+            builder.Property(m => m.UserRoleId)
+                .IsRequired(false); // Make sure to allow null if it's optional
+
+            builder.HasOne(m => m.UserRole)
+                .WithMany(r => r.Users)
+                .HasForeignKey(m => m.UserRoleId)
+                .IsRequired(false); // Make sure to allow null if it's optional
         }
     }
 
@@ -217,6 +225,14 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
                 .WithOne(m => m.Customer)
                 .HasForeignKey(m => m.CustomerId)
                 .IsRequired(false);
+
+            builder.Property(m => m.CustomerRoleId)
+            .IsRequired(false); // Make sure to allow null if it's optional
+
+            builder.HasOne(m => m.CustomerRole)
+                .WithMany(r => r.Customers)
+                .HasForeignKey(m => m.CustomerRoleId)
+                .IsRequired(false); // Make sure to allow null if it's optional
         }
 
     }

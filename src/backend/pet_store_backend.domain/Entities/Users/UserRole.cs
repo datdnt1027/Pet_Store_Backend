@@ -7,8 +7,8 @@ public class UserRole : AggregateRoot<UserRoleId>
 {
     public List<UserPermission> _userPermissions = new();
     public string UserRoleName { get; private set; }
-    public User User { get; private set; } = null!;
-    public Customer Customer { get; private set; } = null!;
+    public List<User> Users { get; private set; } = null!;
+    public List<Customer> Customers { get; private set; } = null!;
     public IReadOnlyList<UserPermission> UserPermissions => _userPermissions.AsReadOnly();
     public bool Status { get; private set; }
 
@@ -16,13 +16,13 @@ public class UserRole : AggregateRoot<UserRoleId>
     private UserRole(
         UserRoleId userRoleId,
         string userRoleName,
-        User user,
+        List<User> users,
         List<UserPermission> userPermissions,
         bool status) : base(userRoleId)
     {
         UserRoleName = userRoleName;
         _userPermissions = userPermissions;
-        User = user;
+        Users = users;
         Status = status;
     }
 
@@ -30,26 +30,26 @@ public class UserRole : AggregateRoot<UserRoleId>
     private UserRole(
         UserRoleId userRoleId,
         string userRoleName,
-        Customer customer,
+        List<Customer> customers,
         List<UserPermission> userPermissions,
         bool status) : base(userRoleId)
     {
         UserRoleName = userRoleName;
         _userPermissions = userPermissions;
-        Customer = customer;
+        Customers = customers;
         Status = status;
     }
 
     public static UserRole Create(
         string userRoleName,
-        User user,
+        List<User> users,
         List<UserPermission> _userPermission
     )
     {
         return new(
             UserRoleId.CreatUnique(),
             userRoleName,
-            user,
+            users,
             _userPermission,
             true);
     }
