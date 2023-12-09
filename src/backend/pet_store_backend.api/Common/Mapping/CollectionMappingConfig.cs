@@ -3,6 +3,7 @@ using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.application.PetProducts.PetCategory.Queries.ProductDetail;
+using pet_store_backend.application.PetProducts.PetProduct.Commands;
 using pet_store_backend.contracts.PetProducts;
 
 namespace pet_store_backend.api.Common.Mapping;
@@ -12,6 +13,7 @@ public class CollectionMappingConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<CreateCategoryRequest, CreateCategoryCommand>();
+        config.NewConfig<CreateProductRequest, CreateProductCommand>();
 
         config.NewConfig<ProductIdRequest, ProductDetailQuery>();
 

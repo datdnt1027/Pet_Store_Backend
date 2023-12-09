@@ -6,6 +6,7 @@ using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.Admin.Queries;
 using pet_store_backend.application.Authentication.Queries.Login;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
+using pet_store_backend.application.PetProducts.PetProduct.Commands;
 using pet_store_backend.contracts;
 using pet_store_backend.contracts.Admin;
 using pet_store_backend.contracts.Authentication;
@@ -60,6 +61,17 @@ public class AdminController : ApiController
     public async Task<IActionResult> CreateCatory(CreateCategoryRequest request)
     {
         var command = _mapper.Map<CreateCategoryCommand>(request);
+        var createCategoryRequest = await _mediator.Send(command);
+
+        return createCategoryRequest.Match(category => Ok(_mapper.Map<MessageResponse>(category)),
+            errors => Problem(errors));
+    }
+
+    [HttpPost("product")]
+    [HasPermission(TableKey.Products, PermissionType.Create)]
+    public async Task<IActionResult> CreateProduct(CreateProductRequest request)
+    {
+        var command = _mapper.Map<CreateProductCommand>(request);
         var createCategoryRequest = await _mediator.Send(command);
 
         return createCategoryRequest.Match(category => Ok(_mapper.Map<MessageResponse>(category)),

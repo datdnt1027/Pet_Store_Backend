@@ -12,12 +12,21 @@ public record ProductRequest(
     string ImageData
 );
 
+public record CreateProductRequest(
+    string CategoryId,
+    string ProductName,
+    string ProductDetail,
+    int ProductQuantity,
+    double ProductPrice,
+    byte[]? ImageData
+);
+
 public record UpdateProductRequest(
     string ProductName,
     string ProductDetail,
     int ProductQuantity,
     double ProductPrice,
-    string ImageData,
+    byte[] ImageData,
     bool Status
 );
 
