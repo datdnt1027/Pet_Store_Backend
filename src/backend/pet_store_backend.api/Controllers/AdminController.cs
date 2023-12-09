@@ -68,15 +68,19 @@ public class AdminController : ApiController
     }
 
     [HttpPost("product")]
-    [HasPermission(TableKey.Products, PermissionType.Create)]
-    public async Task<IActionResult> CreateProduct(CreateProductRequest request)
+    //[HasPermission(TableKey.Products, PermissionType.Create)]
+    [AllowAnonymous]
+    public async Task<IActionResult> CreateProduct([FromForm] CreateProductRequest request)
     {
         var command = _mapper.Map<CreateProductCommand>(request);
-        var createCategoryRequest = await _mediator.Send(command);
+        var createProductResult = await _mediator.Send(command);
 
-        return createCategoryRequest.Match(category => Ok(_mapper.Map<MessageResponse>(category)),
-            errors => Problem(errors));
+        return createProductResult.Match(
+            success => Ok(_mapper.Map<MessageResponse>(success)),
+            errors => Problem(errors)
+        );
     }
+
 
     [HttpPatch]
     [Route("products/{productId}")]
