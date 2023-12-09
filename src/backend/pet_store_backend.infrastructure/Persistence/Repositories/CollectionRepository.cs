@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.PetProducts.Common;
+using pet_store_backend.domain.Entities.PetProducts.PetProduct;
 using pet_store_backend.domain.Entities.PetProducts.PetProductCategory;
 using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
 
@@ -17,6 +18,12 @@ public class CollectionRepository : ICollectionRepository
     public async Task Add(Category category)
     {
         await _dbContext.AddAsync(category);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task AddProduct(Product product)
+    {
+        await _dbContext.AddAsync(product);
         await _dbContext.SaveChangesAsync();
     }
 
@@ -123,6 +130,14 @@ public class CollectionRepository : ICollectionRepository
             .ToListAsync();
 
         return categoriesWithCounts;
+    }
+
+    public async Task<bool> CheckCategoryIsValid(Guid categoryId)
+    {
+        var categoryExists = await _dbContext.Categories
+            .AnyAsync(c => c.Id == CategoryId.Create(categoryId));
+
+        return categoryExists;
     }
 
     public async Task<bool> CheckProductIsValid(Guid productId)

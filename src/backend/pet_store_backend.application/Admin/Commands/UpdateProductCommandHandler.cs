@@ -7,11 +7,11 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 namespace pet_store_backend.application.Admin.Commands;
 
 public record UpdateProductCommand(
-    string ProductName,
+string ProductName,
     string ProductDetail,
     int ProductQuantity,
     double ProductPrice,
-    string ImageData,
+    byte[] ImageData,
     bool Status
 ) : IRequest<ErrorOr<MessageResult>>;
 
