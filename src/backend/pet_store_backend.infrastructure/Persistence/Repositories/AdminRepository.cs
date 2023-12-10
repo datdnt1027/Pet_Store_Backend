@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using pet_store_backend.application.Admin.Common;
 using pet_store_backend.application.Common.Interfaces.Persistence;
+using pet_store_backend.domain.Entities.Users;
+using pet_store_backend.domain.Entities.Users.ValueObjects;
 using pet_store_backend.infrastructure.Persistence.Common;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories;
@@ -40,4 +42,58 @@ public class AdminRepository : IAdminRepository
              )
         ).ToList();
     }
+
+    public async Task<AdminProfileResult?> RetrieveAdminProfile(Guid userId)
+    {
+        var adminProfile = await _dbContext.Users
+            .Where(u => u.Id == UserId.Create(userId)) // Check if UserId.Create is necessary
+            .Select(u => new AdminProfileResult(
+                u.FirstName,
+                u.LastName,
+                u.Email,
+                u.Address ?? "",
+                u.Avatar ?? Array.Empty<byte>(),
+                u.PhoneNumber ?? ""
+            ))
+            .FirstOrDefaultAsync();
+
+        return adminProfile;
+    }
+
+    public async Task<User?> RetrieveUser(Guid userId)
+    {
+        var user = await _dbContext.Users
+            .Where(u => u.Id == UserId.Create(userId)) // Check if UserId.Create is necessary
+            .FirstOrDefaultAsync();
+
+        return user;
+    }
+
+    public async Task UpdateAdminProfile(User user)
+    {
+        _dbContext.Update(user);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> UpdateStatusUserRole(Guid userRoleId, bool status)
+    {
+        var userRole = await _dbContext.UserRoles
+            .Where(ur => ur.Id == UserRoleId.Create(userRoleId))
+            .FirstOrDefaultAsync();
+        if (userRole is not null)
+        {
+            userRole.UpdateStatus(status);
+            _dbContext.Update(userRole);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        return false;
+    }
+
+    public async Task CreateUserRole(UserRole userRole)
+    {
+        await _dbContext.AddAsync(userRole);
+        await _dbContext.SaveChangesAsync();
+    }
+
 }
