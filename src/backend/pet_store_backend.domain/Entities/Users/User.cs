@@ -8,11 +8,11 @@ public sealed class User : Entity<UserId>
 {
     private readonly List<Order>? _userProducts = new();
     public UserRole UserRole { get; private set; } = null!;
-    public UserRoleId UserRoleId { get; private set; }
+    public UserRoleId? UserRoleId { get; private set; }
     public IReadOnlyList<Order>? UserProducts => _userProducts?.AsReadOnly();
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string Email { get; private set; }
+    public string FirstName { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
+    public string Email { get; private set; } = null!;
     public byte[] PasswordHash { get; private set; } = new byte[32];
     public byte[] PasswordSalt { get; private set; } = new byte[32];
     public string? VerificationToken { get; private set; }
@@ -42,6 +42,43 @@ public sealed class User : Entity<UserId>
         UserRoleId = userRoleId;
         Status = status;
     }
+
+    private User(
+        UserId userId,
+        string firstName,
+        string lastName,
+        string email,
+        byte[] avatar,
+        string phoneNumber,
+        string address) : base(userId)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Avatar = avatar;
+        PhoneNumber = phoneNumber;
+        Address = address;
+    }
+
+    // public static User UpdateUserInfo(
+    //     UserId userId,
+    //     string firstName,
+    //     string lastName,
+    //     string email,
+    //     byte[] avatar,
+    //     string phoneNumber,
+    //     string address)
+    // {
+    //     var user = new User(
+    //         userId,
+    //         firstName,
+    //         lastName,
+    //         email,
+    //         avatar,
+    //         phoneNumber,
+    //         address);
+    //     return user;
+    // }
 
     public static User Create(
         string firstName,
@@ -93,6 +130,36 @@ public sealed class User : Entity<UserId>
     public void UpdateUserRoleId(UserRoleId userRoleId)
     {
         UserRoleId = userRoleId;
+    }
+
+    public void UpdateFirstName(string firstName)
+    {
+        FirstName = firstName;
+    }
+
+    public void UpdateLastName(string lastName)
+    {
+        LastName = lastName;
+    }
+
+    public void UpdateEmail(string email)
+    {
+        Email = email;
+    }
+
+    public void UpdateAvatar(byte[] avatar)
+    {
+        Avatar = avatar;
+    }
+
+    public void UpdatePhoneNumber(string phoneNumber)
+    {
+        PhoneNumber = phoneNumber;
+    }
+
+    public void UpdateAddress(string address)
+    {
+        Address = address;
     }
 
 #pragma warning disable CS8618

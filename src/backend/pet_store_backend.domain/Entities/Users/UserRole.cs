@@ -54,6 +54,11 @@ public class UserRole : AggregateRoot<UserRoleId>
             true);
     }
 
+    public void UpdateStatus(bool status)
+    {
+        Status = status;
+    }
+
 #pragma warning disable CS8618
     private UserRole()
     {

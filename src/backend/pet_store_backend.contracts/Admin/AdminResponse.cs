@@ -15,3 +15,11 @@ public record UserPermissionResponse(
     bool Update,
     bool Deactive
 );
+public record AdminProfileResponse(
+    string FirstName,
+    string LastName,
+    string Email,
+    string Address,
+    string Avatar,
+    string PhoneNumber
+);

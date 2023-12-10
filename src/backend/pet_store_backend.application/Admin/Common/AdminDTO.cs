@@ -15,3 +15,12 @@ public record UserPermissionResult(
     bool Update,
     bool Deactive
 );
+
+public record AdminProfileResult(
+    string FirstName,
+    string LastName,
+    string Email,
+    string Address,
+    byte[] Avatar,
+    string PhoneNumber
+);

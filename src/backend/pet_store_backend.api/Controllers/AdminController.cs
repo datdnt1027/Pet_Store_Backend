@@ -42,6 +42,29 @@ public class AdminController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpGet]
+    [Route("profile")]
+    public async Task<IActionResult> GetProfile()
+    {
+        var query = new AdminProfileQuery();
+        var authResult = await _mediator.Send(query);
+
+        return authResult.Match(authResult => Ok(_mapper.Map<AdminProfileResponse>(authResult)),
+            errors => Problem(errors));
+    }
+
+    [HttpPatch]
+    [ValidateAntiForgeryToken]
+    [Route("update_profile")]
+    public async Task<IActionResult> UpdateProfile(UpdateAdminProfileRequest request)
+    {
+        var command = _mapper.Map<UpdateAdminProfileCommand>(request);
+        var updateProfile = await _mediator.Send(command);
+
+        return updateProfile.Match(profile => Ok(_mapper.Map<MessageResponse>(profile)),
+            errors => Problem(errors));
+    }
+
 
     [HttpGet("roles")]
     [HasPermission(TableKey.UserRoles, PermissionType.Read)]
@@ -53,6 +76,13 @@ public class AdminController : ApiController
             userRoles => Ok(_mapper.Map<IEnumerable<UserRoleResponse>>(userRoles)),
             errors => Problem(errors)
         );
+    }
+
+    [HttpPatch("role/{roleId}/status")]
+    [HasPermission(TableKey.UserRoles, PermissionType.Deactivate)]
+    public async Task<IActionResult> UpdateRoleStatus(bool status)
+    {
+        return Ok();
     }
 
     [HttpPost("collections")]
@@ -70,7 +100,7 @@ public class AdminController : ApiController
     [HttpPost("product")]
     //[HasPermission(TableKey.Products, PermissionType.Create)]
     [AllowAnonymous]
-    public async Task<IActionResult> CreateProduct([FromForm] CreateProductRequest request)
+    public async Task<IActionResult> CreateProduct(CreateProductRequest request)
     {
         var command = _mapper.Map<CreateProductCommand>(request);
         var createProductResult = await _mediator.Send(command);
