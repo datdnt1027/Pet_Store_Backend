@@ -82,7 +82,11 @@ namespace pet_store_backend.infrastructure.Migrations
                     VerificationToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     VerifiedAt = table.Column<DateTime>(type: "datetime", nullable: true),
                     PasswordResetToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    TokenExpires = table.Column<DateTime>(type: "datetime", nullable: true)
+                    TokenExpires = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,7 +134,11 @@ namespace pet_store_backend.infrastructure.Migrations
                     VerificationToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     VerifiedAt = table.Column<DateTime>(type: "datetime", nullable: true),
                     PasswordResetToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    TokenExpires = table.Column<DateTime>(type: "datetime", nullable: true)
+                    TokenExpires = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,34 +207,34 @@ namespace pet_store_backend.infrastructure.Migrations
                 columns: new[] { "UserRoleId", "Status", "UserRoleName" },
                 values: new object[,]
                 {
-                    { new Guid("3589728c-dd7b-4be0-84fb-ccdfd0bded91"), true, "User" },
-                    { new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1"), true, "Admin" }
+                    { new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399"), true, "Admin" },
+                    { new Guid("c6cb27d7-6989-4ccf-9e9e-59e87147b019"), true, "User" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "CustomerId", "CustomerRoleId", "Email", "FirstName", "LastName", "PasswordHash", "PasswordResetToken", "PasswordSalt", "TokenExpires", "VerificationToken", "VerifiedAt" },
-                values: new object[] { new Guid("1114c365-9190-4410-a40b-da23fece902c"), new Guid("3589728c-dd7b-4be0-84fb-ccdfd0bded91"), "20110629@student.hcmute.edu.vn", "Dat", "Thien", new byte[] { 174, 85, 1, 1, 138, 112, 174, 143, 142, 199, 9, 197, 28, 99, 164, 199, 160, 236, 19, 56, 144, 199, 37, 255, 190, 237, 182, 42, 83, 72, 193, 24, 249, 14, 23, 250, 50, 87, 252, 223, 71, 85, 31, 163, 225, 236, 60, 211, 96, 196, 96, 66, 80, 168, 7, 66, 88, 123, 102, 34, 160, 246, 205, 251 }, null, new byte[] { 204, 136, 38, 22, 19, 174, 62, 94, 204, 237, 48, 76, 19, 87, 251, 184, 124, 72, 184, 239, 86, 193, 106, 47, 3, 122, 199, 43, 49, 232, 202, 193, 231, 204, 145, 178, 26, 246, 49, 206, 242, 17, 104, 89, 41, 209, 52, 231, 223, 81, 165, 66, 140, 214, 112, 55, 73, 127, 125, 83, 26, 204, 210, 12, 7, 156, 65, 202, 191, 76, 43, 20, 67, 125, 133, 6, 193, 196, 103, 102, 236, 201, 234, 69, 13, 233, 13, 209, 39, 115, 160, 1, 19, 155, 39, 246, 114, 255, 77, 7, 211, 126, 105, 81, 73, 24, 243, 40, 226, 246, 135, 17, 226, 218, 102, 67, 29, 54, 114, 121, 127, 34, 230, 178, 45, 217, 116, 34 }, null, null, new DateTime(2023, 12, 8, 17, 59, 18, 556, DateTimeKind.Local).AddTicks(7620) });
+                columns: new[] { "CustomerId", "Address", "Avatar", "CustomerRoleId", "Email", "FirstName", "LastName", "PasswordHash", "PasswordResetToken", "PasswordSalt", "PhoneNumber", "Status", "TokenExpires", "VerificationToken", "VerifiedAt" },
+                values: new object[] { new Guid("4ab6ac6f-1715-471b-ae87-4ff051f12cdc"), null, null, new Guid("c6cb27d7-6989-4ccf-9e9e-59e87147b019"), "20110629@student.hcmute.edu.vn", "Dat", "Thien", new byte[] { 22, 137, 54, 107, 62, 252, 181, 199, 210, 178, 43, 116, 59, 199, 93, 191, 117, 208, 80, 179, 66, 51, 113, 30, 97, 187, 96, 201, 197, 59, 214, 244, 83, 117, 204, 1, 27, 201, 225, 188, 69, 8, 247, 60, 227, 5, 240, 196, 117, 69, 118, 235, 112, 139, 15, 255, 239, 29, 60, 252, 93, 13, 233, 183 }, null, new byte[] { 167, 241, 95, 177, 165, 181, 233, 125, 32, 155, 118, 114, 192, 108, 72, 44, 121, 199, 125, 53, 100, 8, 52, 242, 49, 64, 79, 218, 148, 196, 1, 214, 203, 150, 209, 224, 27, 145, 100, 135, 8, 7, 150, 120, 75, 25, 186, 86, 151, 66, 216, 157, 26, 126, 204, 187, 57, 179, 132, 177, 78, 39, 235, 9, 118, 108, 145, 121, 142, 72, 110, 104, 49, 121, 199, 204, 12, 160, 111, 217, 220, 25, 191, 250, 26, 81, 65, 153, 110, 239, 58, 29, 201, 38, 139, 124, 83, 211, 93, 106, 140, 239, 200, 231, 53, 114, 86, 179, 116, 82, 47, 191, 32, 18, 121, 230, 106, 187, 246, 191, 58, 226, 203, 32, 215, 87, 108, 16 }, null, true, null, null, new DateTime(2023, 12, 10, 11, 19, 1, 242, DateTimeKind.Local).AddTicks(8451) });
 
             migrationBuilder.InsertData(
                 table: "UserPermissions",
                 columns: new[] { "UserPermissionId", "Create", "Deactive", "Read", "TableName", "Update", "UserRoleId" },
                 values: new object[,]
                 {
-                    { new Guid("25cd3384-623d-402c-8b97-c834aaa46353"), true, true, true, "UserPermissions", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("461ab9c6-0d0c-4c99-bda7-e413684dc710"), true, true, true, "OrderProducts", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("67809df8-a274-4622-bd49-fcc32af2381b"), true, true, true, "Products", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("7c1afd3f-48ff-4c81-a7c4-1b54657c28d4"), true, true, true, "UserRoles", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("9f7c20c8-c2d5-4e0b-a43c-d5d16aba828c"), true, true, true, "Users", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("a91c5a02-bc84-4fb0-93aa-a56bb81301df"), true, true, true, "Customers", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("cb7f1cbf-850d-47b8-aa5e-42e6163dd1e5"), true, true, true, "Categories", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") },
-                    { new Guid("f29ec49a-b9c3-4909-976b-5d53921b4240"), true, true, true, "Orders", true, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1") }
+                    { new Guid("30541c58-185f-4ad0-b29d-09adc0dc50c6"), true, true, true, "Categories", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("3c256968-c21f-46ed-8cc6-06ae164b30d5"), true, true, true, "Users", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("4e52e2c6-b604-4622-98f1-1369ec781ed8"), true, true, true, "Orders", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("aacdcb81-a205-4d09-83f1-3ce453bd0fdb"), true, true, true, "OrderProducts", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("b0cdafd3-b716-4e44-a410-284ea236a02a"), true, true, true, "Products", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("bd936d52-0688-470b-a918-97685b87a83d"), true, true, true, "UserPermissions", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("da149ffb-ba26-446c-ab31-aa3411c8a6ea"), true, true, true, "UserRoles", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") },
+                    { new Guid("f58f50fb-b6c2-4cd1-95d4-ae9464b183b7"), true, true, true, "Customers", true, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399") }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Email", "FirstName", "LastName", "PasswordHash", "PasswordResetToken", "PasswordSalt", "TokenExpires", "UserRoleId", "VerificationToken", "VerifiedAt" },
-                values: new object[] { new Guid("533033ee-c0c2-4ccc-b4cb-edffa7f58493"), "dntdat09@gmail.com", "Dat", "Thien", new byte[] { 27, 31, 0, 208, 55, 158, 79, 90, 187, 80, 223, 238, 147, 80, 217, 35, 155, 115, 79, 82, 107, 195, 172, 137, 255, 142, 193, 174, 141, 234, 66, 193, 192, 69, 181, 63, 63, 110, 107, 107, 227, 154, 115, 45, 170, 81, 175, 158, 30, 187, 141, 133, 189, 48, 154, 39, 43, 30, 93, 222, 139, 185, 199, 250 }, null, new byte[] { 84, 212, 36, 244, 252, 107, 179, 77, 25, 170, 156, 242, 190, 217, 242, 225, 120, 128, 171, 219, 39, 233, 46, 147, 157, 121, 15, 190, 50, 211, 213, 78, 68, 47, 26, 126, 185, 12, 102, 48, 200, 138, 67, 189, 200, 196, 45, 140, 165, 72, 98, 79, 196, 53, 81, 3, 36, 179, 85, 189, 45, 243, 241, 148, 112, 41, 79, 189, 206, 75, 167, 255, 153, 195, 135, 157, 148, 93, 14, 71, 18, 229, 78, 236, 37, 122, 243, 160, 111, 17, 172, 163, 175, 21, 233, 31, 25, 155, 83, 48, 115, 253, 27, 199, 179, 143, 35, 176, 73, 65, 225, 27, 103, 189, 56, 213, 55, 221, 95, 54, 217, 163, 137, 162, 236, 31, 179, 224 }, null, new Guid("d7473b0b-9ab5-4715-864a-136a99d9cac1"), null, new DateTime(2023, 12, 8, 17, 59, 18, 556, DateTimeKind.Local).AddTicks(7165) });
+                columns: new[] { "UserId", "Address", "Avatar", "Email", "FirstName", "LastName", "PasswordHash", "PasswordResetToken", "PasswordSalt", "PhoneNumber", "Status", "TokenExpires", "UserRoleId", "VerificationToken", "VerifiedAt" },
+                values: new object[] { new Guid("3f6d3b72-716c-4126-ba3f-45ad281a8776"), null, null, "dntdat09@gmail.com", "Dat", "Thien", new byte[] { 31, 69, 120, 248, 49, 201, 10, 156, 86, 14, 108, 197, 66, 31, 157, 119, 76, 9, 126, 106, 21, 4, 79, 209, 220, 179, 214, 21, 253, 142, 83, 23, 154, 179, 192, 200, 79, 165, 74, 185, 251, 207, 136, 34, 85, 227, 169, 208, 27, 99, 208, 76, 118, 210, 229, 118, 171, 210, 98, 160, 155, 204, 82, 111 }, null, new byte[] { 30, 129, 49, 222, 36, 151, 210, 161, 8, 177, 55, 191, 0, 87, 137, 80, 224, 10, 228, 149, 35, 70, 66, 112, 1, 105, 11, 122, 112, 194, 69, 250, 226, 76, 119, 99, 35, 228, 189, 162, 172, 122, 102, 90, 3, 56, 61, 214, 105, 198, 232, 43, 49, 97, 52, 203, 25, 205, 3, 47, 196, 149, 25, 201, 193, 64, 15, 192, 125, 185, 184, 149, 165, 212, 109, 239, 133, 116, 127, 215, 73, 208, 14, 37, 103, 68, 53, 172, 102, 124, 238, 6, 81, 102, 119, 68, 51, 157, 207, 130, 202, 156, 93, 172, 240, 93, 153, 152, 198, 252, 84, 187, 158, 205, 138, 47, 251, 212, 218, 217, 58, 222, 94, 107, 225, 72, 146, 5 }, null, true, null, new Guid("b2fc8115-5863-47dc-bedc-b2f948e13399"), null, new DateTime(2023, 12, 10, 11, 19, 1, 242, DateTimeKind.Local).AddTicks(8179) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_CustomerRoleId",

@@ -33,18 +33,6 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
                 .HasColumnType("bit")
                 .IsRequired();
 
-            // // Configure the UserRoleId as a foreign key to UserRole
-            // builder.HasMany(r => r.Users)
-            //     .WithOne(r => r.UserRole)
-            //     .HasForeignKey(u => u.UserRoleId)
-            //     .IsRequired(false);
-
-            // // Configure the UserRoleId as a foreign key to UserRole
-            // builder.HasMany(r => r.Customers)
-            //     .WithOne(r => r.CustomerRole)
-            //     .HasForeignKey(u => u.CustomerRoleId)
-            //     .IsRequired(false);
-
             builder.HasMany(r => r.UserPermissions)
                 .WithOne(r => r.UserRole)
                 .HasForeignKey(r => r.UserRoleId)
@@ -149,6 +137,23 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
             builder.Property(m => m.TokenExpires)
                 .HasColumnType("datetime");
 
+            builder.Property(m => m.Avatar)
+                .HasColumnType("varbinary(max)")
+                .IsRequired(false);
+
+            builder.Property(m => m.PhoneNumber)
+                .HasMaxLength(20)
+                .IsRequired(false);
+
+            builder.Property(m => m.Address)
+                .HasMaxLength(255)
+                .IsRequired(false);
+
+            builder.Property(m => m.Status)
+                .HasColumnName("Status")
+                .HasColumnType("bit")
+                .IsRequired();
+
             builder.HasMany(r => r.UserProducts)
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId)
@@ -220,6 +225,23 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
 
             builder.Property(m => m.TokenExpires)
                 .HasColumnType("datetime");
+
+            builder.Property(m => m.Avatar)
+                .HasColumnType("varbinary(max)")
+                .IsRequired(false);
+
+            builder.Property(m => m.PhoneNumber)
+                .HasMaxLength(20)
+                .IsRequired(false);
+
+            builder.Property(m => m.Address)
+                .HasMaxLength(255)
+                .IsRequired(false);
+
+            builder.Property(m => m.Status)
+                .HasColumnName("Status")
+                .HasColumnType("bit")
+                .IsRequired();
 
             builder.HasMany(m => m.CustomerProducts)
                 .WithOne(m => m.Customer)
