@@ -398,5 +398,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 pet_store_backend.api/obj/Debug
+pet_store_backend.infrastructure/Migrations/*.cs
 pet_store_backend.infrastructure/Migrations
 # pet_store_backend.api/pet_store_backend.api.csproj
