@@ -6,7 +6,6 @@ namespace pet_store_backend.domain.Entities.Users;
 
 public sealed class User : Entity<UserId>
 {
-
     private readonly List<Order>? _userProducts = new();
     public UserRole UserRole { get; private set; } = null!;
     public UserRoleId UserRoleId { get; private set; }
@@ -20,7 +19,10 @@ public sealed class User : Entity<UserId>
     public DateTime? VerifiedAt { get; private set; }
     public string? PasswordResetToken { get; private set; }
     public DateTime? TokenExpires { get; private set; }
-
+    public byte[]? Avatar { get; private set; }
+    public string? PhoneNumber { get; private set; }
+    public string? Address { get; private set; }
+    public bool Status { get; private set; }
 
     private User(
         UserId userId,
@@ -29,7 +31,8 @@ public sealed class User : Entity<UserId>
         string email,
         byte[] passwordHash,
         byte[] passwordSalt,
-        UserRoleId userRoleId) : base(userId)
+        UserRoleId userRoleId,
+        bool status) : base(userId)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -37,6 +40,7 @@ public sealed class User : Entity<UserId>
         PasswordHash = passwordHash;
         PasswordSalt = passwordSalt;
         UserRoleId = userRoleId;
+        Status = status;
     }
 
     public static User Create(
@@ -45,7 +49,8 @@ public sealed class User : Entity<UserId>
         string email,
         byte[] passwordHash,
         byte[] passwordSalt,
-        UserRoleId userRoleId)
+        UserRoleId userRoleId,
+        bool Status = true)
     {
         var user = new User(
             UserId.CreatUnique(),
@@ -54,7 +59,8 @@ public sealed class User : Entity<UserId>
             email,
             passwordHash,
             passwordSalt,
-            userRoleId);
+            userRoleId,
+            Status);
         return user;
     }
 
@@ -113,6 +119,10 @@ public sealed class Customer : Entity<CustomerId>
     public DateTime? VerifiedAt { get; private set; }
     public string? PasswordResetToken { get; private set; }
     public DateTime? TokenExpires { get; private set; }
+    public byte[]? Avatar { get; private set; }
+    public string? PhoneNumber { get; private set; }
+    public string? Address { get; private set; }
+    public bool Status { get; private set; }
 
 
     private Customer(
@@ -122,7 +132,8 @@ public sealed class Customer : Entity<CustomerId>
         string email,
         byte[] passwordHash,
         byte[] passwordSalt,
-        UserRoleId customerRoleId) : base(customerId)
+        UserRoleId customerRoleId,
+        bool status) : base(customerId)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -130,6 +141,7 @@ public sealed class Customer : Entity<CustomerId>
         PasswordHash = passwordHash;
         PasswordSalt = passwordSalt;
         CustomerRoleId = customerRoleId;
+        Status = status;
     }
 
     public static Customer Create(
@@ -138,7 +150,9 @@ public sealed class Customer : Entity<CustomerId>
         string email,
         byte[] passwordHash,
         byte[] passwordSalt,
-        UserRoleId customerRoleId)
+        UserRoleId customerRoleId,
+        bool status = true
+        )
     {
         var customer = new Customer(
             CustomerId.CreatUnique(),
@@ -147,7 +161,8 @@ public sealed class Customer : Entity<CustomerId>
             email,
             passwordHash,
             passwordSalt,
-            customerRoleId);
+            customerRoleId,
+            status);
         return customer;
     }
 
