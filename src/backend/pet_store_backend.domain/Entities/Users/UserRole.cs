@@ -6,7 +6,7 @@ namespace pet_store_backend.domain.Entities.Users;
 public class UserRole : AggregateRoot<UserRoleId>
 {
     public List<UserPermission> _userPermissions = new();
-    public string UserRoleName { get; private set; }
+    public string UserRoleName { get; private set; } = null!;
     public List<User> Users { get; private set; } = null!;
     public List<Customer> Customers { get; private set; } = null!;
     public IReadOnlyList<UserPermission> UserPermissions => _userPermissions.AsReadOnly();

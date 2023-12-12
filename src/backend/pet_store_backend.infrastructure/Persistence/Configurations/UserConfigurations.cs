@@ -113,6 +113,10 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
             builder.HasIndex(m => m.Email)
                 .IsUnique();
 
+            builder.Property(op => op.Gender)
+                .IsRequired(false)
+                .HasConversion<string>();
+
             builder.Property(m => m.PasswordHash)
                 .IsRequired();
 
@@ -201,6 +205,10 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
 
             builder.HasIndex(m => m.Email)
                 .IsUnique();
+
+            builder.Property(op => op.Gender)
+                .IsRequired(false)
+                .HasConversion<string>();
 
             builder.Property(m => m.PasswordHash)
                 .IsRequired();
