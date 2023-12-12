@@ -7,13 +7,15 @@ using Microsoft.AspNetCore.Http;
 using pet_store_backend.application.Common;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Common.Errors;
+using pet_store_backend.domain.Entities.Users.ValueObjects;
 
 namespace pet_store_backend.application.Admin.Commands;
 
 public record UpdateAdminProfileCommand(
     string FirstName,
     string LastName,
-    string Email,
+    int Sex,
+    // string Email,
     string Address,
     byte[] Avatar,
     string PhoneNumber
@@ -31,9 +33,13 @@ public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminP
             .Matches("^[a-zA-Z ]*$").WithMessage("Last name should only contain letters.")
             .When(command => command.LastName != null);
 
-        RuleFor(command => command.Email)
-            .EmailAddress().WithMessage("Invalid email address.")
-            .When(command => command.Email != null);
+        RuleFor(command => command.Sex)
+            .NotEmpty()
+            .Must(BeValidGender).WithMessage("Invalid gender value.");
+
+        // RuleFor(command => command.Email)
+        //     .EmailAddress().WithMessage("Invalid email address.")
+        //     .When(command => command.Email != null);
 
         RuleFor(command => command.Address)
             .Matches("^[a-zA-Z0-9 ,/]*$").WithMessage("Invalid address format.")
@@ -46,6 +52,11 @@ public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminP
         RuleFor(command => command.PhoneNumber)
             .Must(BeValidPhoneNumber).WithMessage("Invalid phone number format. Include country code and digits only.")
             .When(command => command.PhoneNumber != null);
+    }
+
+    private bool BeValidGender(int sex)
+    {
+        return Enum.IsDefined(typeof(Gender), sex);
     }
 
     private bool BeValidAvatar(byte[] avatar)
@@ -74,6 +85,7 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
 
     public async Task<ErrorOr<MessageResult>> Handle(UpdateAdminProfileCommand command, CancellationToken cancellationToken)
     {
+        bool flag = false;
         // Check if all properties in the command are null
         if (AllPropertiesNull(command))
         {
@@ -96,33 +108,47 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
         // Check and update properties only if they are different in AdminProfileAdminCommand
         if (command.FirstName != null && command.FirstName != user.FirstName)
         {
+            if (!flag) flag = true;
             user.UpdateFirstName(command.FirstName);
         }
 
         if (command.LastName != null && command.LastName != user.LastName)
         {
+            if (!flag) flag = true;
             user.UpdateLastName(command.LastName);
         }
 
-        if (command.Email != null && command.Email != user.Email)
+        // if (command.Email != null && command.Email != user.Email)
+        // {
+        //     user.UpdateEmail(command.Email);
+        // }
+
+        if (command.Sex != (int?)user.Gender)
         {
-            user.UpdateEmail(command.Email);
+            if (!flag) flag = true;
+            user.UpdateGender((Gender?)command.Sex);
         }
 
         if (command.Address != null && command.Address != user.Address)
         {
+            if (!flag) flag = true;
             user.UpdateAddress(command.Address);
         }
 
         if (command.Avatar != null && !ByteArraysEqual(command.Avatar, user.Avatar))
         {
+            if (!flag) flag = true;
             user.UpdateAvatar(command.Avatar);
         }
 
         if (command.PhoneNumber != null && command.PhoneNumber != user.PhoneNumber)
         {
+            if (!flag) flag = true;
             user.UpdatePhoneNumber(command.PhoneNumber);
         }
+
+        if (!flag)
+            return Errors.User.NoUserInfoUpdate;
 
         // Save the updated admin profile to the repository
         await _adminRepository.UpdateAdminProfile(user);
@@ -153,7 +179,7 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
     {
         return command.FirstName == null &&
                command.LastName == null &&
-               command.Email == null &&
+               //    command.Email == null &&
                command.Address == null &&
                command.Avatar == null &&
                command.PhoneNumber == null;

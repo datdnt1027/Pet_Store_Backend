@@ -163,6 +163,14 @@ public sealed class User : Entity<UserId>
         Address = address;
     }
 
+    public void UpdateGender(Gender? gender)
+    {
+        if (gender.HasValue)
+        {
+            this.Gender = gender.Value;
+        }
+    }
+
 #pragma warning disable CS8618
     private User()
     {
