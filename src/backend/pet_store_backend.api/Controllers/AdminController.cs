@@ -54,7 +54,6 @@ public class AdminController : ApiController
     }
 
     [HttpPatch]
-    [ValidateAntiForgeryToken]
     [Route("update_profile")]
     public async Task<IActionResult> UpdateProfile(UpdateAdminProfileRequest request)
     {
@@ -78,11 +77,17 @@ public class AdminController : ApiController
         );
     }
 
-    [HttpPatch("role/{roleId}/status")]
+    [HttpPatch]
+    [Route("role/status")]
     [HasPermission(TableKey.UserRoles, PermissionType.Deactivate)]
-    public async Task<IActionResult> UpdateRoleStatus(bool status)
+    public async Task<IActionResult> UpdateRoleStatus(UpdateRoleStatusRequest request)
     {
-        return Ok();
+        var command = _mapper.Map<UpdateRoleStatusCommand>(request);
+        var updateStatus = await _mediator.Send(command);
+        return updateStatus.Match(
+            status => Ok(_mapper.Map<MessageResponse>(status)),
+            errors => Problem(errors)
+        );
     }
 
     [HttpPost("collections")]

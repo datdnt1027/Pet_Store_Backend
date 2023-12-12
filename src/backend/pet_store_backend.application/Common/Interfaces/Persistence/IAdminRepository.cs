@@ -7,8 +7,9 @@ public interface IAdminRepository
 {
     Task<List<UserRoleResult>> RetriveUserRole();
     Task<AdminProfileResult?> RetrieveAdminProfile(Guid userId);
-    Task UpdateAdminProfile(User user);
-    Task<User?> RetrieveUser(Guid userId);
-    Task<bool> UpdateStatusUserRole(Guid userRoleId, bool status);
+    Task UpdateAdminProfile(pet_store_backend.domain.Entities.Users.User user);
+    Task<pet_store_backend.domain.Entities.Users.User?> RetrieveUser(Guid userId);
+    Task UpdateUserRole(UserRole userRole);
     Task CreateUserRole(UserRole userRole);
+    Task<UserRole?> GetUserRoleFromId(Guid userRoleId);
 }

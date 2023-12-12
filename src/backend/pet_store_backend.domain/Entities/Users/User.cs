@@ -13,6 +13,7 @@ public sealed class User : Entity<UserId>
     public string FirstName { get; private set; } = null!;
     public string LastName { get; private set; } = null!;
     public string Email { get; private set; } = null!;
+    public Gender? Gender { get; private set; }
     public byte[] PasswordHash { get; private set; } = new byte[32];
     public byte[] PasswordSalt { get; private set; } = new byte[32];
     public string? VerificationToken { get; private set; }
@@ -180,6 +181,7 @@ public sealed class Customer : Entity<CustomerId>
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
+    public Gender? Gender { get; private set; }
     public byte[] PasswordHash { get; private set; } = new byte[32];
     public byte[] PasswordSalt { get; private set; } = new byte[32];
     public string? VerificationToken { get; private set; }
@@ -263,6 +265,45 @@ public sealed class Customer : Entity<CustomerId>
     {
         CustomerRoleId = customerRoleId;
     }
+
+    public void UpdateFirstName(string firstName)
+    {
+        FirstName = firstName;
+    }
+
+    public void UpdateLastName(string lastName)
+    {
+        LastName = lastName;
+    }
+
+    public void UpdateEmail(string email)
+    {
+        Email = email;
+    }
+
+    public void UpdateAvatar(byte[] avatar)
+    {
+        Avatar = avatar;
+    }
+
+    public void UpdatePhoneNumber(string phoneNumber)
+    {
+        PhoneNumber = phoneNumber;
+    }
+
+    public void UpdateAddress(string address)
+    {
+        Address = address;
+    }
+
+    public void UpdateGender(Gender? gender)
+    {
+        if (gender.HasValue)
+        {
+            this.Gender = gender.Value;
+        }
+    }
+
 
 #pragma warning disable CS8618
     private Customer()

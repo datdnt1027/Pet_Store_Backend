@@ -9,6 +9,7 @@ public class AdminMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
+        config.NewConfig<UpdateRoleStatusRequest, UpdateRoleStatusCommand>();
         config.NewConfig<UpdateAdminProfileRequest, UpdateAdminProfileCommand>();
         config.NewConfig<AdminProfileResult, AdminProfileResponse>()
             .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);

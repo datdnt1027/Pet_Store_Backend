@@ -10,3 +10,8 @@ public record UpdateAdminProfileRequest(
     string? PhoneNumber,
     bool Status
 );
+
+public record UpdateRoleStatusRequest(
+    string UserRoleId,
+    bool Status
+);

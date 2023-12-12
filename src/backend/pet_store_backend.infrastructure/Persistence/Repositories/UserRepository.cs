@@ -3,6 +3,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 using pet_store_backend.domain.Entities.Users;
 using pet_store_backend.infrastructure.Persistence.Common;
+using pet_store_backend.application.User.Common;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories;
 
@@ -88,4 +89,38 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync();
         return userRole?.Id;
     }
+
+    public async Task<UserProfileResult?> RetrieveUserProfile(Guid userId)
+    {
+        var adminProfile = await _dbContext.Customers
+            .Where(u => u.Id == CustomerId.Create(userId))
+            .FirstOrDefaultAsync();
+
+        if (adminProfile is null)
+        {
+            return null;
+        }
+
+        var gender = adminProfile.Gender;
+
+        return new UserProfileResult(
+            adminProfile.FirstName,
+            adminProfile.LastName,
+            gender,
+            adminProfile.Email,
+            adminProfile.Address ?? "",
+            adminProfile.Avatar ?? Array.Empty<byte>(),
+            adminProfile.PhoneNumber ?? ""
+        );
+    }
+
+    public async Task<Customer?> RetrieveUser(Guid userId)
+    {
+        var customer = await _dbContext.Customers
+            .Where(u => u.Id == CustomerId.Create(userId)) // Check if UserId.Create is necessary
+            .FirstOrDefaultAsync();
+
+        return customer;
+    }
+
 }
