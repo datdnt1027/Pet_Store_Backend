@@ -14,7 +14,7 @@ namespace pet_store_backend.application.Admin.Commands;
 public record UpdateUserProfileCommand(
     string FirstName,
     string LastName,
-    int Sex,
+    string Sex,
     // string Email,
     string Address,
     byte[] Avatar,
@@ -54,9 +54,9 @@ public class UpdateUserProfileCommandValidator : AbstractValidator<UpdateUserPro
             .When(command => command.PhoneNumber != null);
     }
 
-    private bool BeValidGender(int sex)
+    private bool BeValidGender(string sex)
     {
-        return Enum.IsDefined(typeof(Gender), sex);
+        return Enum.IsDefined(typeof(Gender), int.Parse(sex));
     }
     private bool BeValidAvatar(byte[] avatar)
     {
@@ -116,10 +116,10 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
             customer.UpdateLastName(command.LastName);
         }
 
-        if (command.Sex != (int?)customer.Gender)
+        if (int.Parse(command.Sex) != (int?)customer.Gender)
         {
             if (!flag) flag = true;
-            customer.UpdateGender((Gender?)command.Sex);
+            customer.UpdateGender((Gender?)int.Parse(command.Sex));
         }
 
         // if (command.Email != null && command.Email != customer.Email)

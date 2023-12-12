@@ -36,7 +36,7 @@ public class UserController : ApiController
 
     [HttpPatch]
     [Route("update_profile")]
-    public async Task<IActionResult> UpdateProfile([FromForm] UpdateUserProfileRequest request)
+    public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserProfileRequest request)
     {
         var command = _mapper.Map<UpdateUserProfileCommand>(request);
         var updateProfile = await _mediator.Send(command);
