@@ -1,3 +1,5 @@
+using pet_store_backend.domain.Entities.Users.ValueObjects;
+
 namespace pet_store_backend.application.Admin.Common;
 
 public record UserRoleResult(
@@ -19,6 +21,7 @@ public record UserPermissionResult(
 public record AdminProfileResult(
     string FirstName,
     string LastName,
+    Gender? Sex,
     string Email,
     string Address,
     byte[] Avatar,

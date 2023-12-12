@@ -55,7 +55,7 @@ public class AdminController : ApiController
 
     [HttpPatch]
     [Route("update_profile")]
-    public async Task<IActionResult> UpdateProfile(UpdateAdminProfileRequest request)
+    public async Task<IActionResult> UpdateProfile([FromForm] UpdateAdminProfileRequest request)
     {
         var command = _mapper.Map<UpdateAdminProfileCommand>(request);
         var updateProfile = await _mediator.Send(command);

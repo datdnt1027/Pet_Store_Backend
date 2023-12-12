@@ -2,13 +2,13 @@ namespace pet_store_backend.contracts.Admin;
 
 
 public record UpdateAdminProfileRequest(
-    string? FirstName,
-    string? LastName,
-    string? Email,
-    string? Address,
+    string FirstName,
+    string LastName,
+    int Sex,
+    // string? Email,
+    string Address,
     byte[]? Avatar,
-    string? PhoneNumber,
-    bool Status
+    string PhoneNumber
 );
 
 public record UpdateRoleStatusRequest(

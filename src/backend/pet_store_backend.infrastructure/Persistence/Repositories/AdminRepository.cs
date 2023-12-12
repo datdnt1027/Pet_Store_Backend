@@ -58,6 +58,7 @@ public class AdminRepository : IAdminRepository
             .Select(u => new AdminProfileResult(
                 u.FirstName,
                 u.LastName,
+                u.Gender,
                 u.Email,
                 u.Address ?? "",
                 u.Avatar ?? Array.Empty<byte>(),
