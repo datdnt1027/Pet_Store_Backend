@@ -27,7 +27,7 @@ public class LoginQueryUserHandler : IRequestHandler<LoginQueryUser, ErrorOr<Aut
     public async Task<ErrorOr<AuthenticationUserResult>> Handle(LoginQueryUser query, CancellationToken cancellationToken)
     {
         // Check if user already exists
-        if (await _userRepository.GetUserByEmail(query.Email) is not User user)
+        if (await _userRepository.GetUserByEmail(query.Email) is not pet_store_backend.domain.Entities.Users.User user)
         {
             return Errors.Authentication.IvalidCredentials;
         }

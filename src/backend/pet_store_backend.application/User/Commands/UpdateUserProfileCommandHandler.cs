@@ -11,7 +11,7 @@ using pet_store_backend.domain.Entities.Users.ValueObjects;
 
 namespace pet_store_backend.application.Admin.Commands;
 
-public record UpdateAdminProfileCommand(
+public record UpdateUserProfileCommand(
     string FirstName,
     string LastName,
     int Sex,
@@ -21,13 +21,13 @@ public record UpdateAdminProfileCommand(
     string PhoneNumber
 ) : IRequest<ErrorOr<MessageResult>>;
 
-public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminProfileCommand>
+public class UpdateUserProfileCommandValidator : AbstractValidator<UpdateUserProfileCommand>
 {
-    public UpdateAdminProfileCommandValidator()
+    public UpdateUserProfileCommandValidator()
     {
         RuleFor(command => command.FirstName)
-            .Matches("^[a-zA-Z ]*$").WithMessage("First name should only contain letters.")
-            .When(command => command.FirstName != null);
+           .Matches("^[a-zA-Z ]*$").WithMessage("First name should only contain letters.")
+           .When(command => command.FirstName != null);
 
         RuleFor(command => command.LastName)
             .Matches("^[a-zA-Z ]*$").WithMessage("Last name should only contain letters.")
@@ -58,13 +58,11 @@ public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminP
     {
         return Enum.IsDefined(typeof(Gender), sex);
     }
-
     private bool BeValidAvatar(byte[] avatar)
     {
         // Allow null or non-empty byte array
         return avatar == null || avatar.Length > 0;
     }
-
     private bool BeValidPhoneNumber(string phoneNumber)
     {
         // Allow null or a valid phone number format
@@ -72,18 +70,18 @@ public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminP
     }
 }
 
-public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfileCommand, ErrorOr<MessageResult>>
+public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, ErrorOr<MessageResult>>
 {
-    private readonly IAdminRepository _adminRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AdminProfileAdminCommandHandler(IAdminRepository adminRepository, IHttpContextAccessor httpContextAccessor)
+    public UpdateUserProfileCommandHandler(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
     {
-        _adminRepository = adminRepository;
+        _userRepository = userRepository;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<ErrorOr<MessageResult>> Handle(UpdateAdminProfileCommand command, CancellationToken cancellationToken)
+    public async Task<ErrorOr<MessageResult>> Handle(UpdateUserProfileCommand command, CancellationToken cancellationToken)
     {
         bool flag = false;
         // Check if all properties in the command are null
@@ -98,60 +96,61 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
             return Errors.User.UserNotSignIn;
         }
         // Retrieve the existing admin profile from the repository
-        var user = await _adminRepository.RetrieveUser(Guid.Parse(userId)); // Replace with the actual method
+        var customer = await _userRepository.RetrieveUser(Guid.Parse(userId)); // Replace with the actual method
 
-        if (user is null)
+        if (customer is null)
         {
             return Errors.User.UserNotExist;
         }
 
         // Check and update properties only if they are different in AdminProfileAdminCommand
-        if (command.FirstName != null && command.FirstName != user.FirstName)
+        if (command.FirstName != null && command.FirstName != customer.FirstName)
         {
             if (!flag) flag = true;
-            user.UpdateFirstName(command.FirstName);
+            customer.UpdateFirstName(command.FirstName);
         }
 
-        if (command.LastName != null && command.LastName != user.LastName)
+        if (command.LastName != null && command.LastName != customer.LastName)
         {
             if (!flag) flag = true;
-            user.UpdateLastName(command.LastName);
+            customer.UpdateLastName(command.LastName);
         }
 
-        // if (command.Email != null && command.Email != user.Email)
+        if (command.Sex != (int?)customer.Gender)
+        {
+            if (!flag) flag = true;
+            customer.UpdateGender((Gender?)command.Sex);
+        }
+
+        // if (command.Email != null && command.Email != customer.Email)
         // {
-        //     user.UpdateEmail(command.Email);
+        //     if (!flag) flag = true;
+        //     customer.UpdateEmail(command.Email);
         // }
 
-        if (command.Sex != (int?)user.Gender)
+        if (command.Address != null && command.Address != customer.Address)
         {
             if (!flag) flag = true;
-            user.UpdateGender((Gender?)command.Sex);
+            customer.UpdateAddress(command.Address);
         }
 
-        if (command.Address != null && command.Address != user.Address)
+        if (command.Avatar != null && !ByteArraysEqual(command.Avatar, customer.Avatar))
         {
             if (!flag) flag = true;
-            user.UpdateAddress(command.Address);
+            customer.UpdateAvatar(command.Avatar);
         }
 
-        if (command.Avatar != null && !ByteArraysEqual(command.Avatar, user.Avatar))
+        if (command.PhoneNumber != null && command.PhoneNumber != customer.PhoneNumber)
         {
             if (!flag) flag = true;
-            user.UpdateAvatar(command.Avatar);
-        }
-
-        if (command.PhoneNumber != null && command.PhoneNumber != user.PhoneNumber)
-        {
-            if (!flag) flag = true;
-            user.UpdatePhoneNumber(command.PhoneNumber);
+            customer.UpdatePhoneNumber(command.PhoneNumber);
         }
 
         if (!flag)
             return Errors.User.NoUserInfoUpdate;
 
         // Save the updated admin profile to the repository
-        await _adminRepository.UpdateAdminProfile(user);
+        await _userRepository.Update(customer);
 
         // You can return a success message or any other information if needed
         return new MessageResult("Admin profile updated successfully");
@@ -175,7 +174,7 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
         return true;
     }
 
-    private static bool AllPropertiesNull(UpdateAdminProfileCommand command)
+    private static bool AllPropertiesNull(UpdateUserProfileCommand command)
     {
         return command.FirstName == null &&
                command.LastName == null &&

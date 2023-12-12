@@ -5,41 +5,42 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using pet_store_backend.application.Admin.Common;
 using pet_store_backend.application.Common.Interfaces.Persistence;
+using pet_store_backend.application.User.Common;
 using pet_store_backend.domain.Common.Errors;
 
 namespace pet_store_backend.application.Admin.Queries;
 
-public record AdminProfileQuery
+public record UserProfileQuery
 (
 
-) : IRequest<ErrorOr<AdminProfileResult>>;
+) : IRequest<ErrorOr<UserProfileResult>>;
 
-public class UpdateProductCommandValidator : AbstractValidator<AdminProfileQuery>
+public class UserProfileQueryValidator : AbstractValidator<UserProfileQuery>
 {
-    public UpdateProductCommandValidator()
+    public UserProfileQueryValidator()
     {
     }
 }
 
-public class AdminProfileHandler : IRequestHandler<AdminProfileQuery, ErrorOr<AdminProfileResult>>
+public class UserProfileQueryHandler : IRequestHandler<UserProfileQuery, ErrorOr<UserProfileResult>>
 {
-    private readonly IAdminRepository _adminRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AdminProfileHandler(IAdminRepository adminRepository, IHttpContextAccessor httpContextAccessor)
+    public UserProfileQueryHandler(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
     {
-        _adminRepository = adminRepository;
+        _userRepository = userRepository;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<ErrorOr<AdminProfileResult>> Handle(AdminProfileQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<UserProfileResult>> Handle(UserProfileQuery request, CancellationToken cancellationToken)
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null)
         {
             return Errors.User.UserNotSignIn;
         }
-        var userProfile = await _adminRepository.RetrieveAdminProfile(Guid.Parse(userId));
+        var userProfile = await _userRepository.RetrieveUserProfile(Guid.Parse(userId));
         if (userProfile == null)
         {
             return Errors.User.UserNotExist;

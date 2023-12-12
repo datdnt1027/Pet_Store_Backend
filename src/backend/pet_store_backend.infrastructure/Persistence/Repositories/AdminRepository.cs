@@ -43,6 +43,14 @@ public class AdminRepository : IAdminRepository
         ).ToList();
     }
 
+    public async Task<UserRole?> GetUserRoleFromId(Guid userRoleId)
+    {
+        var userRole = await _dbContext.UserRoles
+            .Where(ur => ur.Id == UserRoleId.Create(userRoleId) && !ur.UserRoleName.Equals(UserRoleKey.AdminRoleName))
+            .FirstOrDefaultAsync();
+        return userRole;
+    }
+
     public async Task<AdminProfileResult?> RetrieveAdminProfile(Guid userId)
     {
         var adminProfile = await _dbContext.Users
@@ -50,6 +58,7 @@ public class AdminRepository : IAdminRepository
             .Select(u => new AdminProfileResult(
                 u.FirstName,
                 u.LastName,
+                u.Gender,
                 u.Email,
                 u.Address ?? "",
                 u.Avatar ?? Array.Empty<byte>(),
@@ -75,19 +84,10 @@ public class AdminRepository : IAdminRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<bool> UpdateStatusUserRole(Guid userRoleId, bool status)
+    public async Task UpdateUserRole(UserRole userRole)
     {
-        var userRole = await _dbContext.UserRoles
-            .Where(ur => ur.Id == UserRoleId.Create(userRoleId))
-            .FirstOrDefaultAsync();
-        if (userRole is not null)
-        {
-            userRole.UpdateStatus(status);
-            _dbContext.Update(userRole);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-        return false;
+        _dbContext.Update(userRole);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task CreateUserRole(UserRole userRole)
