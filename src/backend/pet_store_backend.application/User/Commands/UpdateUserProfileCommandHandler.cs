@@ -137,7 +137,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         // if (command.Avatar != null && !ByteArraysEqual(command.Avatar, customer.Avatar))
         // {
         //     if (!flag) flag = true;
-        //     customer.UpdateAvatar(command.Avatar);
+        customer.UpdateAvatar(command.Avatar);
         // }
 
         if (command.PhoneNumber != null && command.PhoneNumber != customer.PhoneNumber)
