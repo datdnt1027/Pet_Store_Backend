@@ -2,7 +2,7 @@ public record ProductResponseOrder(
     string ProductName,
     string ProductDetail,
     double ProductPrice,
-    byte[] ImageData,
+    string ImageData,
     int Quantity
 );
 
