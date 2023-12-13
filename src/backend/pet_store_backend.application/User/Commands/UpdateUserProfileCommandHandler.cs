@@ -134,11 +134,11 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
             customer.UpdateAddress(command.Address);
         }
 
-        if (command.Avatar != null && !ByteArraysEqual(command.Avatar, customer.Avatar))
-        {
-            if (!flag) flag = true;
-            customer.UpdateAvatar(command.Avatar);
-        }
+        // if (command.Avatar != null && !ByteArraysEqual(command.Avatar, customer.Avatar))
+        // {
+        //     if (!flag) flag = true;
+        //     customer.UpdateAvatar(command.Avatar);
+        // }
 
         if (command.PhoneNumber != null && command.PhoneNumber != customer.PhoneNumber)
         {

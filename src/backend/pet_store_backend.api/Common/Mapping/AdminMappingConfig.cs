@@ -12,7 +12,7 @@ public class AdminMappingConfig : IRegister
         config.NewConfig<UpdateRoleStatusRequest, UpdateRoleStatusCommand>();
         config.NewConfig<UpdateAdminProfileRequest, UpdateAdminProfileCommand>();
         config.NewConfig<AdminProfileResult, AdminProfileResponse>()
-            .Map(dest => dest.Sex, src => src.Sex.ToString() ?? "")
+            .Map(dest => dest.Sex, src => (int?)src.Sex)
             .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);
     }
 }
