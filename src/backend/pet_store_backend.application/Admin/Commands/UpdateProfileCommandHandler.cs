@@ -138,7 +138,7 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
         // if (command.Avatar != null && !ByteArraysEqual(command.Avatar, user.Avatar))
         // {
         //     if (!flag) flag = true;
-        //     user.UpdateAvatar(command.Avatar);
+        user.UpdateAvatar(command.Avatar);
         // }
 
         if (command.PhoneNumber != null && command.PhoneNumber != user.PhoneNumber)
