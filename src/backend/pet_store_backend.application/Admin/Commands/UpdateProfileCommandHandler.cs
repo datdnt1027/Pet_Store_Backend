@@ -14,7 +14,7 @@ namespace pet_store_backend.application.Admin.Commands;
 public record UpdateAdminProfileCommand(
     string FirstName,
     string LastName,
-    string Sex,
+    int Sex,
     // string Email,
     string Address,
     byte[] Avatar,
@@ -54,9 +54,9 @@ public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminP
             .When(command => command.PhoneNumber != null);
     }
 
-    private bool BeValidGender(string sex)
+    private bool BeValidGender(int sex)
     {
-        return Enum.IsDefined(typeof(Gender), int.Parse(sex));
+        return Enum.IsDefined(typeof(Gender), sex);
     }
 
     private bool BeValidAvatar(byte[] avatar)
@@ -123,10 +123,10 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
         //     user.UpdateEmail(command.Email);
         // }
 
-        if (int.Parse(command.Sex) != (int?)user.Gender)
+        if (command.Sex != (int?)user.Gender)
         {
             if (!flag) flag = true;
-            user.UpdateGender((Gender?)(int.Parse(command.Sex)));
+            user.UpdateGender((Gender?)command.Sex);
         }
 
         if (command.Address != null && command.Address != user.Address)
@@ -135,11 +135,11 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
             user.UpdateAddress(command.Address);
         }
 
-        if (command.Avatar != null && !ByteArraysEqual(command.Avatar, user.Avatar))
-        {
-            if (!flag) flag = true;
-            user.UpdateAvatar(command.Avatar);
-        }
+        // if (command.Avatar != null && !ByteArraysEqual(command.Avatar, user.Avatar))
+        // {
+        //     if (!flag) flag = true;
+        //     user.UpdateAvatar(command.Avatar);
+        // }
 
         if (command.PhoneNumber != null && command.PhoneNumber != user.PhoneNumber)
         {
