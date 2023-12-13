@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Order.Common;
+using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.Orders.ValueObjects;
 using pet_store_backend.domain.Entities.PetProducts.PetProduct;
@@ -87,7 +88,7 @@ public class OrderRepository : IOrderRepository
         return null;
     }
 
-    public async Task<List<OrderProduct>?> RetrieveOrderedProductsForUser()
+    public async Task<List<OrderBriefResult>?> RetrieveOrderedProductsForUser()
     {
         var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (customerId != null)
@@ -96,8 +97,9 @@ public class OrderRepository : IOrderRepository
                 .AsNoTracking()
                 .Where(o => o.CustomerId == CustomerId.Create(Guid.Parse(customerId)) && o.OrderProductStatus == OrderProductStatus.Ordered)
                 .Include(o => o.Product)
-                .Select(op => OrderProduct.RetriveOrderProductBrief(
-                    Product.ProductBrief(
+                .Select(op => new OrderBriefResult(
+                    op.Id.Value,
+                    new ProductOrderBriefResult(
                         op.Product.ProductName,
                         op.Product.ProductDetail,
                         op.Product.ProductPrice.Value,
@@ -114,10 +116,18 @@ public class OrderRepository : IOrderRepository
     }
 
 
-    public async Task<OrderProduct?> CheckOrderIsExist(Guid orderProductId)
+    public async Task<OrderProduct?> CheckProductOrderIsExist(Guid productId, Guid customerId)
     {
         var order = await _dbContext.OrderProducts
-            .Where(o => o.ProductId == ProductId.Create(orderProductId) && o.OrderProductStatus == OrderProductStatus.Ordered)
+            .Where(o => o.ProductId == ProductId.Create(productId) && o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
+            .FirstOrDefaultAsync();
+        return order;
+    }
+
+    public async Task<OrderProduct?> CheckOrderIsExist(Guid orderProductId, Guid customerId)
+    {
+        var order = await _dbContext.OrderProducts
+            .Where(o => o.Id == OrderProductId.Create(orderProductId) && o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
             .FirstOrDefaultAsync();
         return order;
     }
@@ -125,6 +135,11 @@ public class OrderRepository : IOrderRepository
     public async Task UpdateOrderProduct(OrderProduct orderProduct)
     {
         _dbContext.Update(orderProduct);
+        await _dbContext.SaveChangesAsync();
+    }
+    public async Task DeleteOrderProduct(OrderProduct orderProduct)
+    {
+        _dbContext.OrderProducts.Remove(orderProduct);
         await _dbContext.SaveChangesAsync();
     }
 }

@@ -70,16 +70,16 @@ public sealed class OrderProduct : Entity<OrderProductId>
         );
     }
 
-    public static OrderProduct RetriveOrderProductBrief(
-        Product product,
-        int quantity
-    )
-    {
-        return new OrderProduct(
-            product,
-            quantity
-        );
-    }
+    // public static OrderProduct RetriveOrderProductBrief(
+    //     Product product,
+    //     int quantity
+    // )
+    // {
+    //     return new OrderProduct(
+    //         product,
+    //         quantity
+    //     );
+    // }
 
     public void CompletedOrder(OrderId orderId)
     {

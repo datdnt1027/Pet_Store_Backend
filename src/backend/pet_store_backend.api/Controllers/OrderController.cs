@@ -46,6 +46,20 @@ public class OrderController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpDelete]
+    [Route("delete/{orderProductId}")]
+    [Authorize(Roles = UserRoleKey.UserRoleName)]
+    public async Task<IActionResult> CustomerDeleteProduct(string orderProductId)
+    {
+        var command = new DeleteOrderProductCommand(orderProductId);
+        var createOrderProduct = await _mediator.Send(command);
+
+        return createOrderProduct.Match(orderProduct => Ok(_mapper.Map<MessageResponse>(orderProduct)),
+            errors => Problem(errors));
+    }
+
+
+
     [HttpPost]
     [Route("payment/momo")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]

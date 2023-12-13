@@ -32,3 +32,10 @@ public record ProductBriefResult(
     double ProductPrice,
     byte[] ImageData
 );
+
+public record ProductOrderBriefResult(
+    string ProductName,
+    string ProductDetail,
+    double ProductPrice,
+    byte[] ImageData
+);

@@ -31,21 +31,12 @@ public class GetOrderProductCommandHandler : IRequestHandler<GetOrderProductComm
         if (orderProducts != null)
         {
             var totalQuantityProduct = orderProducts.Sum(op => op.Quantity);
-            var totalPrice = orderProducts.Sum(op => op.Quantity * op.Product.ProductPrice.Value);
-
-            var productResults = orderProducts.Select(op => new ProductResultOrder
-            (
-                op.Product.ProductName,
-                op.Product.ProductDetail,
-                op.Product.ProductPrice.Value,
-                op.Product.ImageData ?? Array.Empty<byte>(),
-                op.Quantity
-            )).ToList();
+            var totalPrice = orderProducts.Sum(op => op.Quantity * op.Product.ProductPrice);
 
             var orderProductResult = new OrderProductResult(
                 totalQuantityProduct,
                 (long)totalPrice,
-                productResults
+                orderProducts
             );
 
             return orderProductResult;
