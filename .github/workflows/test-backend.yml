@@ -1,0 +1,9 @@
+jobs:
+  test-backend:
+    triggers:
+      paths:
+        - "src/backend/**"
+        - "test/backend/**"
+    step:
+      - SET ENV=TEST
+      - dotnet test

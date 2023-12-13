@@ -1,0 +1,25 @@
+@host= https://localhost:7206
+
+POST {{host}}/admin/collections
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MzMwMzNlZS1jMGMyLTRjY2MtYjRjYi1lZGZmYTdmNTg0OTMiLCJnaXZlbl9uYW1lIjoiRGF0IiwiZmFtaWx5X25hbWUiOiJUaGllbiIsImp0aSI6IjUzMzAzM2VlLWMwYzItNGNjYy1iNGNiLWVkZmZhN2Y1ODQ5MyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOiJ7XCJVc2VyUm9sZXNcIjp7XCJDcmVhdGVcIjp0cnVlLFwiUmVhZFwiOnRydWUsXCJVcGRhdGVcIjp0cnVlLFwiRGVhY3RpdmF0ZVwiOnRydWV9LFwiQ2F0ZWdvcmllc1wiOntcIkNyZWF0ZVwiOnRydWUsXCJSZWFkXCI6dHJ1ZSxcIlVwZGF0ZVwiOnRydWUsXCJEZWFjdGl2YXRlXCI6dHJ1ZX0sXCJPcmRlcnNcIjp7XCJDcmVhdGVcIjp0cnVlLFwiUmVhZFwiOnRydWUsXCJVcGRhdGVcIjp0cnVlLFwiRGVhY3RpdmF0ZVwiOnRydWV9LFwiQ3VzdG9tZXJzXCI6e1wiQ3JlYXRlXCI6dHJ1ZSxcIlJlYWRcIjp0cnVlLFwiVXBkYXRlXCI6dHJ1ZSxcIkRlYWN0aXZhdGVcIjp0cnVlfSxcIlVzZXJQZXJtaXNzaW9uc1wiOntcIkNyZWF0ZVwiOnRydWUsXCJSZWFkXCI6dHJ1ZSxcIlVwZGF0ZVwiOnRydWUsXCJEZWFjdGl2YXRlXCI6dHJ1ZX0sXCJVc2Vyc1wiOntcIkNyZWF0ZVwiOnRydWUsXCJSZWFkXCI6dHJ1ZSxcIlVwZGF0ZVwiOnRydWUsXCJEZWFjdGl2YXRlXCI6dHJ1ZX0sXCJPcmRlclByb2R1Y3RzXCI6e1wiQ3JlYXRlXCI6dHJ1ZSxcIlJlYWRcIjp0cnVlLFwiVXBkYXRlXCI6dHJ1ZSxcIkRlYWN0aXZhdGVcIjp0cnVlfSxcIlByb2R1Y3RzXCI6e1wiQ3JlYXRlXCI6dHJ1ZSxcIlJlYWRcIjp0cnVlLFwiVXBkYXRlXCI6dHJ1ZSxcIkRlYWN0aXZhdGVcIjp0cnVlfX0iLCJleHAiOjE3MDIwMzc2ODMsImlzcyI6IlBldF9TdG9yZSIsImF1ZCI6IlBldF9TdG9yZSJ9.ed3RoCxuJNV5bqbQDEsV5Ml3zrtppG71TSO7GHmrEM8
+Content-Type: application/json
+
+{
+    "categoryName": "Food",
+    "products":[
+        {
+            "productName":"Banana Flavor",
+            "productDetail":"This food have flavor is Banana",
+            "productQuantity": 65,
+            "productPrice": 120000,
+            "imageData":"./../../../resources/image/1.png"
+        },
+        {
+            "productName":"Chocolate Flavor",
+            "productDetail":"This food have flavor is Banana",
+            "productQuantity": 100,
+            "productPrice": 150000,
+            "imageData":"./../../../resources/image/2.png"
+        }
+    ]
+}
