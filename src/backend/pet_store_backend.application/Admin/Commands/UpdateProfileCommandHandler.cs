@@ -154,7 +154,7 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
         await _adminRepository.UpdateAdminProfile(user);
 
         // You can return a success message or any other information if needed
-        return new MessageResult("Admin profile updated successfully");
+        return new MessageResult("User profile updated successfully");
     }
 
     // The ByteArraysEqual function from the previous example

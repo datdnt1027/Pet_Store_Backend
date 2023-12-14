@@ -12,7 +12,7 @@ public class UserMappingConfig : IRegister
     {
         config.NewConfig<UpdateUserProfileRequest, UpdateUserProfileCommand>();
         config.NewConfig<UserProfileResult, UserProfileResponse>()
-            .Map(dest => dest.Sex, src => (int?)src.Sex)
+            .Map(dest => dest.Sex, src => ((int?)src.Sex).ToString())
             .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);
     }
 }

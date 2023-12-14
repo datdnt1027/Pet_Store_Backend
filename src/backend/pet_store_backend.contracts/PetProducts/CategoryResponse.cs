@@ -26,6 +26,13 @@ public record ProductBriefResponse(
     string ImageData
 );
 
+public record ProductOrderBriefResponse(
+    string ProductName,
+    string ProductDetail,
+    double ProductPrice,
+    string ImageData
+);
+
 public record CategoryWithProductCountResponse(
     string CategoryId,
     string CategoryName,

@@ -113,19 +113,19 @@ public sealed class Product : Entity<ProductId>
             categoryId);
     }
 
-    public static Product ProductBrief(
-        string ProductName,
-        string ProductDetail,
-        double ProductPrice,
-        byte[] ProductImage)
-    {
-        return new Product(
-            ProductName,
-            ProductDetail,
-            Price.CreateNew(ProductPrice),
-            ProductImage
-        );
-    }
+    // public static Product ProductBrief(
+    //     string ProductName,
+    //     string ProductDetail,
+    //     double ProductPrice,
+    //     byte[] ProductImage)
+    // {
+    //     return new Product(
+    //         ProductName,
+    //         ProductDetail,
+    //         Price.CreateNew(ProductPrice),
+    //         ProductImage
+    //     );
+    // }
 
 #pragma warning disable CS8618
     private Product()

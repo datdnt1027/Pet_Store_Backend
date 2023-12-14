@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using ErrorOr;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using pet_store_backend.application.Common;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Common.Errors;
@@ -33,20 +35,28 @@ public class OrderProductCommandHandler : IRequestHandler<OrderProductCommand, E
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ICollectionRepository _collectionRepository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public OrderProductCommandHandler(IOrderRepository orderRepository, ICollectionRepository collectionRepository)
+    public OrderProductCommandHandler(IOrderRepository orderRepository, ICollectionRepository collectionRepository, IHttpContextAccessor httpContextAccessor)
     {
         _orderRepository = orderRepository;
         _collectionRepository = collectionRepository;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<ErrorOr<MessageResult>> Handle(OrderProductCommand request, CancellationToken cancellationToken)
     {
+        var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (customerId == null)
+        {
+            return Errors.User.UserNotSignIn;
+        }
+
         if (!(await _collectionRepository.CheckProductIsValid(Guid.Parse(request.ProductId))))
         {
             return Errors.Product.NullProduct;
         }
-        if ((await _orderRepository.CheckOrderIsExist(Guid.Parse(request.ProductId))) is OrderProduct orderProduct)
+        if ((await _orderRepository.CheckProductOrderIsExist(Guid.Parse(request.ProductId), Guid.Parse(customerId)) is OrderProduct orderProduct))
         {
             int updateQuantity = request.Quantity + orderProduct.Quantity;
             orderProduct.UpdateQuantityOrderProduct(updateQuantity);
