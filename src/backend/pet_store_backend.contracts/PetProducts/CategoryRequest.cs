@@ -37,3 +37,5 @@ public record CategoryIdRequest(
 public record ProductIdRequest(
     string ProductId
 );
+
+

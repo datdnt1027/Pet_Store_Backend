@@ -15,3 +15,8 @@ public record UpdateRoleStatusRequest(
     string UserRoleId,
     bool Status
 );
+
+public record FindUserRequest(
+    string? Email,
+    string? PhoneNumber
+);

@@ -11,3 +11,13 @@ public record UserProfileResult(
     byte[] Avatar,
     string PhoneNumber
 );
+public record UserProfileWithStatusResult(
+    string FirstName,
+    string LastName,
+    Gender? Sex,
+    string Email,
+    string Address,
+    byte[] Avatar,
+    string PhoneNumber,
+    bool Status
+);

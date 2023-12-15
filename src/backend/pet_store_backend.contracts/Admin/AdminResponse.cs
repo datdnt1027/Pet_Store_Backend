@@ -24,3 +24,14 @@ public record AdminProfileResponse(
     string Avatar,
     string PhoneNumber
 );
+
+public record FindCustomerResponse(
+    string FirstName,
+    string LastName,
+    string Sex,
+    string Email,
+    string Address,
+    string Avatar,
+    string PhoneNumber,
+    string Status
+);
