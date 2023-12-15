@@ -34,8 +34,9 @@ public class UpdateAdminProfileCommandValidator : AbstractValidator<UpdateAdminP
             .When(command => command.LastName != null);
 
         RuleFor(command => command.Sex)
-            .Must(BeValidGender).WithMessage("Invalid gender value.")
-            .When(command => command.Sex != null);
+            .Must(BeValidGender)
+            .When(command => command.Sex != null)
+            .WithMessage("Invalid gender value.");
 
         // RuleFor(command => command.Email)
         //     .EmailAddress().WithMessage("Invalid email address.")
@@ -136,10 +137,11 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
         }
 
         // if (command.Avatar != null && !ByteArraysEqual(command.Avatar, user.Avatar))
-        // {
-        if (!flag) flag = true;
-        user.UpdateAvatar(command.Avatar);
-        // }
+        if (command.Avatar != null)
+        {
+            if (!flag) flag = true;
+            user.UpdateAvatar(command.Avatar);
+        }
 
         if (command.PhoneNumber != null && command.PhoneNumber != user.PhoneNumber)
         {
@@ -179,6 +181,7 @@ public class AdminProfileAdminCommandHandler : IRequestHandler<UpdateAdminProfil
     {
         return command.FirstName == null &&
                command.LastName == null &&
+                command.Sex == null &&
                //    command.Email == null &&
                command.Address == null &&
                command.Avatar == null &&
