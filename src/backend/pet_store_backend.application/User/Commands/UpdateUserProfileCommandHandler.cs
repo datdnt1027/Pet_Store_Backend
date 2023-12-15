@@ -34,8 +34,9 @@ public class UpdateUserProfileCommandValidator : AbstractValidator<UpdateUserPro
             .When(command => command.LastName != null);
 
         RuleFor(command => command.Sex)
-            .NotEmpty()
-            .Must(BeValidGender).WithMessage("Invalid gender value.");
+            .Must(BeValidGender)
+            .When(command => command.Sex != null)
+            .WithMessage("Invalid gender value.");
 
         // RuleFor(command => command.Email)
         //     .EmailAddress().WithMessage("Invalid email address.")
@@ -116,7 +117,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
             customer.UpdateLastName(command.LastName);
         }
 
-        if (int.Parse(command.Sex) != (int?)customer.Gender)
+        if (command.Sex != null && int.Parse(command.Sex) != (int?)customer.Gender)
         {
             if (!flag) flag = true;
             customer.UpdateGender((Gender?)int.Parse(command.Sex));
@@ -135,10 +136,11 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         }
 
         // if (command.Avatar != null && !ByteArraysEqual(command.Avatar, customer.Avatar))
-        // {
-        //     if (!flag) flag = true;
-        customer.UpdateAvatar(command.Avatar);
-        // }
+        if (command.Avatar != null)
+        {
+            if (!flag) flag = true;
+            customer.UpdateAvatar(command.Avatar);
+        }
 
         if (command.PhoneNumber != null && command.PhoneNumber != customer.PhoneNumber)
         {
@@ -178,6 +180,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
     {
         return command.FirstName == null &&
                command.LastName == null &&
+               command.Sex == null &&
                //    command.Email == null &&
                command.Address == null &&
                command.Avatar == null &&

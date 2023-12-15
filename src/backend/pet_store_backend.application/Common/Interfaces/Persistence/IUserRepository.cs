@@ -8,6 +8,8 @@ namespace pet_store_backend.application.Common.Interfaces.Persistence
     {
         Task<pet_store_backend.domain.Entities.Users.User?> GetUserByEmail(string email);
         Task<Customer?> GetCustomerByEmail(string email);
+        Task<UserProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email);
+        Task<UserProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber);
         Task Add(Customer customer);
         Task Update(Customer customer);
         Task<Customer?> GetCustomerByVerificationToken(string verificationToken);

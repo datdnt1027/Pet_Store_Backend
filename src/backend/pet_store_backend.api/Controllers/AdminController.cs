@@ -128,4 +128,16 @@ public class AdminController : ApiController
         return updateProduct.Match(product => Ok(_mapper.Map<MessageResponse>(product)),
             errors => Problem(errors));
     }
+
+    [HttpPost]
+    [Route("find_user")]
+    [HasPermission(TableKey.Customers, PermissionType.Read)]
+    public async Task<IActionResult> FindUser(FindUserRequest request)
+    {
+        var query = _mapper.Map<CustomerQuery>(request);
+        var findUser = await _mediator.Send(query);
+
+        return findUser.Match(user => Ok(_mapper.Map<FindCustomerResponse>(user)),
+            errors => Problem(errors));
+    }
 }

@@ -44,12 +44,50 @@ public class UserRepository : IUserRepository
     // This is Customer Email
     public async Task<Customer?> GetCustomerByEmail(string email)
     {
-        var customerRole = await _dbContext.Customers
+        var customer = await _dbContext.Customers
             .Where(u => u.Email == email)
             .Include(u => u.CustomerRole) // Include the UserRole navigation property
             .FirstOrDefaultAsync();
 
-        return customerRole;
+        return customer;
+    }
+
+    public async Task<UserProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email)
+    {
+        var customer = await _dbContext.Customers
+            .Where(u => u.Email == email)
+            .Select(u => new UserProfileWithStatusResult(
+                u.FirstName,
+                u.LastName,
+                u.Gender,
+                u.Email,
+                u.Address ?? "",
+                u.Avatar ?? Array.Empty<byte>(),
+                u.PhoneNumber ?? "",
+                u.Status
+            ))
+            .FirstOrDefaultAsync();
+
+        return customer;
+    }
+
+    public async Task<UserProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber)
+    {
+        var customer = await _dbContext.Customers
+            .Where(u => u.PhoneNumber == phoneNumber)
+            .Select(u => new UserProfileWithStatusResult(
+                u.FirstName,
+                u.LastName,
+                u.Gender,
+                u.Email,
+                u.Address ?? "",
+                u.Avatar ?? Array.Empty<byte>(),
+                u.PhoneNumber ?? "",
+                u.Status
+            ))
+            .FirstOrDefaultAsync();
+
+        return customer;
     }
 
     public async Task<Customer?> GetCustomerByVerificationToken(string verificationToken)
