@@ -19,5 +19,7 @@ namespace pet_store_backend.application.Common.Interfaces.Persistence
         Task<UserRoleId?> GetUserRoleId(string userRoleName);
         Task<UserProfileResult?> RetrieveUserProfile(Guid userId);
         Task<Customer?> RetrieveUser(Guid userId);
+        Task UpdateCustomerStatusAsync(Customer customer);
+
     }
 }

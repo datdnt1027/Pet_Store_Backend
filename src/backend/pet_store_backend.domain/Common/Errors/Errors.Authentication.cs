@@ -27,5 +27,11 @@ public static partial class Errors
             description: "User Don't Have Any Permission Or Permission Not Exist"
         );
 
+        public static Error ForbidenLogin => Error.Custom(
+            type: 403,
+            code: "Auth.Forbidden",
+            description: "User Forbidden"
+        );
+
     }
 }

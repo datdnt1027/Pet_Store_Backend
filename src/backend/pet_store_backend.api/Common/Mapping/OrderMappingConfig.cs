@@ -11,6 +11,7 @@ public class OrderMappingConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<OrderProductRequest, OrderProductCommand>();
+        config.NewConfig<UpdateOrderProductQuantityRequest, UpdateOrderProductQuantityCommand>();
         config.NewConfig<MomoOneTimePaymentRequest, MomoOneTimePaymentProductCommand>();
         config.NewConfig<PaymentResponse, MomoOneTimePaymentResponse>();
         config.NewConfig<OrderProductResult, OrderProductResponse>();

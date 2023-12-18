@@ -34,7 +34,8 @@ public class ApiController : ControllerBase
             ErrorType.Validation => StatusCodes.Status400BadRequest,
             ErrorType.NotFound => StatusCodes.Status404NotFound,
             ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
-            _ => StatusCodes.Status500InternalServerError,
+            ErrorType.Unexpected => StatusCodes.Status500InternalServerError,
+            _ => error.NumericType
         };
 
         return Problem(statusCode: statusCode, title: error.Description);

@@ -23,5 +23,10 @@ public static partial class Errors
             code: "User.NoInfoUpdate",
             description: "No Info User Update");
 
+        public static Error InvalidStatusFormat => Error.Conflict(
+            code: "User.InvalidStatus",
+            description: "Status User Invalid"
+        );
+
     }
 }

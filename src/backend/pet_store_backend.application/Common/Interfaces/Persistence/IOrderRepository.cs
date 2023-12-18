@@ -1,5 +1,4 @@
 using pet_store_backend.application.Order.Common;
-using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.Orders.ValueObjects;
 
@@ -15,4 +14,5 @@ public interface IOrderRepository
     Task AddOrder(pet_store_backend.domain.Entities.Orders.Order order);
     Task<List<OrderBriefResult>?> RetrieveOrderedProductsForUser();
     Task DeleteOrderProduct(OrderProduct orderProduct);
+    Task<OrderProduct?> RetrieveOrderProduct(Guid orderProductId);
 }

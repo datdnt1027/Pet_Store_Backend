@@ -30,6 +30,10 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
         {
             return Errors.Authentication.IvalidCredentials;
         }
+        if (!customer.Status)
+        {
+            return Errors.Authentication.ForbidenLogin;
+        }
         // Check User Password
         if (!_passwordConfiguration.VerifyPasswordHash(query.Password, customer.PasswordHash, customer.PasswordSalt))
         {

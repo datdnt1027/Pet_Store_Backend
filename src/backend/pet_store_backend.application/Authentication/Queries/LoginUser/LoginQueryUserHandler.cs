@@ -5,7 +5,6 @@ using pet_store_backend.application.Authentication.Queries.Login;
 using pet_store_backend.application.Common.Interfaces.Authentication;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Common.Errors;
-using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Queries.LoginUser;
 
@@ -30,6 +29,10 @@ public class LoginQueryUserHandler : IRequestHandler<LoginQueryUser, ErrorOr<Aut
         if (await _userRepository.GetUserByEmail(query.Email) is not pet_store_backend.domain.Entities.Users.User user)
         {
             return Errors.Authentication.IvalidCredentials;
+        }
+        if (!user.Status)
+        {
+            return Errors.Authentication.ForbidenLogin;
         }
         // Check User Password
         if (!_passwordConfiguration.VerifyPasswordHash(query.Password, user.PasswordHash, user.PasswordSalt))
