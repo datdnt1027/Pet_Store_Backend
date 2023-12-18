@@ -12,6 +12,7 @@ public class AdminMappingConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<UpdateRoleStatusRequest, UpdateRoleStatusCommand>();
+        config.NewConfig<UpdateCustomerStatusRequest, UpdateCustomerStatusCommand>();
         config.NewConfig<UpdateAdminProfileRequest, UpdateAdminProfileCommand>();
         config.NewConfig<AdminProfileResult, AdminProfileResponse>()
             .Map(dest => dest.Sex, src => ((int?)src.Sex).ToString())

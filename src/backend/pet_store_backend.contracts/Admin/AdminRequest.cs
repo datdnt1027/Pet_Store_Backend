@@ -16,6 +16,11 @@ public record UpdateRoleStatusRequest(
     bool Status
 );
 
+public record UpdateCustomerStatusRequest(
+    string CustomerId,
+    string Status
+);
+
 public record FindUserRequest(
     string? Email,
     string? PhoneNumber

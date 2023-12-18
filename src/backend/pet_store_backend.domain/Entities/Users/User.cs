@@ -61,6 +61,13 @@ public sealed class User : Entity<UserId>
         Address = address;
     }
 
+    private User(
+        UserId userId,
+        bool status
+    ) : base(userId)
+    {
+        Status = status;
+    }
     // public static User UpdateUserInfo(
     //     UserId userId,
     //     string firstName,
@@ -100,6 +107,14 @@ public sealed class User : Entity<UserId>
             userRoleId,
             Status);
         return user;
+    }
+
+    public static User Create(
+        UserId UserId,
+        bool Status
+    )
+    {
+        return new User(UserId, Status);
     }
 
     public void UpdateVerifiedAt(DateTime verifiedAt)
@@ -310,6 +325,12 @@ public sealed class Customer : Entity<CustomerId>
         {
             this.Gender = gender.Value;
         }
+    }
+
+
+    public void UpdateStatus(bool status)
+    {
+        Status = status;
     }
 
 

@@ -129,6 +129,19 @@ public class AdminController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpPatch]
+    [Route("user/status")]
+    [HasPermission(TableKey.Customers, PermissionType.Deactivate)]
+    public async Task<IActionResult> UpdateUserStatus(UpdateCustomerStatusRequest request)
+    {
+        var command = _mapper.Map<UpdateCustomerStatusCommand>(request);
+        var updateStatus = await _mediator.Send(command);
+        return updateStatus.Match(
+            status => Ok(_mapper.Map<MessageResponse>(status)),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     [Route("find_user")]
     [HasPermission(TableKey.Customers, PermissionType.Read)]

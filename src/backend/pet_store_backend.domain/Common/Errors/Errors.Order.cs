@@ -12,9 +12,13 @@ public static partial class Errors
         public static Error OrderProductAddProblem => Error.Conflict(
             code: "Order.ErrorAddOrderProduct",
             description: "Order Product can not add !");
-
         public static Error NoOrderProductPayment => Error.Conflict(
             code: "Order.NoOrderInCart",
             description: "No Order have to pay !");
+
+        public static Error NoQuantityOrderProductUpdate => Error.Conflict(
+            code: "Order.NoOrderQuantityUpdate",
+            description: "No Order Product Quantity Update !"
+        );
     }
 }

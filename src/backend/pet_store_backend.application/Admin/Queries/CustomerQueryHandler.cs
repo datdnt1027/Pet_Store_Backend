@@ -5,7 +5,6 @@ using MediatR;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.User.Common;
 using pet_store_backend.domain.Common.Errors;
-using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Admin.Queries;
 

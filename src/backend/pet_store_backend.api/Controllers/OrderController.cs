@@ -34,6 +34,18 @@ public class OrderController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpPost]
+    [Route("quantity/customer")]
+    [Authorize(Roles = UserRoleKey.UserRoleName)]
+    public async Task<IActionResult> UpdateQuantCustomerOrderProduct(UpdateOrderProductQuantityRequest request)
+    {
+        var command = _mapper.Map<UpdateOrderProductQuantityCommand>(request);
+        var updateQuantityOrderProduct = await _mediator.Send(command);
+
+        return updateQuantityOrderProduct.Match(orderProduct => Ok(_mapper.Map<MessageResponse>(orderProduct)),
+            errors => Problem(errors));
+    }
+
     [HttpGet]
     [Route("customer")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]

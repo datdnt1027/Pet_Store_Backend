@@ -161,4 +161,11 @@ public class UserRepository : IUserRepository
         return customer;
     }
 
+    public async Task UpdateCustomerStatusAsync(Customer customer)
+    {
+        _dbContext.Entry(customer).State = EntityState.Modified;
+        // Save changes to the database
+        await _dbContext.SaveChangesAsync();
+    }
+
 }

@@ -11,8 +11,7 @@ using pet_store_backend.domain.Entities.Orders;
 namespace pet_store_backend.application.Order.Commands;
 
 public record OrderProductCommand(
-    string ProductId,
-    int Quantity) : IRequest<ErrorOr<MessageResult>>;
+    string ProductId) : IRequest<ErrorOr<MessageResult>>;
 
 public class OrderCommandValidator : AbstractValidator<OrderProductCommand>
 {
@@ -22,8 +21,8 @@ public class OrderCommandValidator : AbstractValidator<OrderProductCommand>
             .NotEmpty().WithMessage("Product ID cannot be empty.")
             .Must(BeValidGuid).WithMessage("Invalid format for Product ID.");
 
-        RuleFor(command => command.Quantity)
-            .GreaterThan(0).WithMessage("Quantity must be greater than 0.");
+        // RuleFor(command => command.Quantity)
+        //     .GreaterThan(0).WithMessage("Quantity must be greater than 0.");
     }
 
     private bool BeValidGuid(string guid)
@@ -58,13 +57,13 @@ public class OrderProductCommandHandler : IRequestHandler<OrderProductCommand, E
         }
         if ((await _orderRepository.CheckProductOrderIsExist(Guid.Parse(request.ProductId), Guid.Parse(customerId)) is OrderProduct orderProduct))
         {
-            int updateQuantity = request.Quantity + orderProduct.Quantity;
+            int updateQuantity = 1 + orderProduct.Quantity;
             orderProduct.UpdateQuantityOrderProduct(updateQuantity);
             await _orderRepository.UpdateOrderProduct(orderProduct);
         }
         else
         {
-            if (!await _orderRepository.AddProductOrder(Guid.Parse(request.ProductId), request.Quantity))
+            if (!await _orderRepository.AddProductOrder(Guid.Parse(request.ProductId), 1))
             {
                 return Errors.Order.OrderProductAddProblem;
             }

@@ -134,12 +134,20 @@ public class OrderRepository : IOrderRepository
 
     public async Task UpdateOrderProduct(OrderProduct orderProduct)
     {
-        _dbContext.Update(orderProduct);
+        _dbContext.Entry(orderProduct).State = EntityState.Modified;
+        // Save changes to the database
         await _dbContext.SaveChangesAsync();
     }
     public async Task DeleteOrderProduct(OrderProduct orderProduct)
     {
         _dbContext.OrderProducts.Remove(orderProduct);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<OrderProduct?> RetrieveOrderProduct(Guid orderProductId)
+    {
+        var orderProduct = await _dbContext.OrderProducts.FirstOrDefaultAsync(
+            orderProduct => orderProduct.Id == OrderProductId.Create(orderProductId));
+        return orderProduct;
     }
 }
