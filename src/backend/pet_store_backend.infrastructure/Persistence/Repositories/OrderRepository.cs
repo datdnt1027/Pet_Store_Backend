@@ -100,6 +100,7 @@ public class OrderRepository : IOrderRepository
                 .Select(op => new OrderBriefResult(
                     op.Id.Value,
                     new ProductOrderBriefResult(
+                        op.ProductId.Value,
                         op.Product.ProductName,
                         op.Product.ProductDetail,
                         op.Product.ProductPrice.Value,

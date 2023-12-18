@@ -34,6 +34,7 @@ public record ProductBriefResult(
 );
 
 public record ProductOrderBriefResult(
+    Guid ProductId,
     string ProductName,
     string ProductDetail,
     double ProductPrice,
