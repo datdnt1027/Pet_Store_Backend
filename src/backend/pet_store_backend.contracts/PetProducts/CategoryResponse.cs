@@ -27,6 +27,7 @@ public record ProductBriefResponse(
 );
 
 public record ProductOrderBriefResponse(
+    Guid productId,
     string ProductName,
     string ProductDetail,
     double ProductPrice,
