@@ -12,7 +12,7 @@ public sealed class Order : AggregateRoot<OrderId>
     public UserId? UserId { get; private set; } = null!;
     public DateTime OrderDate { get; private set; }
     public OrderStatus OrderStatus { get; private set; }
-    public PaymentStatus? PaymentStatus { get; private set; }
+    public PaymentStatus PaymentStatus { get; private set; }
     public DeliveryDate? ExpectedDelivery { get; private set; }
     public IReadOnlyList<OrderProduct> OrderProducts => _orderProducts.AsReadOnly();
 
@@ -20,7 +20,7 @@ public sealed class Order : AggregateRoot<OrderId>
         DateTime orderDate,
         OrderStatus orderStatus,
         UserId? userId,
-        PaymentStatus? paymentStatus) : base(orderId)
+        PaymentStatus paymentStatus) : base(orderId)
     {
         UserId = userId;
         OrderDate = orderDate;
@@ -31,7 +31,7 @@ public sealed class Order : AggregateRoot<OrderId>
     public static Order CreateOrder(Guid orderId
     )
     {
-        return new(OrderId.Create(orderId), DateTime.Now, OrderStatus.Declined, null, null);
+        return new(OrderId.Create(orderId), DateTime.Now, OrderStatus.Declined, null, ValueObjects.PaymentStatus.Cancelled);
     }
 
     public void UpdateUserId(UserId userId)

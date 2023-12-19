@@ -71,6 +71,18 @@ public class OrderRepository : IOrderRepository
         await _dbContext.SaveChangesAsync(); // Save changes to the database
     }
 
+    public async Task UpdateOrderStatusCancelled(Guid orderId)
+    {
+        var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == OrderId.Create(orderId));
+        if (order is not null)
+        {
+            order.UpdateOrderAccept();
+            order.UpdatePaymentStatus(PaymentStatus.Cancelled);
+            _dbContext.Entry(order).State = EntityState.Modified;
+        }
+        await _dbContext.SaveChangesAsync(); // Save changes to the database
+    }
+
     public async Task<List<OrderProductBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId)
     {
         var orderProducts = await _dbContext.OrderProducts
@@ -147,7 +159,7 @@ public class OrderRepository : IOrderRepository
                 orderProduct => orderProduct.OrderId,
                 (order, orderProducts) => new OrderResult(
                     order.OrderDate,
-                    order.PaymentStatus ?? null,
+                    order.PaymentStatus,
                     order.OrderProducts.Select(op => new OrderProductBriefResult(
                         op.Id.Value,
                         new ProductOrderBriefResult(

@@ -17,4 +17,5 @@ public interface IOrderRepository
     Task<OrderProduct?> RetrieveOrderProduct(Guid orderProductId);
     Task UpdateOrderStatusAccept(Guid orderId);
     Task<List<OrderResult>> RetrieveOrderHistory(Guid customerId, int page);
+    Task UpdateOrderStatusCancelled(Guid orderId);
 }

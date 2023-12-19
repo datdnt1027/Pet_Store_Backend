@@ -17,6 +17,7 @@ public enum OrderProductStatus
 
 public enum PaymentStatus
 {
+    Cancelled,
     COD,
     E_Wallet
 };
