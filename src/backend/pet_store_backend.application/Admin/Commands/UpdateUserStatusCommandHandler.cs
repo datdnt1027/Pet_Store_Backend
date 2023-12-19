@@ -44,7 +44,7 @@ public class UpdateCustomerStatusCommandHanlder : IRequestHandler<UpdateCustomer
 
     public async Task<ErrorOr<MessageResult>> Handle(UpdateCustomerStatusCommand request, CancellationToken cancellationToken)
     {
-        if (await _userRepository.RetrieveUser(Guid.Parse(request.CustomerId)) is not Customer customer)
+        if (await _userRepository.RetrieveUser(Guid.Parse(request.CustomerId)) is not pet_store_backend.domain.Entities.Users.Customer customer)
         {
             return Errors.User.UserNotExist;
         }

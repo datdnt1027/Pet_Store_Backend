@@ -3,7 +3,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 using pet_store_backend.domain.Entities.Users;
 using pet_store_backend.infrastructure.Persistence.Common;
-using pet_store_backend.application.User.Common;
+using pet_store_backend.application.Customer.Common;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories;
 

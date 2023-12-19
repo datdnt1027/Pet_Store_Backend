@@ -7,7 +7,6 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Utils;
 using pet_store_backend.domain.Common.Errors;
 using pet_store_backend.domain.Entities;
-using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Commands.Register;
 
@@ -34,7 +33,7 @@ public class RegisterCommadHandler : IRequestHandler<RegisterCommand, ErrorOr<Me
 
         _passwordConfiguration.CreatePasswordHash(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
         // Create user (generate unique Id) & Persist to DB
-        var customer = Customer.Create
+        var customer = pet_store_backend.domain.Entities.Users.Customer.Create
         (
             command.FirstName,
             command.LastName,

@@ -20,7 +20,7 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand,
     }
     public async Task<ErrorOr<MessageResult>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
-        if (await _userRepository.GetCustomerByResetPasswordToken(request.Token) is not Customer customer)
+        if (await _userRepository.GetCustomerByResetPasswordToken(request.Token) is not pet_store_backend.domain.Entities.Users.Customer customer)
         {
             return Errors.Authentication.InvalidToken;
         }

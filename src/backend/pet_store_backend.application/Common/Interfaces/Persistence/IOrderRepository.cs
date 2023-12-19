@@ -12,8 +12,9 @@ public interface IOrderRepository
     Task UpdateOrderProduct(OrderProduct orderProduct);
     Task UpdateProductPaymentInCart(Guid customerId, Guid orderId);
     Task AddOrder(pet_store_backend.domain.Entities.Orders.Order order);
-    Task<List<OrderBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId);
+    Task<List<OrderProductBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId);
     Task DeleteOrderProduct(OrderProduct orderProduct);
     Task<OrderProduct?> RetrieveOrderProduct(Guid orderProductId);
     Task UpdateOrderStatusAccept(Guid orderId);
+    Task<List<OrderResult>> RetrieveOrderHistory(Guid customerId, int page);
 }

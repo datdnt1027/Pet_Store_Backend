@@ -7,6 +7,6 @@ namespace pet_store_backend.application.Authentication.Common
         string Token);
 
     public record AuthenticationCustomerResult(
-       Customer Customer,
+       pet_store_backend.domain.Entities.Users.Customer Customer,
         string Token);
 }

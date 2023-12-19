@@ -130,7 +130,7 @@ public class AdminController : ApiController
     }
 
     [HttpPatch]
-    [Route("user/status")]
+    [Route("customer/status")]
     [HasPermission(TableKey.Customers, PermissionType.Deactivate)]
     public async Task<IActionResult> UpdateUserStatus(UpdateCustomerStatusRequest request)
     {
@@ -143,7 +143,7 @@ public class AdminController : ApiController
     }
 
     [HttpPost]
-    [Route("find_user")]
+    [Route("find_customer")]
     [HasPermission(TableKey.Customers, PermissionType.Read)]
     public async Task<IActionResult> FindUser(FindUserRequest request)
     {

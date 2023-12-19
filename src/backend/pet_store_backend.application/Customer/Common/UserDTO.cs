@@ -1,6 +1,6 @@
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 
-namespace pet_store_backend.application.User.Common;
+namespace pet_store_backend.application.Customer.Common;
 
 public record UserProfileResult(
     string FirstName,

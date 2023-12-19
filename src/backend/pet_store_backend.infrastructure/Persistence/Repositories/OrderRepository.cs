@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using pet_store_backend.application.Common.Interfaces.Persistence;
@@ -8,6 +7,7 @@ using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.Orders.ValueObjects;
 using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
+using pet_store_backend.infrastructure.Persistence.Common;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories;
 
@@ -65,18 +65,19 @@ public class OrderRepository : IOrderRepository
         if (order is not null)
         {
             order.UpdateOrderAccept();
+            order.UpdatePaymentStatus(PaymentStatus.E_Wallet);
             _dbContext.Entry(order).State = EntityState.Modified;
         }
         await _dbContext.SaveChangesAsync(); // Save changes to the database
     }
 
-    public async Task<List<OrderBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId)
+    public async Task<List<OrderProductBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId)
     {
         var orderProducts = await _dbContext.OrderProducts
             .AsNoTracking()
             .Where(o => o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
             .Include(o => o.Product)
-            .Select(op => new OrderBriefResult(
+            .Select(op => new OrderProductBriefResult(
                 op.Id.Value,
                 new ProductOrderBriefResult(
                     op.ProductId.Value,
@@ -127,5 +128,40 @@ public class OrderRepository : IOrderRepository
         var orderProduct = await _dbContext.OrderProducts.FirstOrDefaultAsync(
             orderProduct => orderProduct.Id == OrderProductId.Create(orderProductId));
         return orderProduct;
+    }
+
+    public async Task<List<OrderResult>> RetrieveOrderHistory(Guid customerId, int page)
+    {
+        int pageSize = PageSize.OrderSize;
+
+        // Calculate the number of products to skip based on the page number
+        int ordersToSkip = (page - 1) * pageSize;
+        // Assuming _dbContext is your DbContext with DbSet<Order> and DbSet<OrderProduct>
+        var ordersWithProducts = await _dbContext.Orders
+            .OrderByDescending(order => order.OrderDate)  // Add an OrderBy clause
+            .AsNoTracking()
+            .Skip(ordersToSkip)
+            .GroupJoin(
+                _dbContext.OrderProducts.Where(orderProduct => orderProduct.CustomerId == CustomerId.Create(customerId)),
+                order => order.Id,
+                orderProduct => orderProduct.OrderId,
+                (order, orderProducts) => new OrderResult(
+                    order.OrderDate,
+                    order.PaymentStatus ?? null,
+                    order.OrderProducts.Select(op => new OrderProductBriefResult(
+                        op.Id.Value,
+                        new ProductOrderBriefResult(
+                        op.ProductId.Value,
+                        op.Product.ProductName,
+                        op.Product.ProductDetail,
+                        op.Product.ProductPrice.Value,
+                        op.Product.ImageData ?? Array.Empty<byte>()
+                    ),
+                    op.Quantity
+                    )
+                )
+            ))
+            .ToListAsync();
+        return ordersWithProducts;
     }
 }
