@@ -28,7 +28,7 @@ public class VerifyQueryHandler : IRequestHandler<VerifyCommand, ErrorOr<Message
     public async Task<ErrorOr<MessageResult>> Handle(VerifyCommand query, CancellationToken cancellationToken)
     {
         // Check if user registered
-        if (await _userRepository.GetCustomerByVerificationToken(query.VerificationToken) is not Customer customer)
+        if (await _userRepository.GetCustomerByVerificationToken(query.VerificationToken) is not pet_store_backend.domain.Entities.Users.Customer customer)
         {
             return Errors.Authentication.InvalidToken;
         }

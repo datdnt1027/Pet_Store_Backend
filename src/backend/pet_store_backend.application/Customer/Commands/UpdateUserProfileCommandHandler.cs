@@ -9,7 +9,7 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.domain.Common.Errors;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 
-namespace pet_store_backend.application.Admin.Commands;
+namespace pet_store_backend.application.Customer.Commands;
 
 public record UpdateUserProfileCommand(
     string FirstName,

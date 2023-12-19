@@ -25,7 +25,7 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
     public async Task<ErrorOr<MessageResult>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
         // Validate User doesn't exist
-        if (await _userRepository.GetCustomerByEmail(request.Email) is not Customer customer)
+        if (await _userRepository.GetCustomerByEmail(request.Email) is not pet_store_backend.domain.Entities.Users.Customer customer)
         {
             return Errors.User.UserNotExist;
         }

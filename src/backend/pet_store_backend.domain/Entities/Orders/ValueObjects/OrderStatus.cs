@@ -14,3 +14,9 @@ public enum OrderProductStatus
     Completed,
     // Cancelled
 }
+
+public enum PaymentStatus
+{
+    COD,
+    E_Wallet
+};

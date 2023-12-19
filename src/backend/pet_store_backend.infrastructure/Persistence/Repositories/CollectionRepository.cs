@@ -4,6 +4,7 @@ using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Entities.PetProducts.PetProduct;
 using pet_store_backend.domain.Entities.PetProducts.PetProductCategory;
 using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
+using pet_store_backend.infrastructure.Persistence.Common;
 
 namespace pet_store_backend.infrastructure.Persistence.Repositories;
 
@@ -34,7 +35,7 @@ public class CollectionRepository : ICollectionRepository
 
     public async Task<CategoryResult?> GetCategoriesWithProductsInBatchAsync(string categoryId, int page)
     {
-        int pageSize = 5;
+        int pageSize = PageSize.CategorySize;
 
         // Calculate the number of products to skip based on the page number
         int productsToSkip = (page - 1) * pageSize;

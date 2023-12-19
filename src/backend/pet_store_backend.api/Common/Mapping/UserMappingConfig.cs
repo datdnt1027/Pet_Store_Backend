@@ -1,6 +1,6 @@
 using Mapster;
-using pet_store_backend.application.Admin.Commands;
-using pet_store_backend.application.User.Common;
+using pet_store_backend.application.Customer.Commands;
+using pet_store_backend.application.Customer.Common;
 using pet_store_backend.contracts.User;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 

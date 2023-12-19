@@ -2,7 +2,7 @@ using pet_store_backend.contracts.PetProducts;
 
 namespace pet_store_backend.contracts.Order;
 
-public record OrderBriefResponse(
+public record OrderProductBriefResponse(
     Guid OrderProductId,
     ProductOrderBriefResponse Product,
     int Quantity
@@ -11,5 +11,11 @@ public record OrderBriefResponse(
 public record OrderProductResponse(
     int TotalQuantityProduct,
     long TotalPrice,
-    List<OrderBriefResponse> Orders
+    List<OrderProductBriefResponse> Orders
+);
+
+public record OrderResponse(
+    DateTime OrderDate,
+    string PaymentType,
+    IEnumerable<OrderProductBriefResponse> Orders
 );

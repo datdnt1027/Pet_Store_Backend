@@ -1,5 +1,6 @@
 using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Entities.Orders;
+using pet_store_backend.domain.Entities.Orders.ValueObjects;
 
 namespace pet_store_backend.application.Order.Common;
 
@@ -37,14 +38,20 @@ public record MomoPaymentReturnResult(
 //     byte[] ImageData,
 //     int Quantity
 // );
-public record OrderBriefResult(
+public record OrderProductBriefResult(
     Guid OrderProductId,
     ProductOrderBriefResult Product,
     int Quantity
 );
+
 public record OrderProductResult(
     int TotalQuantityProduct,
     long TotalPrice,
-    List<OrderBriefResult> Orders
+    List<OrderProductBriefResult> Orders
 );
 
+public record OrderResult(
+    DateTime OrderDate,
+    PaymentStatus? PaymentType,
+    IEnumerable<OrderProductBriefResult> Orders
+);

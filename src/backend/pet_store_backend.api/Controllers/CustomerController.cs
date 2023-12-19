@@ -2,9 +2,11 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using pet_store_backend.application.Admin.Commands;
-using pet_store_backend.application.Admin.Queries;
+using pet_store_backend.application.Customer.Commands;
+using pet_store_backend.application.Customer.Queries;
+using pet_store_backend.application.PetProducts.PetProduct.Queries;
 using pet_store_backend.contracts;
+using pet_store_backend.contracts.Order;
 using pet_store_backend.contracts.User;
 using pet_store_backend.infrastructure.Persistence.Common;
 
@@ -13,11 +15,11 @@ namespace pet_store_backend.api.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize(Roles = UserRoleKey.UserRoleName)]
-public class UserController : ApiController
+public class CustomerController : ApiController
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
-    public UserController(ISender mediator, IMapper mapper)
+    public CustomerController(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -43,6 +45,18 @@ public class UserController : ApiController
 
         return updateProfile.Match(profile => Ok(_mapper.Map<MessageResponse>(profile)),
             errors => Problem(errors));
+    }
+
+    [HttpGet]
+    [Route("orders")]
+    public async Task<IActionResult> RetrieveCustomerOrderHistory([FromQuery] int page = 1)
+    {
+        var query = new OrderByBatchQuery(page);
+        var orderHistoryByBatch = await _mediator.Send(query);
+
+        return orderHistoryByBatch.Match(order => Ok(_mapper.Map<List<OrderResponse>>(order)),
+            errors => Problem(errors));
+
     }
 
 }
