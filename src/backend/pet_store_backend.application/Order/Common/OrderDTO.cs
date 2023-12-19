@@ -22,6 +22,14 @@ public record PaymentResponse
     string QrCodeUrl
 );
 
+public record MomoPaymentReturnResult(
+    string OrderId,
+    string PaymentMessage,
+    string PaymentDate,
+    decimal Amount,
+    string Signature
+);
+
 // public record ProductResultOrder(
 //     string ProductName,
 //     string ProductDetail,
@@ -39,3 +47,4 @@ public record OrderProductResult(
     long TotalPrice,
     List<OrderBriefResult> Orders
 );
+

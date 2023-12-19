@@ -12,6 +12,7 @@ public record UserProfileResult(
     string PhoneNumber
 );
 public record UserProfileWithStatusResult(
+    Guid CustomerId,
     string FirstName,
     string LastName,
     Gender? Sex,

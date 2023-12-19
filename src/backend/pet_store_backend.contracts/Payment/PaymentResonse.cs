@@ -1,6 +1,6 @@
 namespace pet_store_backend.contracts.Payment;
 
-public record class MomoOneTimePaymentResponse(
+public record MomoOneTimePaymentResponse(
     string PartnerCode,
     string RequestId,
     string OrderId,
@@ -11,4 +11,12 @@ public record class MomoOneTimePaymentResponse(
     string PayUrl,
     string DeepLink,
     string QrCodeUrl
+);
+
+public record MomoPaymentReturnResponse(
+    string OrderId,
+    string PaymentMessage,
+    string PaymentDate,
+    decimal Amount,
+    string Signature
 );

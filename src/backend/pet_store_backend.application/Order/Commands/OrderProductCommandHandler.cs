@@ -63,10 +63,7 @@ public class OrderProductCommandHandler : IRequestHandler<OrderProductCommand, E
         }
         else
         {
-            if (!await _orderRepository.AddProductOrder(Guid.Parse(request.ProductId), 1))
-            {
-                return Errors.Order.OrderProductAddProblem;
-            }
+            await _orderRepository.AddProductOrder(Guid.Parse(customerId), Guid.Parse(request.ProductId), 1);
         }
 
         return new MessageResult("Add to Cart success !");

@@ -85,4 +85,18 @@ public class OrderController : ApiController
         );
     }
 
+    [HttpGet]
+    [Route("payment/momo-return")]
+    [AllowAnonymous]
+    // [Authorize(Roles = UserRoleKey.UserRoleName)]
+    public async Task<IActionResult> ProductsPaymentReturn([FromQuery] MomoPaymentProductReturnRequest request)
+    {
+        var command = _mapper.Map<MomoPaymentProductReturnCommand>(request);
+        var paymentMessage = await _mediator.Send(command);
+
+        return paymentMessage.Match(payment => Ok(_mapper.Map<MomoPaymentReturnResponse>(payment)),
+            errors => Problem(errors)
+        );
+    }
+
 }
