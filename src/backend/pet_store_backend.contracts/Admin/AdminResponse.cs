@@ -26,6 +26,7 @@ public record AdminProfileResponse(
 );
 
 public record FindCustomerResponse(
+    string CustomerId,
     string FirstName,
     string LastName,
     string Sex,

@@ -6,7 +6,6 @@ using pet_store_backend.application.Order.Common;
 using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Entities.Orders;
 using pet_store_backend.domain.Entities.Orders.ValueObjects;
-using pet_store_backend.domain.Entities.PetProducts.PetProduct;
 using pet_store_backend.domain.Entities.PetProducts.ValueObjects;
 using pet_store_backend.domain.Entities.Users.ValueObjects;
 
@@ -15,29 +14,22 @@ namespace pet_store_backend.infrastructure.Persistence.Repositories;
 public class OrderRepository : IOrderRepository
 {
     private readonly DataContext _dbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    // private readonly IHttpContextAccessor _httpContextAccessor;
 
     public OrderRepository(DataContext dbContext, IHttpContextAccessor httpContextAccessor)
     {
         _dbContext = dbContext;
-        _httpContextAccessor = httpContextAccessor;
+        // _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<bool> AddProductOrder(Guid productId, int quantity)
+    public async Task AddProductOrder(Guid customerId, Guid productId, int quantity)
     {
-        var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (customerId != null)
-        {
-            var orderProduct = OrderProduct.Create(
-                CustomerId.Create(Guid.Parse(customerId))
-                , ProductId.Create(productId)
-                , quantity);
-            await _dbContext.AddAsync(orderProduct);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-        return false;
+        var orderProduct = OrderProduct.Create(
+            CustomerId.Create(customerId)
+            , ProductId.Create(productId)
+            , quantity);
+        await _dbContext.AddAsync(orderProduct);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task AddOrder(Order order)
@@ -46,74 +38,59 @@ public class OrderRepository : IOrderRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<OrderProductWithPrice>?> RetrieveTotalOrderProductPaymentInCart(OrderId orderId)
+    public async Task UpdateProductPaymentInCart(Guid customerId, Guid orderId)
     {
-        var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (customerId != null)
+        var order = pet_store_backend.domain.Entities.Orders.Order.CreateOrder(orderId);
+        await _dbContext.AddAsync(order);
+        var orderProducts = await _dbContext.OrderProducts
+            .AsNoTracking()
+            .Where(o => o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
+            .ToListAsync();
+
+        // Update OrderProductStatus to Paid
+        foreach (var orderProduct in orderProducts)
         {
-            var totalProductPayment = await _dbContext.OrderProducts
-                .AsNoTracking()
-                .Where(o => o.CustomerId == CustomerId.Create(Guid.Parse(customerId)) && o.OrderProductStatus == OrderProductStatus.Ordered)
-                .Join(
-                    _dbContext.Products,
-                    orderProduct => orderProduct.ProductId,
-                    product => product.Id,
-                    (orderProduct, product) => new OrderProductWithPrice(
-                        OrderProduct.Retrive(
-                            orderProduct.Id,
-                            orderProduct.CustomerId,
-                            orderProduct.ProductId,
-                            orderProduct.Quantity,
-                            orderProduct.OrderProductStatus
-                        ),
-                        product.ProductPrice.Value
-                    )
-                ).ToListAsync();
+            // Assuming you have a method to update the OrderProductStatus in your _dbContext
+            orderProduct.CompletedOrder(OrderId.Create(orderId));
 
-            // Update OrderProductStatus to Paid
-            foreach (var orderProductWithPrice in totalProductPayment)
-            {
-                var orderProduct = orderProductWithPrice.OrderProduct;
-
-                // Assuming you have a method to update the OrderProductStatus in your _dbContext
-                orderProduct.CompletedOrder(orderId);
-
-                // Update the orderProduct status in the context
-                _dbContext.Entry(orderProduct).State = EntityState.Modified;
-            }
-            await _dbContext.SaveChangesAsync(); // Save changes to the database
-
-            return totalProductPayment;
+            // Update the orderProduct status in the context
+            _dbContext.Entry(orderProduct).State = EntityState.Modified;
         }
-        return null;
+        await _dbContext.SaveChangesAsync(); // Save changes to the database
     }
 
-    public async Task<List<OrderBriefResult>?> RetrieveOrderedProductsForUser()
+    public async Task UpdateOrderStatusAccept(Guid orderId)
     {
-        var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (customerId != null)
+        var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == OrderId.Create(orderId));
+        if (order is not null)
         {
-            var orderProducts = await _dbContext.OrderProducts
-                .AsNoTracking()
-                .Where(o => o.CustomerId == CustomerId.Create(Guid.Parse(customerId)) && o.OrderProductStatus == OrderProductStatus.Ordered)
-                .Include(o => o.Product)
-                .Select(op => new OrderBriefResult(
-                    op.Id.Value,
-                    new ProductOrderBriefResult(
-                        op.ProductId.Value,
-                        op.Product.ProductName,
-                        op.Product.ProductDetail,
-                        op.Product.ProductPrice.Value,
-                        op.Product.ImageData ?? Array.Empty<byte>()
-                    ),
-                    op.Quantity
-                ))
-                .ToListAsync();
-            if (orderProducts.Count > 0)
-                return orderProducts;
-            return null;
+            order.UpdateOrderAccept();
+            _dbContext.Entry(order).State = EntityState.Modified;
         }
-        return null!;
+        await _dbContext.SaveChangesAsync(); // Save changes to the database
+    }
+
+    public async Task<List<OrderBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId)
+    {
+        var orderProducts = await _dbContext.OrderProducts
+            .AsNoTracking()
+            .Where(o => o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
+            .Include(o => o.Product)
+            .Select(op => new OrderBriefResult(
+                op.Id.Value,
+                new ProductOrderBriefResult(
+                    op.ProductId.Value,
+                    op.Product.ProductName,
+                    op.Product.ProductDetail,
+                    op.Product.ProductPrice.Value,
+                    op.Product.ImageData ?? Array.Empty<byte>()
+                ),
+                op.Quantity
+            ))
+            .ToListAsync();
+        if (orderProducts.Count > 0)
+            return orderProducts;
+        return null;
     }
 
 

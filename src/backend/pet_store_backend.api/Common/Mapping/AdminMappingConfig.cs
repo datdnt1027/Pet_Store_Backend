@@ -19,6 +19,7 @@ public class AdminMappingConfig : IRegister
             .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);
         config.NewConfig<FindUserRequest, CustomerQuery>();
         config.NewConfig<UserProfileWithStatusResult, FindCustomerResponse>()
+            .Map(dest => dest.CustomerId, src => src.CustomerId.ToString())
             .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null); ;
     }
 }

@@ -57,6 +57,7 @@ public class UserRepository : IUserRepository
         var customer = await _dbContext.Customers
             .Where(u => u.Email == email)
             .Select(u => new UserProfileWithStatusResult(
+                u.Id.Value,
                 u.FirstName,
                 u.LastName,
                 u.Gender,
@@ -76,6 +77,7 @@ public class UserRepository : IUserRepository
         var customer = await _dbContext.Customers
             .Where(u => u.PhoneNumber == phoneNumber)
             .Select(u => new UserProfileWithStatusResult(
+                u.Id.Value,
                 u.FirstName,
                 u.LastName,
                 u.Gender,

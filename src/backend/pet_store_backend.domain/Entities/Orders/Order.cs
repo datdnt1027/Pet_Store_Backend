@@ -25,15 +25,20 @@ public sealed class Order : AggregateRoot<OrderId>
         OrderStatus = orderStatus;
     }
 
-    public static Order CreateOrder(
+    public static Order CreateOrder(Guid orderId
     )
     {
-        return new(OrderId.CreateUnique(), DateTime.Now, OrderStatus.Accepted, null);
+        return new(OrderId.Create(orderId), DateTime.Now, OrderStatus.Declined, null);
     }
 
     public void UpdateUserId(UserId userId)
     {
         this.UserId = userId;
+    }
+
+    public void UpdateOrderAccept()
+    {
+        OrderStatus = OrderStatus.Accepted;
     }
 
     public void UpdateOrderDelivery(DateTime expectedDeliveryDateStart, DateTime expectedDeliveryDateEnd)

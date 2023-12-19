@@ -35,18 +35,20 @@ namespace pet_store_backend.infrastructure.Services
             string Signature
         );
 
-        private record PaymentResponse
+        private record PaymentResult
         (
             string PartnerCode,
             string RequestId,
             string OrderId,
             long Amount,
             long ResponseTime,
-            string Message,
-            string ResultCode,
-            string PayUrl,
-            string DeepLink,
-            string QrCodeUrl
+            string OrderInfo,
+            string OrderType,
+            string TransId,
+            int ResultCode,
+            string PayType,
+            string ExtraData,
+            string Signature
         );
 
         public (bool, string?) GetLinkPaymentMomo(
@@ -54,7 +56,6 @@ namespace pet_store_backend.infrastructure.Services
             long Amount,
             string OrderId,
             string OrderInfo,
-            string RedirectUrl,
             string ExtraData = "",
             string Lang = "vi",
             string RequestType = "captureWallet"
@@ -67,7 +68,7 @@ namespace pet_store_backend.infrastructure.Services
                 "&orderId=" + $"{OrderId}" +
                 "&orderInfo=" + $"{OrderInfo}" +
                 "&partnerCode=" + $"{_momoSettings.PartnerCode}" +
-                "&redirectUrl=" + $"{RedirectUrl}" +
+                "&redirectUrl=" + $"{_momoSettings.ReturnUrl}" +
                 "&requestId=" + $"{RequestId}" +
                 "&requestType=" + $"{RequestType}";
             string signature = _passwordConfiguration.HmacSHA256(rawHash, _momoSettings.SecretKey);
@@ -78,7 +79,7 @@ namespace pet_store_backend.infrastructure.Services
                 PartnerName: "Test",
                 RequestType: RequestType,
                 IpnUrl: $"{_momoSettings.IpnUrl}",
-                RedirectUrl: $"{RedirectUrl}",
+                RedirectUrl: $"{_momoSettings.ReturnUrl}",
                 OrderId: OrderId,
                 Amount: Amount,
                 Lang: Lang,
@@ -109,6 +110,37 @@ namespace pet_store_backend.infrastructure.Services
             {
                 return (false, createPaymentLinks.ReasonPhrase);
             }
+        }
+
+        public bool IsValidSignature(
+            string RequestId,
+            string OrderId,
+            long Amount,
+            long ResponseTime,
+            string OrderInfo,
+            string OrderType,
+            string TransId,
+            string Message,
+            int ResultCode,
+            string PayType,
+            string ExtraData,
+            string Signature)
+        {
+            string rawHash = "accessKey=" + $"{_momoSettings.AccessKey}" +
+                "&amount=" + $"{Amount}" +
+                "&extraData=" + $"{ExtraData}" +
+                "&message=" + $"{Message}" +
+                "&orderId=" + $"{OrderId}" +
+                "&orderInfo=" + $"{OrderInfo}" +
+                "&orderType=" + $"{OrderType}" +
+                "&partnerCode=" + $"{_momoSettings.PartnerCode}" +
+                "&payType=" + $"{PayType}" +
+                "&requestId=" + $"{RequestId}" +
+                "&responseTime=" + $"{ResponseTime}" +
+                "&resultCode=" + $"{ResultCode}" +
+                "&transId=" + $"{TransId}";
+            string checkSignature = _passwordConfiguration.HmacSHA256(rawHash, _momoSettings.SecretKey);
+            return Signature.Equals(checkSignature);
         }
     }
 }

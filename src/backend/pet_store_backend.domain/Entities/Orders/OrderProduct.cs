@@ -87,10 +87,10 @@ public sealed class OrderProduct : Entity<OrderProductId>
         OrderId = orderId;
     }
 
-    public void CancelOrder()
-    {
-        OrderProductStatus = OrderProductStatus.Cancelled;
-    }
+    // public void CancelOrder()
+    // {
+    //     OrderProductStatus = OrderProductStatus.Cancelled;
+    // }
 
     public void UpdateQuantityOrderProduct(int newQuantity)
     {
