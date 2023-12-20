@@ -149,4 +149,19 @@ public class CollectionRepository : ICollectionRepository
         return productExists;
     }
 
+    public async Task<Product?> GetProduct(Guid productId)
+    {
+        var productExists = await _dbContext.Products
+            .FirstOrDefaultAsync(p => p.Id == ProductId.Create(productId));
+
+        return productExists;
+    }
+
+    public async Task UpdateProduct(Product product)
+    {
+        _dbContext.Entry(product).State = EntityState.Modified;
+        // Save changes to the database
+        await _dbContext.SaveChangesAsync();
+    }
+
 }

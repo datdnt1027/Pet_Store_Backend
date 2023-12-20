@@ -103,8 +103,7 @@ public class AdminController : ApiController
     }
 
     [HttpPost("product")]
-    //[HasPermission(TableKey.Products, PermissionType.Create)]
-    [AllowAnonymous]
+    [HasPermission(TableKey.Products, PermissionType.Create)]
     public async Task<IActionResult> CreateProduct(CreateProductRequest request)
     {
         var command = _mapper.Map<CreateProductCommand>(request);
@@ -118,9 +117,10 @@ public class AdminController : ApiController
 
 
     [HttpPatch]
-    [Route("products/{productId}")]
+    [Route("products")]
     [HasPermission(TableKey.Products, PermissionType.Update)]
-    public async Task<IActionResult> UpdateStatusProduct(string productId, UpdateProductRequest request)
+    [HasPermission(TableKey.Products, PermissionType.Deactivate)]
+    public async Task<IActionResult> UpdateStatusProduct(UpdateProductRequest request)
     {
         var command = _mapper.Map<UpdateProductCommand>(request);
         var updateProduct = await _mediator.Send(command);

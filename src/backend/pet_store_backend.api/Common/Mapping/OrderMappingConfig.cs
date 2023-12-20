@@ -14,7 +14,7 @@ public class OrderMappingConfig : IRegister
         config.NewConfig<MomoPaymentReturnResult, MomoOneTimePaymentResponse>();
         config.NewConfig<OrderProductRequest, OrderProductCommand>();
         config.NewConfig<UpdateOrderProductQuantityRequest, UpdateOrderProductQuantityCommand>();
-        config.NewConfig<MomoOneTimePaymentRequest, MomoOneTimePaymentProductCommand>();
+        // config.NewConfig<MomoOneTimePaymentRequest, MomoOneTimePaymentProductCommand>();
         config.NewConfig<PaymentResponse, MomoOneTimePaymentResponse>();
         config.NewConfig<OrderProductResult, OrderProductResponse>();
         config.NewConfig<OrderProductBriefResult, OrderProductBriefResponse>();

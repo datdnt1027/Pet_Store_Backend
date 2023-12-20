@@ -7,7 +7,6 @@ using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Utils;
 using pet_store_backend.domain.Common.Errors;
 using pet_store_backend.domain.Entities;
-using pet_store_backend.domain.Entities.Users;
 
 namespace pet_store_backend.application.Authentication.Commands.ForgotPassword;
 
