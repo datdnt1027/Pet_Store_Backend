@@ -14,5 +14,10 @@ public static partial class Errors
             code: "ProductId.Invalid",
             description: "ProductId is Invalid"
         );
+
+        public static Error NoInfoProductUpdate => Error.Conflict(
+            code: "Product.NoInfoUpdate",
+            description: "No Info Product Update"
+        );
     }
 }

@@ -126,6 +126,44 @@ public sealed class Product : Entity<ProductId>
     //         ProductImage
     //     );
     // }
+    public void UpdateCategoryId(Guid categoryId)
+    {
+        CategoryId = CategoryId.Create(categoryId);
+    }
+    public void UpdateProductName(string productName)
+    {
+        ProductName = productName;
+    }
+
+    public void UpdateProductDetail(string productDetail)
+    {
+        ProductDetail = productDetail;
+    }
+
+    public void UpdateProductQuantity(int productQuantity)
+    {
+        ProductQuantity = productQuantity;
+    }
+
+    public void UpdateImageData(byte[] imageData)
+    {
+        ImageData = imageData;
+    }
+
+    public void UpdateProductPrice(double productPrice)
+    {
+        ProductPrice = Price.CreateNew(productPrice);
+    }
+
+    public void UpdateProductStatus(bool status)
+    {
+        Status = status;
+    }
+
+    public void UpdateDateTimeProduct(DateTime dateTime)
+    {
+        UpdatedDateTime = dateTime;
+    }
 
 #pragma warning disable CS8618
     private Product()

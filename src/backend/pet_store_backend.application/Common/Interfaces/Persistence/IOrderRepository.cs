@@ -1,6 +1,5 @@
 using pet_store_backend.application.Order.Common;
 using pet_store_backend.domain.Entities.Orders;
-using pet_store_backend.domain.Entities.Orders.ValueObjects;
 
 namespace pet_store_backend.application.Common.Interfaces.Persistence;
 

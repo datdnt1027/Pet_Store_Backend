@@ -15,4 +15,6 @@ public interface ICollectionRepository
     Task<bool> CheckCategoryIsValid(Guid categoryId);
     Task<bool> CheckProductIsValid(Guid productId);
     Task<List<ProductResult>> GetProductsWithPage(int page);
+    Task<Product?> GetProduct(Guid productId);
+    Task UpdateProduct(Product product);
 }

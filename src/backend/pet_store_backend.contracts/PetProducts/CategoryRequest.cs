@@ -22,12 +22,14 @@ public record CreateProductRequest(
 );
 
 public record UpdateProductRequest(
-    string ProductName,
-    string ProductDetail,
-    int ProductQuantity,
-    double ProductPrice,
-    byte[] ImageData,
-    bool Status
+    string ProductId,
+    string? CategoryId,
+    string? ProductName,
+    string? ProductDetail,
+    string? ProductQuantity,
+    string? ProductPrice,
+    byte[]? ImageData,
+    string? Status
 );
 
 public record CategoryIdRequest(

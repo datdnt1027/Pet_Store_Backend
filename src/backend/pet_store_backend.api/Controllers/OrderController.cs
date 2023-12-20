@@ -61,7 +61,7 @@ public class OrderController : ApiController
     [HttpDelete]
     [Route("delete/{orderProductId}")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]
-    public async Task<IActionResult> CustomerDeleteProduct(string orderProductId)
+    public async Task<IActionResult> CustomerDeleteOrderProduct(string orderProductId)
     {
         var command = new DeleteOrderProductCommand(orderProductId);
         var createOrderProduct = await _mediator.Send(command);
@@ -70,14 +70,12 @@ public class OrderController : ApiController
             errors => Problem(errors));
     }
 
-
-
-    [HttpPost]
+    [HttpGet]
     [Route("payment/momo")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]
-    public async Task<IActionResult> ProductsPayment(MomoOneTimePaymentRequest request)
+    public async Task<IActionResult> ProductsPayment()
     {
-        var command = _mapper.Map<MomoOneTimePaymentProductCommand>(request);
+        var command = new MomoOneTimePaymentProductCommand();
         var paymentMessage = await _mediator.Send(command);
 
         return paymentMessage.Match(payment => Ok(_mapper.Map<MomoOneTimePaymentResponse>(payment)),

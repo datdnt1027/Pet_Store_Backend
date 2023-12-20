@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using pet_store_backend.application.Common.Interfaces.Persistence;
 using pet_store_backend.application.Order.Common;
-using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Common.Errors;
 
 namespace pet_store_backend.application.PetProducts.PetProduct.Queries;

@@ -1,6 +1,4 @@
-﻿using pet_store_backend.domain.Entities.Users;
-
-namespace pet_store_backend.application.Authentication.Common
+﻿namespace pet_store_backend.application.Authentication.Common
 {
     public record AuthenticationUserResult(
        pet_store_backend.domain.Entities.Users.User User,
