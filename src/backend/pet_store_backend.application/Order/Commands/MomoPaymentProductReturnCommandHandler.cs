@@ -60,10 +60,10 @@ public class MomoPaymentProductReturnCommandHandler : IRequestHandler<MomoPaymen
         {
             if (request.ResultCode == 0)
             {
-                await _orderRepository.UpdateOrderStatusAccept(Guid.Parse(request.OrderId));
+                await _orderRepository.UpdateOrderE_WalletStatusAccept(Guid.Parse(request.OrderId));
                 var result = new MomoPaymentReturnResult(
                     request.OrderId,
-                    "Payment Success",
+                    "Payment Momo Success",
                     DateTime.Now.ToString(),
                     request.Amount,
                     request.Signature

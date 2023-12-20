@@ -16,6 +16,7 @@ public record CategoryResult(
 );
 
 public record ProductResult(
+    Guid CategoryId,
     Guid ProductId,
     string ProductName,
     string ProductDetail,

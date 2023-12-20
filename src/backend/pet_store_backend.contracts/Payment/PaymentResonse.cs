@@ -20,3 +20,10 @@ public record MomoPaymentReturnResponse(
     decimal Amount,
     string Signature
 );
+
+public record CODPaymentResponse(
+    string OrderId,
+    string PaymentMessage,
+    string PaymentDate,
+    decimal Amount
+);

@@ -9,6 +9,7 @@ public record CategoryResponse(
 );
 
 public record ProductResponse(
+    string CategoryId,
     string ProductId,
     string ProductName,
     string ProductDetail,

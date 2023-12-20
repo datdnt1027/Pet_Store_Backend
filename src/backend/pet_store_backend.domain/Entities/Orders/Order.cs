@@ -39,14 +39,19 @@ public sealed class Order : AggregateRoot<OrderId>
         this.UserId = userId;
     }
 
-    public void UpdateOrderAccept()
-    {
-        OrderStatus = OrderStatus.Accepted;
-    }
+    // public void UpdateOrderAccept()
+    // {
+    //     OrderStatus = OrderStatus.Accepted;
+    // }
 
     public void UpdatePaymentStatus(PaymentStatus paymentStatus)
     {
+        if (paymentStatus != PaymentStatus.Cancelled)
+        {
+            OrderStatus = OrderStatus.Accepted;
+        }
         PaymentStatus = paymentStatus;
+
     }
 
     public void UpdateOrderDelivery(DateTime expectedDeliveryDateStart, DateTime expectedDeliveryDateEnd)

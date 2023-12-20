@@ -89,6 +89,7 @@ public class CollectionRepository : ICollectionRepository
             .Skip(productsToSkip)
             .Take(pageSize)
             .Select(product => new ProductResult(
+                product.CategoryId.Value,
                 product.Id.Value,
                 product.ProductName,
                 product.ProductDetail,
@@ -108,6 +109,7 @@ public class CollectionRepository : ICollectionRepository
             .AsNoTracking() // Make the query non-tracking
             .Where(p => p.Id == ProductId.Create(new Guid(productId)) && p.Status == status)
             .Select(product => new ProductResult(
+                product.CategoryId.Value,
                 product.Id.Value,
                 product.ProductName,
                 product.ProductDetail,
@@ -144,7 +146,7 @@ public class CollectionRepository : ICollectionRepository
     public async Task<bool> CheckProductIsValid(Guid productId)
     {
         var productExists = await _dbContext.Products
-            .AnyAsync(p => p.Id == ProductId.Create(productId));
+            .AnyAsync(p => p.Id == ProductId.Create(productId) && p.Status == true);
 
         return productExists;
     }
