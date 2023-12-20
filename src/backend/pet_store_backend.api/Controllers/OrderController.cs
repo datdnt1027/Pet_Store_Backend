@@ -73,7 +73,7 @@ public class OrderController : ApiController
     [HttpGet]
     [Route("payment/momo")]
     [Authorize(Roles = UserRoleKey.UserRoleName)]
-    public async Task<IActionResult> ProductsPayment()
+    public async Task<IActionResult> ProductsPaymentMomo()
     {
         var command = new MomoOneTimePaymentProductCommand();
         var paymentMessage = await _mediator.Send(command);
@@ -93,6 +93,19 @@ public class OrderController : ApiController
         var paymentMessage = await _mediator.Send(command);
 
         return paymentMessage.Match(payment => Ok(_mapper.Map<MomoPaymentReturnResponse>(payment)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpGet]
+    [Route("payment/cod")]
+    [Authorize(Roles = UserRoleKey.UserRoleName)]
+    public async Task<IActionResult> ProductsPaymentCod()
+    {
+        var command = new CODPaymentOrderProductCommand();
+        var paymentMessage = await _mediator.Send(command);
+
+        return paymentMessage.Match(payment => Ok(_mapper.Map<CODPaymentResponse>(payment)),
             errors => Problem(errors)
         );
     }

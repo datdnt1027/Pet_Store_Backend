@@ -15,7 +15,7 @@ public class OrderMappingConfig : IRegister
         config.NewConfig<OrderProductRequest, OrderProductCommand>();
         config.NewConfig<UpdateOrderProductQuantityRequest, UpdateOrderProductQuantityCommand>();
         // config.NewConfig<MomoOneTimePaymentRequest, MomoOneTimePaymentProductCommand>();
-        config.NewConfig<PaymentResponse, MomoOneTimePaymentResponse>();
+        config.NewConfig<MomoPaymentResponse, MomoOneTimePaymentResponse>();
         config.NewConfig<OrderProductResult, OrderProductResponse>();
         config.NewConfig<OrderProductBriefResult, OrderProductBriefResponse>();
         config.NewConfig<OrderProductResult, OrderProductResponse>()
@@ -23,5 +23,6 @@ public class OrderMappingConfig : IRegister
         config.NewConfig<OrderResult, OrderResponse>();
         // config.NewConfig<ProductResultOrder, ProductResponseOrder>()
         //     .Map(dest => dest.ImageData, src => src.ImageData.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.ImageData)}" : null);
+        config.NewConfig<CODPaymentResult, CODPaymentResponse>();
     }
 }

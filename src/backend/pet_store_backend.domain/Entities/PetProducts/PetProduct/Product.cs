@@ -6,7 +6,7 @@ namespace pet_store_backend.domain.Entities.PetProducts.PetProduct;
 
 public sealed class Product : Entity<ProductId>
 {
-    public CategoryId? CategoryId { get; private set; }
+    public CategoryId CategoryId { get; private set; } = null!;
     public string ProductName { get; private set; }
     public string ProductDetail { get; private set; }
     public int ProductQuantity { get; private set; }
@@ -91,7 +91,7 @@ public sealed class Product : Entity<ProductId>
             imageData,
             DateTime.Now,
             DateTime.Now,
-            false);
+            true);
     }
 
     public static Product Create(string productName,
@@ -109,7 +109,7 @@ public sealed class Product : Entity<ProductId>
             imageData,
             DateTime.Now,
             DateTime.Now,
-            false,
+            true,
             categoryId);
     }
 

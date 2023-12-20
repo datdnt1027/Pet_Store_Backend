@@ -38,7 +38,7 @@ public class OrderRepository : IOrderRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateProductPaymentInCart(Guid customerId, Guid orderId)
+    public async Task UpdateProductPaymentE_WalletInCart(Guid customerId, Guid orderId)
     {
         var order = pet_store_backend.domain.Entities.Orders.Order.CreateOrder(orderId);
         await _dbContext.AddAsync(order);
@@ -59,24 +59,55 @@ public class OrderRepository : IOrderRepository
         await _dbContext.SaveChangesAsync(); // Save changes to the database
     }
 
-    public async Task UpdateOrderStatusAccept(Guid orderId)
+    public async Task UpdateProductPaymentCODInCart(Guid customerId, Guid orderId)
+    {
+        var order = pet_store_backend.domain.Entities.Orders.Order.CreateOrder(orderId);
+        order.UpdatePaymentStatus(PaymentStatus.COD);
+        await _dbContext.AddAsync(order);
+        var orderProducts = await _dbContext.OrderProducts
+            .AsNoTracking()
+            .Where(o => o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
+            .ToListAsync();
+
+        // Update OrderProductStatus to Paid
+        foreach (var orderProduct in orderProducts)
+        {
+            // Assuming you have a method to update the OrderProductStatus in your _dbContext
+            orderProduct.CompletedOrder(OrderId.Create(orderId));
+
+            // Update the orderProduct status in the context
+            _dbContext.Entry(orderProduct).State = EntityState.Modified;
+        }
+        await _dbContext.SaveChangesAsync(); // Save changes to the database
+    }
+
+    public async Task UpdateOrderE_WalletStatusAccept(Guid orderId)
     {
         var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == OrderId.Create(orderId));
         if (order is not null)
         {
-            order.UpdateOrderAccept();
             order.UpdatePaymentStatus(PaymentStatus.E_Wallet);
             _dbContext.Entry(order).State = EntityState.Modified;
         }
         await _dbContext.SaveChangesAsync(); // Save changes to the database
     }
 
+    // public async Task UpdateOrderCODStatusAccept(Guid orderId)
+    // {
+    //     var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == OrderId.Create(orderId));
+    //     if (order is not null)
+    //     {
+    //         order.UpdatePaymentStatus(PaymentStatus.COD);
+    //         _dbContext.Entry(order).State = EntityState.Modified;
+    //     }
+    //     await _dbContext.SaveChangesAsync(); // Save changes to the database
+    // }
+
     public async Task UpdateOrderStatusCancelled(Guid orderId)
     {
         var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == OrderId.Create(orderId));
         if (order is not null)
         {
-            order.UpdateOrderAccept();
             order.UpdatePaymentStatus(PaymentStatus.Cancelled);
             _dbContext.Entry(order).State = EntityState.Modified;
         }

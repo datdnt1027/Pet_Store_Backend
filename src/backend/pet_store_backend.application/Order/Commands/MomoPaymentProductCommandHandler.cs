@@ -14,7 +14,7 @@ namespace pet_store_backend.application.Order.Commands;
 
 public record MomoOneTimePaymentProductCommand(
 // string RedirectUrl
-) : IRequest<ErrorOr<PaymentResponse>>;
+) : IRequest<ErrorOr<MomoPaymentResponse>>;
 
 public class MomoOneTimePaymentProductCommandValidator : AbstractValidator<MomoOneTimePaymentProductCommand>
 {
@@ -25,13 +25,13 @@ public class MomoOneTimePaymentProductCommandValidator : AbstractValidator<MomoO
         //     .WithMessage("If provided, RedirectUrl must be a valid URL.");
     }
 
-    private static bool BeAValidUrl(string url)
-    {
-        return Uri.TryCreate(url, UriKind.Absolute, out _);
-    }
+    // private static bool BeAValidUrl(string url)
+    // {
+    //     return Uri.TryCreate(url, UriKind.Absolute, out _);
+    // }
 }
 
-public class MomoPaymentProductCommandHandler : IRequestHandler<MomoOneTimePaymentProductCommand, ErrorOr<PaymentResponse>>
+public class MomoPaymentProductCommandHandler : IRequestHandler<MomoOneTimePaymentProductCommand, ErrorOr<MomoPaymentResponse>>
 {
     private readonly IPaymentProvider _paymentProvider;
     private readonly IOrderRepository _orderRepository;
@@ -43,7 +43,7 @@ public class MomoPaymentProductCommandHandler : IRequestHandler<MomoOneTimePayme
         _orderRepository = orderRepository;
         _httpContextAccessor = httpContextAccessor;
     }
-    public async Task<ErrorOr<PaymentResponse>> Handle(MomoOneTimePaymentProductCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<MomoPaymentResponse>> Handle(MomoOneTimePaymentProductCommand request, CancellationToken cancellationToken)
     {
         var customerId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (customerId == null)
@@ -65,10 +65,10 @@ public class MomoPaymentProductCommandHandler : IRequestHandler<MomoOneTimePayme
 
             if (createMomoLinkResult && message != null)
             {
-                var responseData = JsonConvert.DeserializeObject<PaymentResponse>(message);
+                var responseData = JsonConvert.DeserializeObject<MomoPaymentResponse>(message);
                 if (responseData?.ResultCode == "0")
                 {
-                    await _orderRepository.UpdateProductPaymentInCart(Guid.Parse(customerId), orderId);
+                    await _orderRepository.UpdateProductPaymentE_WalletInCart(Guid.Parse(customerId), orderId);
                     return responseData;
                 }
                 else
@@ -78,7 +78,7 @@ public class MomoPaymentProductCommandHandler : IRequestHandler<MomoOneTimePayme
             }
             else
             {
-                Errors.Payment.PaymentProblem(message ?? "Payment Failure!");
+                return Errors.Order.NoOrderProductPayment;
             }
         }
         return Errors.Order.NoOrderProductPayment;

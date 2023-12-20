@@ -9,12 +9,13 @@ public interface IOrderRepository
     Task<OrderProduct?> CheckProductOrderIsExist(Guid productId, Guid customerId);
     Task AddProductOrder(Guid customerId, Guid productId, int quantity);
     Task UpdateOrderProduct(OrderProduct orderProduct);
-    Task UpdateProductPaymentInCart(Guid customerId, Guid orderId);
+    Task UpdateProductPaymentE_WalletInCart(Guid customerId, Guid orderId);
     Task AddOrder(pet_store_backend.domain.Entities.Orders.Order order);
     Task<List<OrderProductBriefResult>?> RetrieveOrderedProductsForCustomer(Guid customerId);
     Task DeleteOrderProduct(OrderProduct orderProduct);
     Task<OrderProduct?> RetrieveOrderProduct(Guid orderProductId);
-    Task UpdateOrderStatusAccept(Guid orderId);
+    Task UpdateOrderE_WalletStatusAccept(Guid orderId);
     Task<List<OrderResult>> RetrieveOrderHistory(Guid customerId, int page);
     Task UpdateOrderStatusCancelled(Guid orderId);
+    Task UpdateProductPaymentCODInCart(Guid customerId, Guid orderId);
 }

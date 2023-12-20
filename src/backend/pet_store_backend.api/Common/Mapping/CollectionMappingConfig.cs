@@ -32,6 +32,7 @@ public class CollectionMappingConfig : IRegister
             .Map(dest => dest.ImageData, src => src.ImageData.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.ImageData)}" : null);
 
         config.NewConfig<ProductResult, ProductResponse>()
+            .Map(dest => dest.CategoryId, src => src.CategoryId)
             .Map(dest => dest.ProductId, src => src.ProductId)
             .Map(dest => dest.ImageData, src => src.ImageData.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.ImageData)}" : null);
 

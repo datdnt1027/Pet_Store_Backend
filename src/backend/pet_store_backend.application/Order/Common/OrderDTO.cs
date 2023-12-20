@@ -9,7 +9,7 @@ public record OrderProductWithPrice(
     double Price
 );
 
-public record PaymentResponse
+public record MomoPaymentResponse
 (
     string PartnerCode,
     string RequestId,
@@ -51,7 +51,14 @@ public record OrderProductResult(
 );
 
 public record OrderResult(
-    DateTime OrderDate,
+    DateTime? OrderDate,
     PaymentStatus? PaymentType,
     IEnumerable<OrderProductBriefResult> Orders
+);
+
+public record CODPaymentResult(
+    string OrderId,
+    string PaymentMessage,
+    string PaymentDate,
+    decimal Amount
 );
