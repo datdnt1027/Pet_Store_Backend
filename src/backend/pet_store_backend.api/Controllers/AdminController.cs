@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.Admin.Queries;
 using pet_store_backend.application.Authentication.Queries.Login;
+using pet_store_backend.application.Order.Queries;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.application.PetProducts.PetProduct.Commands;
 using pet_store_backend.contracts;
 using pet_store_backend.contracts.Admin;
 using pet_store_backend.contracts.Authentication;
+using pet_store_backend.contracts.Order;
 using pet_store_backend.contracts.PetProducts;
 using pet_store_backend.infrastructure.Authentication;
 using pet_store_backend.infrastructure.Persistence.Common;
@@ -150,6 +152,18 @@ public class AdminController : ApiController
         var findUser = await _mediator.Send(query);
 
         return findUser.Match(user => Ok(_mapper.Map<FindCustomerResponse>(user)),
+            errors => Problem(errors));
+    }
+
+    [HttpGet]
+    [Route("orders")]
+    [HasPermission(TableKey.Orders, PermissionType.Read)]
+    public async Task<IActionResult> GetOrderManage()
+    {
+        var query = new OrderByBatchQuery();
+        var orders = await _mediator.Send(query);
+
+        return orders.Match(order => Ok(_mapper.Map<List<OrderManageResponse>>(order)),
             errors => Problem(errors));
     }
 }

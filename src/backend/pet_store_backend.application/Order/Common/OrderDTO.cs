@@ -56,6 +56,14 @@ public record OrderResult(
     IEnumerable<OrderProductBriefResult> Orders
 );
 
+public record OrderManageResult(
+    Guid OrderId,
+    string OrderStatus,
+    string PaymentStatus,
+    string ExpectedDeliveryStartDate,
+    string ExpectedDeliveryEndDate
+);
+
 public record CODPaymentResult(
     string OrderId,
     string PaymentMessage,

@@ -18,4 +18,5 @@ public interface IOrderRepository
     Task<List<OrderResult>> RetrieveOrderHistory(Guid customerId, int page);
     Task UpdateOrderStatusCancelled(Guid orderId);
     Task UpdateProductPaymentCODInCart(Guid customerId, Guid orderId);
+    Task<List<OrderManageResult>> GetListOrderManage();
 }

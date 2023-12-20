@@ -207,4 +207,17 @@ public class OrderRepository : IOrderRepository
             .ToListAsync();
         return ordersWithProducts;
     }
+
+    public async Task<List<OrderManageResult>> GetListOrderManage()
+    {
+        var listOrder = await _dbContext.Orders.Select(o => new OrderManageResult(
+            o.Id.Value,
+            o.OrderStatus.ToString(),
+            o.PaymentStatus.ToString(),
+            o.ExpectedDelivery.StartDate.ToString() ?? "",
+            o.ExpectedDelivery.EndDate.ToString() ?? ""
+        )).ToListAsync();
+
+        return listOrder;
+    }
 }
