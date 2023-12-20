@@ -29,14 +29,14 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
             request.Products.ConvertAll(product => Product.Create(
                 product.ProductName,
                 product.ProductDetail,
-                product.ProductQuantity,
-                product.ProductPrice,
-                File.ReadAllBytes(product.ImageData)
+                int.Parse(product.ProductQuantity),
+                double.Parse(product.ProductPrice),
+                product.ImageData
             ))
         );
 
         await _categoryRepository.Add(category);
 
-        return new MessageResult(Message: "Created Successfully !");
+        return new MessageResult(Message: "Create Collection Successfully !");
     }
 }

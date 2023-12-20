@@ -13,9 +13,9 @@ public record CreateCategoryCommand(
 public record ProductCommand(
     string ProductName,
     string ProductDetail,
-    int ProductQuantity,
-    double ProductPrice,
-   string ImageData
+    string ProductQuantity,
+    string ProductPrice,
+    byte[] ImageData
 );
 
 
@@ -27,17 +27,52 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
             .NotNull().NotEmpty().MaximumLength(50); // Adjust the maximum length as needed
 
         RuleFor(x => x.Products)
-            .NotEmpty().WithMessage("At least one product is required")
             .ForEach(product =>
             {
                 product.ChildRules(productRule =>
                 {
-                    productRule.RuleFor(p => p.ProductName).NotNull().NotEmpty();
-                    productRule.RuleFor(p => p.ProductDetail).NotNull().NotEmpty();
-                    productRule.RuleFor(p => p.ProductQuantity).GreaterThan(0);
-                    productRule.RuleFor(p => p.ProductPrice).GreaterThan(0);
-                    productRule.RuleFor(p => p.ImageData).NotNull().NotEmpty();
+                    productRule.RuleFor(x => x.ProductName)
+                        .NotEmpty()
+                        .WithMessage("Product name is required.")
+                        .Matches("^[a-zA-Z ]*$").WithMessage("Product name should only contain letters.")
+                        .MaximumLength(100).WithMessage("Product name cannot exceed 100 characters.");
+
+                    productRule.RuleFor(x => x.ProductDetail)
+                        .NotEmpty()
+                        .WithMessage("Product detail is required.")
+                        .Matches("^[a-zA-Z ]*$").WithMessage("Product detail should only contain letters.")
+                        .MaximumLength(255).WithMessage("Product detail cannot exceed 255 characters.");
+
+                    productRule.RuleFor(x => x.ProductQuantity)
+                        .Must(x => int.TryParse(x, out int quantity) && quantity > 0)
+                        .WithMessage("Product quantity must be a valid number.");
+
+                    productRule.RuleFor(x => x.ProductPrice)
+                        .NotEmpty().WithMessage("Product Price can not be null.")
+                        .Must(BeValidVndAmount)
+                        .WithMessage("Product price must be a valid number.");
+
+                    // ImageData can be null, but if provided, it should be of a specific type
+                    productRule.RuleFor(x => x.ImageData)
+                        // .NotEmpty().When(x => x.ImageData == null)
+                        // .WithMessage("Image data is required.")
+                        .Must(x => x is byte[]).When(x => x.ImageData != null)
+                        .WithMessage("Image data must be in byte array format.");
                 });
-            });
+            })
+            .When(commad => commad.Products != null);
+    }
+
+    private bool BeValidVndAmount(string? value)
+    {
+        if (value != null)
+        {
+            if (double.TryParse(value, out double result) && result > 0)
+            {
+                // Check if the value is divisible by 1000
+                return result % 1000 == 0;
+            }
+        }
+        return false;
     }
 }

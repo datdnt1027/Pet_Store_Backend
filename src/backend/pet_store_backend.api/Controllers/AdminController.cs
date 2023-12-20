@@ -115,9 +115,8 @@ public class AdminController : ApiController
         );
     }
 
-
     [HttpPatch]
-    [Route("products")]
+    [Route("product")]
     [HasPermission(TableKey.Products, PermissionType.Update)]
     [HasPermission(TableKey.Products, PermissionType.Deactivate)]
     public async Task<IActionResult> UpdateStatusProduct(UpdateProductRequest request)

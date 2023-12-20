@@ -91,7 +91,7 @@ public sealed class Product : Entity<ProductId>
             imageData,
             DateTime.Now,
             DateTime.Now,
-            true);
+            false);
     }
 
     public static Product Create(string productName,
@@ -109,7 +109,7 @@ public sealed class Product : Entity<ProductId>
             imageData,
             DateTime.Now,
             DateTime.Now,
-            true,
+            false,
             categoryId);
     }
 
