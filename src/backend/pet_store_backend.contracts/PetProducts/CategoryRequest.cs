@@ -2,22 +2,22 @@ namespace pet_store_backend.contracts.PetProducts;
 
 public record CreateCategoryRequest(
     string CategoryName,
-    List<ProductRequest> Products);
+    List<ProductRequest>? Products);
 
 public record ProductRequest(
     string ProductName,
     string ProductDetail,
-    int ProductQuantity,
-    double ProductPrice,
-    string ImageData
+    string ProductQuantity,
+    string ProductPrice,
+    byte[]? ImageData
 );
 
 public record CreateProductRequest(
     string CategoryId,
     string ProductName,
     string ProductDetail,
-    int ProductQuantity,
-    double ProductPrice,
+    string ProductQuantity,
+    string ProductPrice,
     byte[]? ImageData
 );
 

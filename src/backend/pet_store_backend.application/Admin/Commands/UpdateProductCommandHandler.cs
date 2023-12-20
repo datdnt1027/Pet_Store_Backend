@@ -12,8 +12,8 @@ public record UpdateProductCommand(
     string CategoryId,
     string ProductName,
     string ProductDetail,
-    string? ProductQuantity,
-    string? ProductPrice,
+    string ProductQuantity,
+    string ProductPrice,
     byte[] ImageData,
     string Status
 ) : IRequest<ErrorOr<MessageResult>>;
@@ -41,11 +41,12 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
             .When(command => command.ProductDetail != null);
 
         RuleFor(x => x.ProductQuantity)
-             .Must(x => int.TryParse(x, out _)).WithMessage("Product quantity must be a valid number.")
-             .When(command => !string.IsNullOrEmpty(command.ProductQuantity));
+            .Must(x => int.TryParse(x, out int quantity) && quantity > 0)
+            .WithMessage("Product quantity must be a valid number.")
+            .When(command => !string.IsNullOrEmpty(command.ProductQuantity));
 
         RuleFor(x => x.ProductPrice)
-            .Must(x => double.TryParse(x, out _)).WithMessage("Product price must be a valid number.")
+            .Must(BeValidVndAmount).WithMessage("Product price must be a valid price.")
             .When(command => !string.IsNullOrEmpty(command.ProductPrice));
 
         RuleFor(x => x.Status)
@@ -54,8 +55,10 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 
         // Validate ImageData only if it is not null
         RuleFor(x => x.ImageData)
-            .Must(BeValidImageData).WithMessage("Invalid image data.")
-            .When(command => command.ImageData != null); ;
+            // .NotEmpty().When(x => x.ImageData == null)
+            // .WithMessage("Image data is required.")
+            .Must(BeValidImageData).When(x => x.ImageData != null)
+            .WithMessage("Image data must be in byte array format.");
     }
 
     private bool BeValidImageData(byte[] imageData)
@@ -72,6 +75,20 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
     private bool BeValidGuid(string guid)
     {
         return Guid.TryParse(guid, out _);
+    }
+
+    private bool BeValidVndAmount(string? value)
+    {
+        if (value != null)
+        {
+            if (double.TryParse(value, out double result) && result > 0)
+            {
+                // Check if the value is divisible by 1000
+                return result % 1000 == 0;
+            }
+        }
+
+        return false;
     }
 }
 
