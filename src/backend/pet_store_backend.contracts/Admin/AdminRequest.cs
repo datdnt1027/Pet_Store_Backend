@@ -25,3 +25,10 @@ public record FindUserRequest(
     string? Email,
     string? PhoneNumber
 );
+
+public record UpdateOrderManageRequest(
+    string OrderId,
+    string OrderStatus,
+    string? ExpectedDeliveryStartDate,
+    string? ExpectedDeliveryEndDate
+);

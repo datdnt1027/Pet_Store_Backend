@@ -64,6 +64,7 @@ public class OrderRepository : IOrderRepository
         var order = pet_store_backend.domain.Entities.Orders.Order.CreateOrder(orderId);
         order.UpdatePaymentStatus(PaymentStatus.COD);
         await _dbContext.AddAsync(order);
+        await _dbContext.SaveChangesAsync(); // Save changes to the database
         var orderProducts = await _dbContext.OrderProducts
             .AsNoTracking()
             .Where(o => o.CustomerId == CustomerId.Create(customerId) && o.OrderProductStatus == OrderProductStatus.Ordered)
@@ -77,8 +78,8 @@ public class OrderRepository : IOrderRepository
 
             // Update the orderProduct status in the context
             _dbContext.Entry(orderProduct).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync(); // Save changes to the database
         }
-        await _dbContext.SaveChangesAsync(); // Save changes to the database
     }
 
     public async Task UpdateOrderE_WalletStatusAccept(Guid orderId)
@@ -210,14 +211,52 @@ public class OrderRepository : IOrderRepository
 
     public async Task<List<OrderManageResult>> GetListOrderManage()
     {
-        var listOrder = await _dbContext.Orders.Select(o => new OrderManageResult(
-            o.Id.Value,
-            o.OrderStatus.ToString(),
-            o.PaymentStatus.ToString(),
-            o.ExpectedDelivery.StartDate.ToString() ?? "",
-            o.ExpectedDelivery.EndDate.ToString() ?? ""
-        )).ToListAsync();
+#pragma warning disable CS8602
+        var listOrder = await _dbContext.Orders
+            .Join(
+                _dbContext.OrderProducts,
+                order => order.Id,
+                orderProduct => orderProduct.OrderId,
+                (order, orderProducts) => new
+                {
+                    order,
+                    orderProducts
+                })
+            .Join(
+                _dbContext.Customers,
+                orderInfo => orderInfo.orderProducts.CustomerId,
+                customer => customer.Id,
+                (orderInfo, customer) => new OrderManageResult(
+                    orderInfo.order.Id.Value,
+                    orderInfo.order.OrderStatus.ToString(),
+                    orderInfo.order.PaymentStatus.ToString(),
+                    orderInfo.order.ExpectedDelivery.StartDate.ToString() ?? "",
+                    orderInfo.order.ExpectedDelivery.EndDate.ToString() ?? "",
+                    customer.Email
+                )
+            )
+            .ToListAsync();
 
         return listOrder;
+#pragma warning restore CS8602
     }
+
+    public async Task<pet_store_backend.domain.Entities.Orders.Order?> RetrieveOrder(Guid orderId)
+    {
+        var order = await _dbContext.Orders
+            .Where(u => u.Id == OrderId.Create(orderId)) // Check if UserId.Create is necessary
+            .FirstOrDefaultAsync();
+
+        return order;
+    }
+
+
+    public async Task UpdateOrder(Order order)
+    {
+        _dbContext.Entry(order).State = EntityState.Modified;
+        // Save changes to the database
+        await _dbContext.SaveChangesAsync();
+    }
+
+
 }

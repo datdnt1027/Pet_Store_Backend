@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.Admin.Queries;
 using pet_store_backend.application.Authentication.Queries.Login;
+using pet_store_backend.application.Order.Commands;
 using pet_store_backend.application.Order.Queries;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.application.PetProducts.PetProduct.Commands;
@@ -164,6 +165,18 @@ public class AdminController : ApiController
         var orders = await _mediator.Send(query);
 
         return orders.Match(order => Ok(_mapper.Map<List<OrderManageResponse>>(order)),
+            errors => Problem(errors));
+    }
+
+    [HttpPatch]
+    [Route("order")]
+    [HasPermission(TableKey.Orders, PermissionType.Update)]
+    public async Task<IActionResult> UpdateOrderManage(UpdateOrderManageRequest request)
+    {
+        var command = _mapper.Map<UpdateOrderManageCommand>(request);
+        var orderUpdate = await _mediator.Send(command);
+
+        return orderUpdate.Match(order => Ok(_mapper.Map<MessageResponse>(order)),
             errors => Problem(errors));
     }
 }

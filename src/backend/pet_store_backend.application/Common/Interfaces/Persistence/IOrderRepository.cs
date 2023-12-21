@@ -19,4 +19,6 @@ public interface IOrderRepository
     Task UpdateOrderStatusCancelled(Guid orderId);
     Task UpdateProductPaymentCODInCart(Guid customerId, Guid orderId);
     Task<List<OrderManageResult>> GetListOrderManage();
+    Task<pet_store_backend.domain.Entities.Orders.Order?> RetrieveOrder(Guid orderId);
+    Task UpdateOrder(pet_store_backend.domain.Entities.Orders.Order order);
 }

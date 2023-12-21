@@ -25,5 +25,6 @@ public record OrderManageResponse(
     string OrderStatus,
     string PaymentStatus,
     string ExpectedDeliveryStartDate,
-    string ExpectedDeliveryEndDate
+    string ExpectedDeliveryEndDate,
+    string CustomerEmail
 );

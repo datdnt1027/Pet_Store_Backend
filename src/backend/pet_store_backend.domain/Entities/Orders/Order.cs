@@ -13,7 +13,7 @@ public sealed class Order : AggregateRoot<OrderId>
     public DateTime OrderDate { get; private set; }
     public OrderStatus OrderStatus { get; private set; }
     public PaymentStatus PaymentStatus { get; private set; }
-    public DeliveryDate ExpectedDelivery { get; private set; } = null!;
+    public DeliveryDate? ExpectedDelivery { get; private set; }
     public IReadOnlyList<OrderProduct> OrderProducts => _orderProducts.AsReadOnly();
 
     private Order(OrderId orderId,
@@ -52,6 +52,11 @@ public sealed class Order : AggregateRoot<OrderId>
         }
         PaymentStatus = paymentStatus;
 
+    }
+
+    public void UpdateOrderStatus(OrderStatus orderStatus)
+    {
+        OrderStatus = orderStatus;
     }
 
     public void UpdateOrderDelivery(DateTime expectedDeliveryDateStart, DateTime expectedDeliveryDateEnd)

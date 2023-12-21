@@ -5,7 +5,7 @@ public enum OrderStatus
     Accepted,
     Declined,
     Deliver,
-    Recieve
+    Receive
 }
 
 public enum OrderProductStatus

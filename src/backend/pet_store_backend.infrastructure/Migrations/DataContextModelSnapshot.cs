@@ -28,7 +28,7 @@ namespace pet_store_backend.infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("OrderId");
 
-                    b.Property<DateTime?>("OrderDate")
+                    b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("OrderStatus")
@@ -229,15 +229,15 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dc69ea5a-916c-4c5c-9b8d-041c6afe809d"),
-                            CustomerRoleId = new Guid("2efbff6a-599e-4738-a619-dd2f9c9f1543"),
+                            Id = new Guid("2caebfb9-895d-42da-b207-525e12e6dbff"),
+                            CustomerRoleId = new Guid("ce8e04bc-ef5f-476c-9243-f463bbe4acc6"),
                             Email = "20110629@student.hcmute.edu.vn",
                             FirstName = "Dat",
                             LastName = "Thien",
-                            PasswordHash = new byte[] { 234, 127, 93, 177, 150, 250, 75, 76, 164, 228, 217, 159, 75, 76, 84, 237, 37, 147, 214, 15, 222, 164, 11, 30, 251, 61, 86, 95, 72, 41, 146, 192, 222, 39, 14, 57, 189, 250, 199, 152, 75, 57, 49, 133, 169, 219, 176, 36, 19, 105, 218, 28, 103, 87, 207, 36, 220, 65, 18, 144, 97, 153, 155, 104 },
-                            PasswordSalt = new byte[] { 114, 254, 85, 47, 112, 129, 67, 176, 83, 221, 77, 222, 225, 247, 76, 56, 59, 50, 139, 223, 191, 205, 42, 216, 221, 47, 110, 63, 77, 238, 157, 223, 94, 19, 168, 76, 217, 13, 104, 100, 140, 77, 198, 187, 138, 3, 107, 124, 115, 63, 73, 220, 126, 169, 28, 89, 130, 230, 14, 158, 244, 77, 212, 166, 4, 138, 110, 116, 241, 173, 52, 103, 45, 199, 112, 25, 244, 12, 8, 0, 238, 241, 8, 34, 255, 116, 67, 227, 10, 69, 188, 232, 39, 158, 131, 40, 85, 60, 56, 26, 203, 60, 150, 24, 32, 124, 72, 143, 176, 7, 133, 207, 48, 198, 34, 120, 248, 249, 10, 92, 153, 61, 15, 69, 82, 32, 226, 51 },
+                            PasswordHash = new byte[] { 165, 166, 46, 117, 65, 84, 43, 163, 143, 191, 252, 175, 30, 159, 111, 238, 128, 111, 10, 135, 143, 78, 6, 230, 8, 24, 160, 172, 23, 95, 79, 111, 240, 45, 14, 233, 161, 253, 65, 234, 100, 211, 32, 85, 14, 141, 66, 76, 134, 188, 31, 169, 83, 201, 144, 53, 20, 208, 154, 120, 10, 34, 111, 90 },
+                            PasswordSalt = new byte[] { 56, 150, 57, 124, 113, 246, 73, 25, 195, 9, 34, 183, 222, 121, 9, 144, 191, 50, 30, 208, 197, 12, 94, 126, 142, 197, 69, 239, 185, 131, 221, 93, 22, 129, 3, 68, 21, 41, 141, 153, 187, 209, 215, 200, 70, 154, 57, 155, 184, 67, 53, 52, 77, 133, 243, 91, 221, 250, 19, 200, 180, 13, 34, 250, 158, 149, 8, 53, 99, 10, 62, 110, 131, 155, 163, 133, 193, 134, 105, 73, 134, 145, 12, 14, 232, 220, 9, 213, 97, 147, 220, 203, 156, 26, 47, 131, 127, 220, 239, 185, 182, 195, 49, 189, 168, 98, 254, 67, 122, 17, 110, 67, 93, 240, 131, 157, 253, 168, 138, 126, 126, 109, 109, 46, 40, 99, 221, 147 },
                             Status = true,
-                            VerifiedAt = new DateTime(2023, 12, 20, 19, 38, 34, 419, DateTimeKind.Local).AddTicks(776)
+                            VerifiedAt = new DateTime(2023, 12, 21, 12, 13, 29, 749, DateTimeKind.Local).AddTicks(8909)
                         });
                 });
 
@@ -325,15 +325,15 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("74e5c1f1-a743-443a-9e3f-40b5a3a95ac9"),
+                            Id = new Guid("ff48821e-957b-4827-a910-df39ed7aafc8"),
                             Email = "dntdat09@gmail.com",
                             FirstName = "Dat",
                             LastName = "Thien",
-                            PasswordHash = new byte[] { 108, 3, 201, 52, 104, 8, 158, 155, 200, 172, 185, 10, 3, 254, 108, 221, 187, 81, 115, 167, 135, 75, 161, 24, 122, 115, 204, 140, 12, 62, 113, 92, 133, 168, 93, 251, 213, 99, 162, 236, 113, 32, 158, 30, 240, 178, 42, 61, 40, 41, 85, 202, 181, 63, 115, 178, 159, 54, 86, 245, 16, 71, 44, 136 },
-                            PasswordSalt = new byte[] { 202, 217, 169, 172, 66, 55, 85, 160, 178, 230, 6, 8, 20, 77, 82, 170, 50, 51, 146, 139, 183, 149, 213, 238, 146, 145, 203, 159, 31, 148, 41, 114, 106, 87, 31, 47, 227, 247, 42, 91, 211, 241, 42, 242, 159, 225, 41, 90, 179, 125, 216, 198, 171, 24, 234, 191, 82, 62, 235, 118, 251, 155, 230, 12, 33, 174, 5, 76, 214, 27, 192, 15, 221, 132, 114, 138, 17, 108, 235, 161, 92, 137, 212, 231, 15, 104, 92, 113, 127, 158, 21, 28, 30, 90, 218, 78, 204, 163, 115, 245, 30, 62, 138, 12, 191, 244, 65, 182, 59, 195, 66, 110, 62, 254, 84, 203, 104, 235, 62, 113, 105, 5, 54, 246, 214, 151, 130, 104 },
+                            PasswordHash = new byte[] { 16, 119, 247, 166, 178, 73, 190, 45, 79, 19, 87, 202, 166, 92, 188, 48, 170, 188, 92, 164, 170, 16, 254, 76, 8, 59, 88, 152, 205, 101, 73, 75, 41, 151, 99, 131, 161, 103, 33, 60, 184, 111, 20, 98, 73, 169, 29, 182, 60, 198, 33, 222, 135, 71, 132, 102, 101, 9, 73, 61, 87, 203, 12, 254 },
+                            PasswordSalt = new byte[] { 252, 202, 231, 186, 174, 114, 106, 246, 76, 104, 209, 130, 0, 79, 177, 12, 161, 140, 49, 199, 118, 133, 44, 151, 201, 211, 181, 107, 87, 8, 37, 215, 22, 197, 255, 82, 117, 209, 245, 200, 145, 55, 138, 102, 145, 57, 113, 133, 36, 28, 195, 176, 220, 92, 6, 119, 202, 69, 103, 243, 81, 16, 111, 192, 55, 6, 76, 238, 250, 152, 227, 195, 86, 241, 80, 238, 9, 3, 12, 184, 210, 111, 218, 106, 198, 119, 86, 5, 245, 210, 35, 43, 187, 10, 179, 45, 109, 173, 94, 223, 193, 140, 28, 175, 47, 233, 197, 242, 6, 238, 220, 21, 62, 141, 142, 100, 200, 29, 1, 159, 226, 148, 77, 91, 209, 117, 128, 36 },
                             Status = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397"),
-                            VerifiedAt = new DateTime(2023, 12, 20, 19, 38, 34, 419, DateTimeKind.Local).AddTicks(491)
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a"),
+                            VerifiedAt = new DateTime(2023, 12, 21, 12, 13, 29, 749, DateTimeKind.Local).AddTicks(8597)
                         });
                 });
 
@@ -372,83 +372,83 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3a837705-4133-4f01-a4fb-30e65160ecd0"),
+                            Id = new Guid("bba0ccde-3d9d-42fa-b2f1-5817e5283ce0"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Users",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("11400538-f5fb-4376-859c-c402d45a5132"),
+                            Id = new Guid("b430fadd-8888-4255-b5a3-e2a5254ec239"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Customers",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("7ce3f6e9-3b31-4762-a577-0df38d388b35"),
+                            Id = new Guid("7dfeb950-772c-4d57-90e6-fc1b4ecc0448"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Categories",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("e24cabee-aea1-415f-8df8-08147e5adc21"),
+                            Id = new Guid("5de9bf94-a07c-4647-871c-7f61437eb120"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Products",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("19386eaf-752d-4f21-a6e5-60e32e5d0997"),
+                            Id = new Guid("0a1a7492-db76-4bd9-a553-3c8fd83d9f28"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "UserRoles",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("d560bee4-0de0-4783-baa5-f98329071635"),
+                            Id = new Guid("92388f57-e37e-408b-a529-b1005e5b8ed7"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "UserPermissions",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("1eab85c6-a7e2-4384-a352-427f615201f0"),
+                            Id = new Guid("5b3a9190-a4b0-4bef-9665-91b92fb5f889"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "Orders",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         },
                         new
                         {
-                            Id = new Guid("0f928576-21cd-442f-bec2-98746090003a"),
+                            Id = new Guid("248bf4b9-1ecc-496c-9a0f-85535fef7363"),
                             Create = true,
                             Deactive = true,
                             Read = true,
                             TableName = "OrderProducts",
                             Update = true,
-                            UserRoleId = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397")
+                            UserRoleId = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a")
                         });
                 });
 
@@ -473,13 +473,13 @@ namespace pet_store_backend.infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1fc87eb4-0820-40e7-bc9d-72dae05dd397"),
+                            Id = new Guid("0003e7ae-c345-4d45-b489-fd6378cde41a"),
                             Status = true,
                             UserRoleName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("2efbff6a-599e-4738-a619-dd2f9c9f1543"),
+                            Id = new Guid("ce8e04bc-ef5f-476c-9243-f463bbe4acc6"),
                             Status = true,
                             UserRoleName = "User"
                         });

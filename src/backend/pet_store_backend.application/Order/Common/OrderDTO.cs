@@ -61,7 +61,8 @@ public record OrderManageResult(
     string OrderStatus,
     string PaymentStatus,
     string ExpectedDeliveryStartDate,
-    string ExpectedDeliveryEndDate
+    string ExpectedDeliveryEndDate,
+    string CustomerEmail
 );
 
 public record CODPaymentResult(

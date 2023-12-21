@@ -21,7 +21,7 @@ public class DataContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
-    public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<pet_store_backend.domain.Entities.Orders.Order> Orders { get; set; } = null!;
     public DbSet<OrderProduct> OrderProducts { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
