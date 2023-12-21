@@ -11,7 +11,7 @@ public record UserProfileResult(
     byte[] Avatar,
     string PhoneNumber
 );
-public record UserProfileWithStatusResult(
+public record CustomerProfileWithStatusResult(
     Guid CustomerId,
     string FirstName,
     string LastName,
@@ -22,3 +22,17 @@ public record UserProfileWithStatusResult(
     string PhoneNumber,
     bool Status
 );
+
+public record UserProfileWithStatusResult(
+    Guid UserId,
+    string FirstName,
+    string LastName,
+    Gender? Sex,
+    string Email,
+    string Address,
+    byte[] Avatar,
+    string PhoneNumber,
+    bool Status
+);
+
+

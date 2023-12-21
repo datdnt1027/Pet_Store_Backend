@@ -68,11 +68,11 @@ public class UserRepository : IUserRepository
 
 
 
-    public async Task<UserProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email)
+    public async Task<CustomerProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email)
     {
         var customer = await _dbContext.Customers
             .Where(u => u.Email == email)
-            .Select(u => new UserProfileWithStatusResult(
+            .Select(u => new CustomerProfileWithStatusResult(
                 u.Id.Value,
                 u.FirstName,
                 u.LastName,
@@ -88,11 +88,11 @@ public class UserRepository : IUserRepository
         return customer;
     }
 
-    public async Task<UserProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber)
+    public async Task<CustomerProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber)
     {
         var customer = await _dbContext.Customers
             .Where(u => u.PhoneNumber == phoneNumber)
-            .Select(u => new UserProfileWithStatusResult(
+            .Select(u => new CustomerProfileWithStatusResult(
                 u.Id.Value,
                 u.FirstName,
                 u.LastName,
@@ -192,6 +192,25 @@ public class UserRepository : IUserRepository
             .AnyAsync(o => o.Id == UserRoleId.Create(userRoleId));
 
         return checkUserRole;
+    }
+
+    public async Task<List<UserProfileWithStatusResult>> GetListUser()
+    {
+        var userList = await _dbContext.Users
+            .Where(u => u.UserRole.UserRoleName != UserRoleKey.AdminRoleName)
+            .Select(u => new UserProfileWithStatusResult(
+                u.Id.Value,
+                u.FirstName,
+                u.LastName,
+                u.Gender,
+                u.Email,
+                u.Address ?? "",
+                u.Avatar ?? Array.Empty<byte>(),
+                u.PhoneNumber ?? "",
+                u.Status
+            ))
+            .ToListAsync();
+        return userList;
     }
 
 }
