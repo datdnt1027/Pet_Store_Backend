@@ -179,4 +179,16 @@ public class AdminController : ApiController
         return orderUpdate.Match(order => Ok(_mapper.Map<MessageResponse>(order)),
             errors => Problem(errors));
     }
+
+    [HttpPost]
+    [Route("user")]
+    [HasPermission(TableKey.Users, PermissionType.Create)]
+    public async Task<IActionResult> CreateUser(CreateUserRequest request)
+    {
+        var command = _mapper.Map<CreateUserCommand>(request);
+        var createUser = await _mediator.Send(command);
+
+        return createUser.Match(user => Ok(_mapper.Map<MessageResponse>(user)),
+            errors => Problem(errors));
+    }
 }

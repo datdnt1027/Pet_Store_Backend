@@ -230,8 +230,8 @@ public class OrderRepository : IOrderRepository
                     orderInfo.order.Id.Value,
                     orderInfo.order.OrderStatus.ToString(),
                     orderInfo.order.PaymentStatus.ToString(),
-                    orderInfo.order.ExpectedDelivery.StartDate.ToString() ?? "",
-                    orderInfo.order.ExpectedDelivery.EndDate.ToString() ?? "",
+                    orderInfo.order.ExpectedDelivery.StartDate.ToString("yyyy-MM-dd HH:mm:ss") ?? "",
+                    orderInfo.order.ExpectedDelivery.EndDate.ToString("yyyy-MM-dd HH:mm:ss") ?? "",
                     customer.Email
                 )
             )
@@ -240,6 +240,7 @@ public class OrderRepository : IOrderRepository
         return listOrder;
 #pragma warning restore CS8602
     }
+
 
     public async Task<pet_store_backend.domain.Entities.Orders.Order?> RetrieveOrder(Guid orderId)
     {

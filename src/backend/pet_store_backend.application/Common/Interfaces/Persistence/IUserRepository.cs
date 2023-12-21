@@ -20,6 +20,8 @@ namespace pet_store_backend.application.Common.Interfaces.Persistence
         Task<UserProfileResult?> RetrieveUserProfile(Guid userId);
         Task<pet_store_backend.domain.Entities.Users.Customer?> RetrieveUser(Guid userId);
         Task UpdateCustomerStatusAsync(pet_store_backend.domain.Entities.Users.Customer customer);
-
+        Task AddUser(User user);
+        Task<bool> CheckUserExistByEmail(string email);
+        Task<bool> CheckUserRoleExist(Guid userRoleId);
     }
 }

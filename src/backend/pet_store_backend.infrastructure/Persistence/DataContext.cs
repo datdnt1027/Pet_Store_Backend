@@ -27,10 +27,10 @@ public class DataContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
         SeedAdminData(modelBuilder);
+        SeedUserData(modelBuilder);
         SeedGuestData(modelBuilder);
         base.OnModelCreating(modelBuilder);
     }
-
     public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using var hmac = new HMACSHA512();
@@ -94,6 +94,39 @@ public class DataContext : DbContext
         user.UpdateUserRoleId(userRole.Id);
         modelBuilder.Entity<User>().HasData(user);
     }
+
+    private void SeedUserData(ModelBuilder modelBuilder)
+    {
+        var userRole = UserRole.Create(UserRoleKey.SaleRoleName, null!, null!);
+        List<UserPermission> userPermissions = new();
+        userPermissions.Add(UserPermission.CreatePermission(
+            TableKey.Orders,
+            true,
+            true,
+            true,
+            true,
+            userRole.Id
+        ));
+        userPermissions.Add(UserPermission.CreatePermission(
+            TableKey.Categories,
+            true,
+            true,
+            false,
+            false,
+            userRole.Id
+        ));
+        userPermissions.Add(UserPermission.CreatePermission(
+            TableKey.Products,
+            true,
+            true,
+            false,
+            false,
+            userRole.Id
+        ));
+        modelBuilder.Entity<UserRole>().HasData(userRole);
+        modelBuilder.Entity<UserPermission>().HasData(userPermissions);
+    }
+
 
 
     private static void SeedGuestData(ModelBuilder modelBuilder)

@@ -23,6 +23,12 @@ public class UserRepository : IUserRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task AddUser(User user)
+    {
+        await _dbContext.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
+    }
+
     //Update information for Customer
     public async Task Update(Customer customer)
     {
@@ -51,6 +57,16 @@ public class UserRepository : IUserRepository
 
         return customer;
     }
+
+    public async Task<bool> CheckUserExistByEmail(string email)
+    {
+        var checkUserEmail = await _dbContext.Users
+            .AnyAsync(u => u.Email == email);
+
+        return checkUserEmail;
+    }
+
+
 
     public async Task<UserProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email)
     {
@@ -168,6 +184,14 @@ public class UserRepository : IUserRepository
         _dbContext.Entry(customer).State = EntityState.Modified;
         // Save changes to the database
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> CheckUserRoleExist(Guid userRoleId)
+    {
+        var checkUserRole = await _dbContext.UserRoles
+            .AnyAsync(o => o.Id == UserRoleId.Create(userRoleId));
+
+        return checkUserRole;
     }
 
 }

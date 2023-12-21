@@ -32,3 +32,12 @@ public record UpdateOrderManageRequest(
     string? ExpectedDeliveryStartDate,
     string? ExpectedDeliveryEndDate
 );
+
+
+public record CreateUserRequest(
+    string UserRoleId,
+    string FirstName,
+    string LastName,
+    string Email,
+    string Password,
+    string ConfirmPassword);
