@@ -108,7 +108,7 @@ public class AdminController : ApiController
     }
 
     [HttpPost("product")]
-    [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    // [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [HasPermission(TableKey.Products, PermissionType.Create)]
     public async Task<IActionResult> CreateProduct(CreateProductRequest request)
     {
@@ -163,7 +163,7 @@ public class AdminController : ApiController
     }
 
     [HttpGet]
-    [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    // [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [Route("orders")]
     [HasPermission(TableKey.Orders, PermissionType.Read)]
     public async Task<IActionResult> GetOrderManage()
@@ -176,7 +176,7 @@ public class AdminController : ApiController
     }
 
     [HttpPatch]
-    [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    // [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [Route("order")]
     [HasPermission(TableKey.Orders, PermissionType.Update)]
     public async Task<IActionResult> UpdateOrderManage(UpdateOrderManageRequest request)
