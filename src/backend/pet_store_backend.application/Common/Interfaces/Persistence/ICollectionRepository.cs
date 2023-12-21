@@ -9,6 +9,7 @@ public interface ICollectionRepository
     Task Add(Category category);
     Task AddProduct(Product product);
     Task<List<Category>> GetAllCategoriesWithProductsAsync();
+    Task<List<ProductResult>> GetProductsSearch(string searchKey);
     Task<List<CategoryWithProductCount>> GetAllCategoriesWithNumberOfProducts(bool status = true);
     Task<CategoryResult?> GetCategoriesWithProductsInBatchAsync(string CategoryId, int page);
     Task<ProductResult?> GetProductDetail(string productId, bool status = true);

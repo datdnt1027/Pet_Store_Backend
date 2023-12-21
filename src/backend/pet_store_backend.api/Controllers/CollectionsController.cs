@@ -59,6 +59,19 @@ public class CollectionsController : ApiController
         );
     }
 
+    [HttpGet]
+    [Route("products_search")]
+    public async Task<IActionResult> GetProductsSearch([FromQuery] string search)
+    {
+        var query = new SearchProductQuery(search);
+        var productsSearch = await _mediator.Send(query);
+
+        return productsSearch.Match(
+            products => Ok(_mapper.Map<List<ProductResponse>>(products)),
+            errors => Problem(errors)
+        );
+    }
+
     [HttpPost]
     [Route("product")]
     public async Task<IActionResult> GetProductDetail(ProductIdRequest productQuery)

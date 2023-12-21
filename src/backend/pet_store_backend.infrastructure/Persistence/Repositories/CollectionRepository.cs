@@ -102,6 +102,26 @@ public class CollectionRepository : ICollectionRepository
         return productsInBatch;
     }
 
+    public async Task<List<ProductResult>> GetProductsSearch(string searchKey)
+    {
+        var searchProduct = await _dbContext.Products
+            .AsNoTracking()
+            .Where(p => p.ProductName.Contains(searchKey))
+            .Take(5)
+            .Select(product => new ProductResult(
+                product.CategoryId.Value,
+                product.Id.Value,
+                product.ProductName,
+                product.ProductDetail,
+                product.ProductQuantity,
+                product.ProductPrice.Value,
+                product.ImageData ?? Array.Empty<byte>(),
+                product.CreatedDateTime,
+                product.UpdatedDateTime
+            )).ToListAsync();
+        return searchProduct;
+    }
+
 
     public async Task<ProductResult?> GetProductDetail(string productId, bool status = true)
     {
