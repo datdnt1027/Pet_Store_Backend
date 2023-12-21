@@ -45,7 +45,6 @@ public class AdminController : ApiController
     }
 
     [HttpGet]
-    [Authorize]
     [Route("profile")]
     public async Task<IActionResult> GetProfile()
     {
@@ -57,7 +56,6 @@ public class AdminController : ApiController
     }
 
     [HttpPatch]
-    [Authorize]
     [Route("update_profile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateAdminProfileRequest request)
     {

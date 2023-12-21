@@ -38,6 +38,7 @@ public record FindCustomerResponse(
 );
 
 public record UserProfileWithStatusResponse(
+    string UserRoleName,
     string UserId,
     string FirstName,
     string LastName,

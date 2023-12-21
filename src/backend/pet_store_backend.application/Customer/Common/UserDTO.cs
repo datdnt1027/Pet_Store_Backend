@@ -24,6 +24,7 @@ public record CustomerProfileWithStatusResult(
 );
 
 public record UserProfileWithStatusResult(
+    string UserRoleName,
     Guid UserId,
     string FirstName,
     string LastName,

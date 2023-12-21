@@ -197,17 +197,28 @@ public class UserRepository : IUserRepository
     public async Task<List<UserProfileWithStatusResult>> GetListUser()
     {
         var userList = await _dbContext.Users
+            .Join(
+                _dbContext.UserRoles,
+                user => user.UserRoleId,
+                userRole => userRole.Id,
+                (user, userRole) => new
+                {
+                    User = user,
+                    UserRole = userRole
+                }
+            )
             .Where(u => u.UserRole.UserRoleName != UserRoleKey.AdminRoleName)
             .Select(u => new UserProfileWithStatusResult(
-                u.Id.Value,
-                u.FirstName,
-                u.LastName,
-                u.Gender,
-                u.Email,
-                u.Address ?? "",
-                u.Avatar ?? Array.Empty<byte>(),
-                u.PhoneNumber ?? "",
-                u.Status
+                u.UserRole.UserRoleName,
+                u.User.Id.Value,
+                u.User.FirstName,
+                u.User.LastName,
+                u.User.Gender,
+                u.User.Email,
+                u.User.Address ?? "",
+                u.User.Avatar ?? Array.Empty<byte>(),
+                u.User.PhoneNumber ?? "",
+                u.User.Status
             ))
             .ToListAsync();
         return userList;
