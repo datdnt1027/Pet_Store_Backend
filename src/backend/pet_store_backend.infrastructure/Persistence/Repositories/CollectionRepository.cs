@@ -57,6 +57,7 @@ public class CollectionRepository : ICollectionRepository
             .Where(p => p.Status == true)
             .Skip(productsToSkip)
             .Take(pageSize)
+            .OrderBy(p => p.CategoryId)
             .Select(product => new ProductBriefResult(
                 product.Id.Value,
                 product.ProductName,

@@ -29,7 +29,7 @@ Ví dụ:
 
 Vui lòng khi chạy project vào appsettings.Development.json để setting những trường còn trống trong user secret của mình.
 ```sh
-dotnet user-secrets set "JwtSettings:SecretKey" "your-jwt-secret-key"
+dotnet user-secrets set "JwtSettings:SecretKey" "your-jwt-secret-key
 
 dotnet user-secrets set "EmailSettings:Username" "your-email-username"
 
