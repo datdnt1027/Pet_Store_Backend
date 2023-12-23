@@ -18,4 +18,5 @@ public interface ICollectionRepository
     Task<List<ProductResult>> GetProductsWithPage(int page);
     Task<Product?> GetProduct(Guid productId);
     Task UpdateProduct(Product product);
+    Task<List<ProductResult>> GetNumberProductsOrderByDate(int numOfProducts, int page);
 }

@@ -209,6 +209,44 @@ public class OrderRepository : IOrderRepository
         return ordersWithProducts;
     }
 
+    public async Task<List<ProductResult>> GetBestSellProduct(int numOfProducts, int page)
+    {
+        int productsToSkip = (page - 1) * numOfProducts;
+        var bestSellProducts = await _dbContext
+            .OrderProducts
+            .GroupJoin(
+                _dbContext.Orders,
+                orderProduct => orderProduct.OrderId,
+                order => order.Id,
+                (orderProduct, order) => new
+                {
+                    ProductId = orderProduct.ProductId,
+                    NumberOfProduct = order.Where(o => o.OrderStatus == OrderStatus.Receive).Count()
+                }
+            )
+            .AsNoTracking()
+            .OrderByDescending(o => o.NumberOfProduct)
+            .Skip(productsToSkip)
+            .Take(numOfProducts)
+            .Join(
+                _dbContext.Products,
+                order => order.ProductId,
+                product => product.Id,
+                (order, product) => new ProductResult(
+                    product.CategoryId.Value,
+                    product.Id.Value,
+                    product.ProductName,
+                    product.ProductDetail,
+                    product.ProductQuantity,
+                    product.ProductPrice.Value,
+                    product.ImageData ?? Array.Empty<byte>(),
+                    product.CreatedDateTime,
+                    product.UpdatedDateTime
+                )
+            ).ToListAsync();
+        return bestSellProducts;
+    }
+
     public async Task<List<OrderManageResult>> GetListOrderManage()
     {
 #pragma warning disable CS8602

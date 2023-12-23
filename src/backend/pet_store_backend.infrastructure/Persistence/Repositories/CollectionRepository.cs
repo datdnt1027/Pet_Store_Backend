@@ -103,6 +103,30 @@ public class CollectionRepository : ICollectionRepository
         return productsInBatch;
     }
 
+    public async Task<List<ProductResult>> GetNumberProductsOrderByDate(int numOfProducts, int page)
+    {
+        int productsToSkip = (page - 1) * numOfProducts;
+
+        var productsInBatch = await _dbContext.Products
+            .AsNoTracking()
+            .Where(p => p.Status == true)
+            .OrderByDescending(p => p.CreatedDateTime) // Add an OrderBy clause based on your sorting criteria
+            .Skip(productsToSkip)
+            .Take(numOfProducts)
+            .Select(product => new ProductResult(
+                product.CategoryId.Value,
+                product.Id.Value,
+                product.ProductName,
+                product.ProductDetail,
+                product.ProductQuantity,
+                product.ProductPrice.Value,
+                product.ImageData ?? Array.Empty<byte>(),
+                product.CreatedDateTime,
+                product.UpdatedDateTime
+            )).ToListAsync();
+        return productsInBatch;
+    }
+
     public async Task<List<ProductResult>> GetProductsSearch(string searchKey)
     {
         var searchProduct = await _dbContext.Products
