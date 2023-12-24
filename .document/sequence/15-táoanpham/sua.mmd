@@ -1,0 +1,18 @@
+
+sequenceDiagram
+    Nhân viên ->> Trang quản lý sản phẩm: Click chọn nút Edit tại sản phẩm mong muốn để chỉnh sửa
+    Trang quản lý sản phẩm ->> Form chỉnh sửa sản phẩm: Hiển thị form chỉnh sửa sản phẩm
+    Nhân viên ->> Form chỉnh sửa sản phẩm: Nhân viên nhập vào các thông tin cần cần và có thể chỉnh sửa và ấn lưu.
+    Form chỉnh sửa sản phẩm  ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Form chỉnh sửa sản phẩm : Trả về biến admin
+    Trang quản lý sản phẩm ->> APIController: Gửi lên token kèm với thông tin mới được chỉnh sửa của sản phẩm mới lên API
+    APIController ->> APIController: Xác nhận token và thông tin sản phẩm
+    alt token sai
+    APIController -->> Form chỉnh sửa sản phẩm: Trả kết quả sai token
+    Form chỉnh sửa sản phẩm ->> Nhân viên: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Cập nhật sản phẩm
+    APIController -->> Form chỉnh sửa sản phẩm: Trả kết quả thành công
+    Form chỉnh sửa sản phẩm ->> Trang quản lý sản phẩm: Hiển thị lại list product
+
+

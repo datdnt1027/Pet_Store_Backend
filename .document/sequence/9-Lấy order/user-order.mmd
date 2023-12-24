@@ -1,0 +1,16 @@
+
+sequenceDiagram
+    Người dùng->>+UserNavbar: Người dùng lia chuột vào ảnh avatar
+    UserNavbar ->> UserDropdownMenu: Hệ thống hiển thị hộp thoại drop down gồm các nút profile, order và logout
+    Người dùng ->> UserDropdownMenu: Người dùng chọn My Orders
+    UserDropdownMenu ->> Trang đơn hàng: Điều hướng tới trang quản lý đơn hàng
+    Trang đơn hàng ->> Trình duyệt: Láy biến user có trong local storage
+    Trình duyệt -->> Trang đơn hàng: Trả về biến user
+    Trang đơn hàng ->> APIController: Gửi token từ biến user để lấy thông tin tài khoản
+    APIController ->> APIController: Xác minh token
+    alt token sai
+    APIController -->> Trang đơn hàng: Trả kết quả sai token
+    Trang đơn hàng ->> Người dùng: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController -->> Trang đơn hàng: Trả kết quả thành công kèm với tất cả order của nguoiwff dùng
+    Trang đơn hàng ->> Người dùng: Hiển thị các order

@@ -1,0 +1,15 @@
+
+sequenceDiagram
+    Admin ->> Trang chủ admin: Admin nhấp chọn quản lý nhân viên trên side menu
+    Trang chủ admin ->> Trang quản lý nhân viên: Hiển thị trang quản lý nhân viên
+    Trang quản lý nhân viên ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Trang quản lý nhân viên: Trả về biến admin
+    Trang quản lý nhân viên ->> APIController: Gửi lên token từ biến admin lên API
+    APIController ->> APIController: Xác nhận token đó
+    alt token sai
+    APIController -->> Trang quản lý nhân viên: Trả kết quả sai token
+   Trang quản lý nhân viên ->> Admin: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController -->> Trang quản lý nhân viên: Trả kết quả thành công kèm với list các nhân viên
+    Trang quản lý nhân viên ->> Admin: Hiển thị các nhân viên có từ kết quả trả về
+

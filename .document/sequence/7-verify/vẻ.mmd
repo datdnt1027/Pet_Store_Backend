@@ -1,0 +1,19 @@
+# Đăng nhậpf bằng google
+
+```mermaid
+
+sequenceDiagram
+    APIController ->> Người dùng: Gửi email chứa đường link verify
+    Người dùng->>+Email từ PETCAL: Người dùng nhấp vào đường link xác nhận
+    Email từ PETCAL ->> Trang xác nhận: Hiển thị trang web xác nhận
+    Trang xác nhận ->> APIController: Dùng token có trong url gửi lên
+    APIController ->> APIController: Xác nhận token
+    APIController -->> Trang xác nhận: Trả kết quả thành công
+    Trang xác nhận -->> Người dùng: Hiển thị đã xác nhận thành công
+
+
+    
+
+
+
+```

@@ -3,12 +3,29 @@
 ```mermaid
 
 sequenceDiagram
-    Client->>Protocol: Gửi request
-    Protocol->>Controller: Nhận request, điều phối manager
-    Controller->>Service: Xử lý biz
-    Service->>Model: Lưu trữ gì đó
-    Model->>Service: Trả về kết quả
-    Service->>Controller: Trả về kết quả
-    Controller->>Protocol: Gửi tới người dùng
+    Người dùng->>+Trang chủ: Người dùng chọn vào nút đăng ký ở trên trang chủ
+    Trang chủ ->>+Trang đăng ký: Hệ thống hiển thị trang đăng ký
+
+
+        
+                Người dùng ->>+Trang đăng ký: Người dùng nhập thông tin vào và nhất nút đăng ký
+                Trang đăng ký ->>+ Trang đăng ký: Hệ thống kiểm tra thông tin có được nhập đầy đủ
+                alt sai
+                Trang đăng ký -->> Người dùng: Yêu cầu người dùng nhập lại
+        else đúng
+            Trang đăng ký ->>+ APIController: Gửi thông tin lên
+        end
+    APIController ->>+ APIController: Hệ thống kiểm tra thông tin người dùng xem có tồn tại và hợp lý, nếu có thì lưu vào hệ thống
+    APIController -->> Trang đăng ký: Hệ thống trả kết quả.
+    alt sai
+    Trang đăng ký -->> Người dùng: Yêu cầu nhập lại
+    else đúng
+    Trang đăng ký -->> Người dùng: Hiển thị thông báo thành công
+  end
+
+    
+    Người dùng ->> Trang đăng ký: Người dùng xác nhận
+    Trang đăng ký ->> Trang đăng nhập: Hệ thống điều hướng tới trang đăng nhập.
+   
     
 ```
