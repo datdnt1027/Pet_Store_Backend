@@ -1,0 +1,28 @@
+
+sequenceDiagram
+    Admin ->> Trang chủ admin: Admin nhấp chọn quản lý danh mục trên side menu
+    Trang chủ admin ->> Trang quản lý danh mục: Hiển thị trang quản lý danh mục
+    Trang quản lý danh mục ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Trang quản lý danh mục: Trả về biến admin
+    Trang quản lý danh mục ->> APIController: Gửi token từ biến admin lên API
+    APIController ->> APIController: Xác nhận token đó
+    alt token sai
+    APIController -->> Trang quản lý danh mục: Trả kết quả sai token
+   Trang quản lý danh mục ->> Admin: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController -->> Trang quản lý danh mục: Trả kết quả thành công kèm danh sách thông tin danh mục
+    Trang quản lý danh mục ->> Admin: Hiển thị danh sách danh mục có từ kết quả trả về
+    Admin ->> Trang quản lý danh mục: Ấn chọn Create để tạo danh mục mới
+    Trang quản lý danh mục  ->> Form tạo danh mục: Hiển thị form tạo mục.
+    Admin ->> Form tạo danh mục: Nhập tên của danh mục và ấn tạo
+    Trang quản lý danh mục ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Trang quản lý danh mục: Trả về biến admin
+    Trang quản lý danh mục ->> APIController: Gửi token từ biến admin và tên lên API
+    APIController ->> APIController: Xác nhận token đó
+     alt token sai
+    APIController -->> Trang quản lý danh mục: Trả kết quả sai token
+    Trang quản lý danh mục ->> Admin: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Sử dụng tên đó để tạo danh mục mới với id ngẫu nhiên và độc nhất
+    APIController -->> Trang quản lý danh mục: Trả kết quả thành công
+    Trang quản lý danh mục ->> Admin: Tái hiển thị lại thông tin danh mục

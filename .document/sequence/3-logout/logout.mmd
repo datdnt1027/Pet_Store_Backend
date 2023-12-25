@@ -1,0 +1,16 @@
+# Đăng xuất
+```mermaid
+
+
+
+sequenceDiagram
+    Người dùng->>+UserNavbar: Người dùng lia chuột vào ô Profile
+    UserNavbar ->> UserDropdownMenu: Hệ thống hiển thị hộp thoại drop down gồm các nút profile, order và logout
+    Người dùng ->> UserDropdownMenu: Người dùng chọn Logout
+    UserDropdownMenu ->> Trình duyệt: Xóa thông tin người dùng ra khỏi storage
+    UserDropdownMenu ->> Trang chủ: Điều hướng về trang chủ với tài khoản đã logout 
+    
+
+
+
+```

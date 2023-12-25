@@ -1,0 +1,14 @@
+Nhân viên ->> Trang quản lý sản phẩm: Click chọn nút create để thêm sản phẩm
+    Trang quản lý sản phẩm ->> Form tạo sản phẩm: Hiển thị form tạo sản phẩm
+    Nhân viên ->> Form tạo sản phẩm: Người dùng nhập vào các thông tin cần thiết và nhấn tạo.
+    Form tạo sản phẩm  ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Form tạo sản phẩm : Trả về biến admin
+    Trang quản lý sản phẩm ->> APIController: Gửi lên token kèm với thông tin của sản phẩm mới lên API
+    APIController ->> APIController: Xác nhận token và thông tin sản phẩm
+    alt token sai
+    APIController -->> Form tạo sản phẩm: Trả kết quả sai token
+    Form tạo sản phẩm ->> Nhân viên: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Tạo sản phẩm mới
+    APIController -->> Form tạo sản phẩm: Trả kết quả thành công
+    Form tạo sản phẩm ->> Trang quản lý sản phẩm: Hiển thị lại list product

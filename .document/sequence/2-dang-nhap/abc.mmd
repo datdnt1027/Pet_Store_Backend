@@ -2,10 +2,26 @@
 
 ```mermaid
 
+
 sequenceDiagram
-    Alice->>+John: Đăng nhập google gì đo
-    Alice->>+John: John, can you hear me?
-    John-->>-Alice: Hi Alice, I can hear you!
-    John-->>-Alice: I feel great!
+    Người dùng->>+Trang chủ: Người truy cập vào trang đăng nhập
+    Trang chủ ->> Trang đăng nhập: Hiển thị trang đăng nhập
+    Người dùng ->> Trang đăng nhập: Nhập email và mật khẩu để đăng nhập
+    Trang đăng nhập ->> Trang đăng nhập: Kiểm tra người dùng có nhập đầy đủ thông tin
+    alt không đủ
+    Trang đăng nhập->>Người dùng: Yêu cầu nhập trường còn thiếu
+    else đủ
+    Trang đăng nhập->>APIController: Gửi thông tin đăng nhập lên hệ thống
+    end
+    APIController ->>APIController: Kiểm tra thông tin đăng nhập
+    alt không chính xác
+    APIController -->> Trang đăng nhập: Trả về kết quả sai thông tin đăng nhập
+    Trang đăng nhập -->> Người dùng: Yêu cầu nhập lại
+    else
+    APIController -->> Trang đăng nhập: Trả về kết quả thành công
+    Trang đăng nhập ->> Trình duyệt web: Lưu thông tin vào trình duyệt
+    Trang đăng nhập -->> Trang chủ: Thông báo thành công và đi tới trang chủ
+    end
+
 
 ```

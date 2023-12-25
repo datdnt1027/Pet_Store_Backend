@@ -1,0 +1,28 @@
+# Đăng nhậpf bằng google
+
+```mermaid
+
+sequenceDiagram
+    Người dùng ->> Trang đăng nhập: Người dùng email
+    Trang đăng nhập->>+APIController: Gửi email của người dùng lên hệ thống
+    APIController ->> APIController: Kiểm tra thông tin người dùng có tồn tại
+    alt không tồn tại
+    APIController -->>Trang đăng nhập: Trả kết quả không tìm thấy
+    end
+    
+    APIController -->>Trang đăng nhập: Trả kết quả thành công
+    APIController ->>Người dùng: Gửi mail đến người dùng
+    Trang đăng nhập ->> Trang quên mật khẩu: Hiển thị trang quên mật khẩu
+    Người dùng ->>  Trang quên mật khẩu: Người dùng nhập token từ email, mật khẩu mới và xác nhận
+    Trang quên mật khẩu ->> APIController: Gửi thông tin lên API
+    APIController ->> APIController: Xác nhận token
+    alt token không đúng
+    APIController -->> Trang quên mật khẩu: Trả kết quả sai token
+    Trang quên mật khẩu ->> Người dùng: Hiển thị thông báo sai token
+    end
+    APIController ->> APIController: Cập nhật mật khẩu
+    APIController  -->> Trang quên mật khẩu: Trả kết quả thành công
+    Trang quên mật khẩu ->> Người dùng: Hiển thị thông báo đổi mật khẩu thành công và điều hướng tới trang chủ
+
+
+```
