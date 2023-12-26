@@ -11,7 +11,7 @@ namespace pet_store_backend.application.Admin.Queries;
 public record CustomerQuery(
     string Email,
     string PhoneNumber
-) : IRequest<ErrorOr<UserProfileWithStatusResult>>;
+) : IRequest<ErrorOr<CustomerProfileWithStatusResult>>;
 
 public class CustomerQueryValidator : AbstractValidator<CustomerQuery>
 {
@@ -33,7 +33,7 @@ public class CustomerQueryValidator : AbstractValidator<CustomerQuery>
     }
 }
 
-public class CustomerQueryHandler : IRequestHandler<CustomerQuery, ErrorOr<UserProfileWithStatusResult>>
+public class CustomerQueryHandler : IRequestHandler<CustomerQuery, ErrorOr<CustomerProfileWithStatusResult>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -42,14 +42,14 @@ public class CustomerQueryHandler : IRequestHandler<CustomerQuery, ErrorOr<UserP
         _userRepository = userRepository;
     }
 
-    public async Task<ErrorOr<UserProfileWithStatusResult>> Handle(CustomerQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CustomerProfileWithStatusResult>> Handle(CustomerQuery request, CancellationToken cancellationToken)
     {
         if (request.Email == null && request.PhoneNumber == null)
         {
             return Errors.User.UserNotExist;
         }
 
-        UserProfileWithStatusResult? customer = null;
+        CustomerProfileWithStatusResult? customer = null;
 
         if (request.Email != null)
         {

@@ -1,0 +1,16 @@
+# Xem danh sách sản phẩm trong cart
+
+```mermaid
+sequenceDiagram
+    Người dùng->>+Trang check out: Người dùng truy cập vào trang check out
+    Trang check out ->> Trình duyệt: Lấy biến user có trong local storage
+    Trình duyệt -->> Trang check out: Trả về biến user
+    Trang check out ->> APIController: Gửi token từ biến user để xác nhận người dùng
+    APIController ->> APIController: Xác minh token
+    alt token sai
+    APIController -->> Trang check out: Trả kết quả sai token
+    Trang check out ->> Người dùng: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController -->> Trang check out: Trả kết quả thành công kèm với tất cả item trong cart của người dùng
+    Trang check out ->> Người dùng: Hiển thị các cart
+```

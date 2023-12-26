@@ -1,0 +1,28 @@
+# Thanh toán
+
+```mermaid
+
+sequenceDiagram
+    Người dùng ->> Trang checkout: Chọn hình thức thanh toán
+    Người dùng ->> Trang checkout: Ấn thanh toán
+    Trang checkout ->> Trình duyệt: Láy biến user có trong local storage
+    Trình duyệt-->>  Trang checkout: Trả về biến user
+    alt momo
+    Trang checkout ->> MOMO API Controller:  Gửi token có trong user lên API
+    MOMO API Controller ->> MOMO API Controller: Xác nhận token của người gửi
+    MOMO API Controller -->> Trang checkout: Trả về url tới trang thanh toán của momo
+    Trang checkout ->> Trang thanh toán MOMO: Điều hướng tới trang thanh toán
+    Người dùng ->> Trang thanh toán MOMO: Quét mã thanh toán
+    alt thành công
+    Trang thanh toán MOMO ->> Trang kết quả thành công: Điều hướng tới trang kết quả thành công
+    else thất bại
+    Trang thanh toán MOMO ->> Trang kết quả thành công: Điều hướng tới trang kết quả thất bại
+    end
+    else cod
+    Trang checkout ->> COD API Controller: Gửi token có trong user lên API
+    COD API Controller ->>  COD API Controller:: Xác nhận token của người gửi và tiến hành cập nhật đơn
+    COD API Controller ->> Trang thanh toán COD: Hiển thị trang thanh toán thành công
+    end
+
+
+```

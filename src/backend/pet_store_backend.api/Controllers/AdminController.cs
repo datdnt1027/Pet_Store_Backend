@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.Admin.Commands;
 using pet_store_backend.application.Admin.Queries;
 using pet_store_backend.application.Authentication.Queries.Login;
+using pet_store_backend.application.Order.Commands;
+using pet_store_backend.application.Order.Queries;
 using pet_store_backend.application.PetProducts.PetCategory.Commands.CreateCategory;
 using pet_store_backend.application.PetProducts.PetProduct.Commands;
 using pet_store_backend.contracts;
 using pet_store_backend.contracts.Admin;
 using pet_store_backend.contracts.Authentication;
+using pet_store_backend.contracts.Order;
 using pet_store_backend.contracts.PetProducts;
 using pet_store_backend.infrastructure.Authentication;
 using pet_store_backend.infrastructure.Persistence.Common;
@@ -18,7 +21,6 @@ namespace pet_store_backend.api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = UserRoleKey.AdminRoleName)]
 public class AdminController : ApiController
 {
     private readonly ISender _mediator;
@@ -66,6 +68,7 @@ public class AdminController : ApiController
 
 
     [HttpGet("roles")]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [HasPermission(TableKey.UserRoles, PermissionType.Read)]
     public async Task<IActionResult> GetUserRoles()
     {
@@ -78,6 +81,7 @@ public class AdminController : ApiController
     }
 
     [HttpPatch]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [Route("role/status")]
     [HasPermission(TableKey.UserRoles, PermissionType.Deactivate)]
     public async Task<IActionResult> UpdateRoleStatus(UpdateRoleStatusRequest request)
@@ -91,6 +95,7 @@ public class AdminController : ApiController
     }
 
     [HttpPost("collections")]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [HasPermission(TableKey.Categories, PermissionType.Create)]
     [HasPermission(TableKey.Products, PermissionType.Create)]
     public async Task<IActionResult> CreateCatory(CreateCategoryRequest request)
@@ -103,6 +108,7 @@ public class AdminController : ApiController
     }
 
     [HttpPost("product")]
+    // [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [HasPermission(TableKey.Products, PermissionType.Create)]
     public async Task<IActionResult> CreateProduct(CreateProductRequest request)
     {
@@ -117,6 +123,7 @@ public class AdminController : ApiController
 
     [HttpPatch]
     [Route("product")]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [HasPermission(TableKey.Products, PermissionType.Update)]
     [HasPermission(TableKey.Products, PermissionType.Deactivate)]
     public async Task<IActionResult> UpdateStatusProduct(UpdateProductRequest request)
@@ -129,6 +136,7 @@ public class AdminController : ApiController
     }
 
     [HttpPatch]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [Route("customer/status")]
     [HasPermission(TableKey.Customers, PermissionType.Deactivate)]
     public async Task<IActionResult> UpdateUserStatus(UpdateCustomerStatusRequest request)
@@ -142,6 +150,7 @@ public class AdminController : ApiController
     }
 
     [HttpPost]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
     [Route("find_customer")]
     [HasPermission(TableKey.Customers, PermissionType.Read)]
     public async Task<IActionResult> FindUser(FindUserRequest request)
@@ -150,6 +159,58 @@ public class AdminController : ApiController
         var findUser = await _mediator.Send(query);
 
         return findUser.Match(user => Ok(_mapper.Map<FindCustomerResponse>(user)),
+            errors => Problem(errors));
+    }
+
+    [HttpGet]
+    // [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    [Route("orders")]
+    [HasPermission(TableKey.Orders, PermissionType.Read)]
+    public async Task<IActionResult> GetOrderManage()
+    {
+        var query = new OrderByBatchQuery();
+        var orders = await _mediator.Send(query);
+
+        return orders.Match(order => Ok(_mapper.Map<List<OrderManageResponse>>(order)),
+            errors => Problem(errors));
+    }
+
+    [HttpPatch]
+    // [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    [Route("order")]
+    [HasPermission(TableKey.Orders, PermissionType.Update)]
+    public async Task<IActionResult> UpdateOrderManage(UpdateOrderManageRequest request)
+    {
+        var command = _mapper.Map<UpdateOrderManageCommand>(request);
+        var orderUpdate = await _mediator.Send(command);
+
+        return orderUpdate.Match(order => Ok(_mapper.Map<MessageResponse>(order)),
+            errors => Problem(errors));
+    }
+
+    [HttpGet]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    [Route("users")]
+    [HasPermission(TableKey.Users, PermissionType.Read)]
+    public async Task<IActionResult> CreateUser()
+    {
+        var query = new UserQuery();
+        var createUser = await _mediator.Send(query);
+
+        return createUser.Match(user => Ok(_mapper.Map<List<UserProfileWithStatusResponse>>(user)),
+            errors => Problem(errors));
+    }
+
+    [HttpPost]
+    [Authorize(Roles = UserRoleKey.AdminRoleName)]
+    [Route("user")]
+    [HasPermission(TableKey.Users, PermissionType.Create)]
+    public async Task<IActionResult> CreateUser(CreateUserRequest request)
+    {
+        var command = _mapper.Map<CreateUserCommand>(request);
+        var createUser = await _mediator.Send(command);
+
+        return createUser.Match(user => Ok(_mapper.Map<MessageResponse>(user)),
             errors => Problem(errors));
     }
 }

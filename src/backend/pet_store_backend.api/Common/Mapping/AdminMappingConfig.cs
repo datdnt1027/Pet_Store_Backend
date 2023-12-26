@@ -18,8 +18,12 @@ public class AdminMappingConfig : IRegister
             .Map(dest => dest.Sex, src => ((int?)src.Sex).ToString())
             .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);
         config.NewConfig<FindUserRequest, CustomerQuery>();
-        config.NewConfig<UserProfileWithStatusResult, FindCustomerResponse>()
+        config.NewConfig<CustomerProfileWithStatusResult, FindCustomerResponse>()
             .Map(dest => dest.CustomerId, src => src.CustomerId.ToString())
-            .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null); ;
+            .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);
+
+        config.NewConfig<UserProfileWithStatusResult, UserProfileWithStatusResponse>()
+            .Map(dest => dest.UserId, src => src.UserId.ToString())
+            .Map(dest => dest.Avatar, src => src.Avatar.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.Avatar)}" : null);
     }
 }

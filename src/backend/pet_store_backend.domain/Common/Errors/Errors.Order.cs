@@ -7,18 +7,28 @@ public static partial class Errors
     public static class Order
     {
         public static Error NoOrderProductDelete => Error.Conflict(
-            code: "Order.ErrorDeleteOrderProduct",
+            code: "OrderProduct.ErrorDeleteOrderProduct",
             description: "Order Product not exist to delete !");
         public static Error OrderProductAddProblem => Error.Conflict(
-            code: "Order.ErrorAddOrderProduct",
+            code: "OrderProduct.ErrorAddOrderProduct",
             description: "Order Product can not add !");
         public static Error NoOrderProductPayment => Error.Conflict(
-            code: "Order.NoOrderInCart",
-            description: "No Order have to pay !");
+            code: "OrderProduct.NoOrderInCart",
+            description: "No Order Product have to pay !");
 
         public static Error NoQuantityOrderProductUpdate => Error.Conflict(
-            code: "Order.NoOrderQuantityUpdate",
+            code: "OrderProduct.NoOrderQuantityUpdate",
             description: "No Order Product Quantity Update !"
+        );
+
+        public static Error NoOrderInfoUpdate => Error.Conflict(
+            code: "Order.NoOrderInfoUpdate",
+            description: "No Order Info Update !"
+        );
+
+        public static Error NoOrderExist => Error.Conflict(
+            code: "Order.NoOrderExist",
+            description: "Order not exist !"
         );
     }
 }

@@ -1,4 +1,5 @@
 using pet_store_backend.application.Order.Common;
+using pet_store_backend.application.PetProducts.Common;
 using pet_store_backend.domain.Entities.Orders;
 
 namespace pet_store_backend.application.Common.Interfaces.Persistence;
@@ -18,4 +19,8 @@ public interface IOrderRepository
     Task<List<OrderResult>> RetrieveOrderHistory(Guid customerId, int page);
     Task UpdateOrderStatusCancelled(Guid orderId);
     Task UpdateProductPaymentCODInCart(Guid customerId, Guid orderId);
+    Task<List<OrderManageResult>> GetListOrderManage();
+    Task<pet_store_backend.domain.Entities.Orders.Order?> RetrieveOrder(Guid orderId);
+    Task UpdateOrder(pet_store_backend.domain.Entities.Orders.Order order);
+    Task<List<ProductResult>> GetBestSellProduct(int numOfProducts, int page);
 }

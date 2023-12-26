@@ -1,0 +1,14 @@
+# Xem chi tiết sản phẩm
+
+```mermaid
+
+sequenceDiagram
+    Người dùng->>+Trang chủ: Người dùng chọn sản phẩm muốn xem thông tin
+    Trang chủ ->> Trang chi tiết sản phẩm: Hiển thị trang chi tiết sản phẩm kèm với ID của sản phẩm
+    Trang chi tiết sản phẩm ->> APIController: Dùng id để truyền lên API
+    APIController ->> APIController: Dựa vào id để tìm kiếm sản phẩm
+    APIController -->> Trang chi tiết sản phẩm: Trả về thông tin sản phẩm
+    Trang chi tiết sản phẩm -->> Người dùng: Hiển thị ra chi tiết sản phẩm
+    
+
+```

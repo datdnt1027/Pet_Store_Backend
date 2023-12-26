@@ -54,6 +54,11 @@ public sealed class Order : AggregateRoot<OrderId>
 
     }
 
+    public void UpdateOrderStatus(OrderStatus orderStatus)
+    {
+        OrderStatus = orderStatus;
+    }
+
     public void UpdateOrderDelivery(DateTime expectedDeliveryDateStart, DateTime expectedDeliveryDateEnd)
     {
         ExpectedDelivery = DeliveryDate.Create(expectedDeliveryDateStart, expectedDeliveryDateEnd);

@@ -1,0 +1,27 @@
+# Chỉnh sửa Profile
+
+```mermaid
+sequenceDiagram
+    Người dùng->>+Header Page: Người dùng lia chuột vào ô Profile
+    Header Page ->> Profile User: Hệ thống hiển thị hộp thoại drop down gồm các nút profile, order và logout
+    Người dùng ->> Profile User: Người dùng chọn Profile
+    Profile User ->> Trang Profile: Điều hướng tới trang
+    Trang Profile ->> Trình duyệt: Láy biến user có trong local storage
+    Trình duyệt-->>  Trang Profile: Trả về biến user
+    Trang Profile ->> APIController: Gửi token từ biến user để lấy thông tin tài khoản
+    APIController ->> APIController: Dựa vào token để tìm kiếm
+    APIController -->> Trang Profile: Trả về kết quả
+    Trang Profile -->>  Người dùng: Hiển thị thông tin từ kết quả
+    Người dùng ->> Trang Profile: Chọn edit để chỉnh sửa thông tin cá nhân
+    Trang Profile -->> Người dùng: Hiển thị các hộp thoại input để người dùng nhập vào
+    Người dùng ->> Trang Profile: Người dùng nhập thông tin vào và ấn xác nhận
+    Trang Profile ->> APIController: Gửi thông tin đã được chỉnh sửa lên
+    APIController ->> APIController: Kiểm tra thông tin
+    alt thông tin có sai sót
+        APIController -->> Trang Profile: Trả về lỗi
+    else thông tin hợp lệ
+    APIController ->> APIController: Cập nhật thông tin vào hệ thống
+    APIController -->> Trang Profile: Trả về thành công
+    Trang Profile -->> Người dùng: Hiển thị thông báo thành công
+    end
+```

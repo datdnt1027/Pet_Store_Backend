@@ -19,3 +19,12 @@ public record OrderResponse(
     string PaymentType,
     IEnumerable<OrderProductBriefResponse> Orders
 );
+
+public record OrderManageResponse(
+    string OrderId,
+    string OrderStatus,
+    string PaymentStatus,
+    string ExpectedDeliveryStartDate,
+    string ExpectedDeliveryEndDate,
+    string CustomerEmail
+);

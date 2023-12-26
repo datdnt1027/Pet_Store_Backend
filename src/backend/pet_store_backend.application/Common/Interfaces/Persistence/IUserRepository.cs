@@ -8,8 +8,8 @@ namespace pet_store_backend.application.Common.Interfaces.Persistence
     {
         Task<pet_store_backend.domain.Entities.Users.User?> GetUserByEmail(string email);
         Task<pet_store_backend.domain.Entities.Users.Customer?> GetCustomerByEmail(string email);
-        Task<UserProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email);
-        Task<UserProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber);
+        Task<CustomerProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email);
+        Task<CustomerProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber);
         Task Add(pet_store_backend.domain.Entities.Users.Customer customer);
         Task Update(pet_store_backend.domain.Entities.Users.Customer customer);
         Task<pet_store_backend.domain.Entities.Users.Customer?> GetCustomerByVerificationToken(string verificationToken);
@@ -20,6 +20,9 @@ namespace pet_store_backend.application.Common.Interfaces.Persistence
         Task<UserProfileResult?> RetrieveUserProfile(Guid userId);
         Task<pet_store_backend.domain.Entities.Users.Customer?> RetrieveUser(Guid userId);
         Task UpdateCustomerStatusAsync(pet_store_backend.domain.Entities.Users.Customer customer);
-
+        Task AddUser(User user);
+        Task<bool> CheckUserExistByEmail(string email);
+        Task<bool> CheckUserRoleExist(Guid userRoleId);
+        Task<List<UserProfileWithStatusResult>> GetListUser();
     }
 }

@@ -24,5 +24,9 @@ public class OrderMappingConfig : IRegister
         // config.NewConfig<ProductResultOrder, ProductResponseOrder>()
         //     .Map(dest => dest.ImageData, src => src.ImageData.Length > 0 ? $"data:image/jpeg;base64, {Convert.ToBase64String(src.ImageData)}" : null);
         config.NewConfig<CODPaymentResult, CODPaymentResponse>();
+        config.NewConfig<OrderManageResult, OrderManageResponse>()
+        .Map(dest => dest.OrderId, src => src.OrderId.ToString())
+        .Map(dest => dest.ExpectedDeliveryEndDate, src => src.ExpectedDeliveryEndDate.ToString())
+        .Map(dest => dest.ExpectedDeliveryStartDate, src => src.ExpectedDeliveryStartDate.ToString());
     }
 }

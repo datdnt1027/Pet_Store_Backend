@@ -23,6 +23,12 @@ public class UserRepository : IUserRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task AddUser(User user)
+    {
+        await _dbContext.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
+    }
+
     //Update information for Customer
     public async Task Update(Customer customer)
     {
@@ -52,11 +58,21 @@ public class UserRepository : IUserRepository
         return customer;
     }
 
-    public async Task<UserProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email)
+    public async Task<bool> CheckUserExistByEmail(string email)
+    {
+        var checkUserEmail = await _dbContext.Users
+            .AnyAsync(u => u.Email == email);
+
+        return checkUserEmail;
+    }
+
+
+
+    public async Task<CustomerProfileWithStatusResult?> GetCustomerByEmailForAdmin(string email)
     {
         var customer = await _dbContext.Customers
             .Where(u => u.Email == email)
-            .Select(u => new UserProfileWithStatusResult(
+            .Select(u => new CustomerProfileWithStatusResult(
                 u.Id.Value,
                 u.FirstName,
                 u.LastName,
@@ -72,11 +88,11 @@ public class UserRepository : IUserRepository
         return customer;
     }
 
-    public async Task<UserProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber)
+    public async Task<CustomerProfileWithStatusResult?> GetCustomerByPhoneNumberForAdmin(string phoneNumber)
     {
         var customer = await _dbContext.Customers
             .Where(u => u.PhoneNumber == phoneNumber)
-            .Select(u => new UserProfileWithStatusResult(
+            .Select(u => new CustomerProfileWithStatusResult(
                 u.Id.Value,
                 u.FirstName,
                 u.LastName,
@@ -168,6 +184,44 @@ public class UserRepository : IUserRepository
         _dbContext.Entry(customer).State = EntityState.Modified;
         // Save changes to the database
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> CheckUserRoleExist(Guid userRoleId)
+    {
+        var checkUserRole = await _dbContext.UserRoles
+            .AnyAsync(o => o.Id == UserRoleId.Create(userRoleId));
+
+        return checkUserRole;
+    }
+
+    public async Task<List<UserProfileWithStatusResult>> GetListUser()
+    {
+        var userList = await _dbContext.Users
+            .Join(
+                _dbContext.UserRoles,
+                user => user.UserRoleId,
+                userRole => userRole.Id,
+                (user, userRole) => new
+                {
+                    User = user,
+                    UserRole = userRole
+                }
+            )
+            .Where(u => u.UserRole.UserRoleName != UserRoleKey.AdminRoleName)
+            .Select(u => new UserProfileWithStatusResult(
+                u.UserRole.UserRoleName,
+                u.User.Id.Value,
+                u.User.FirstName,
+                u.User.LastName,
+                u.User.Gender,
+                u.User.Email,
+                u.User.Address ?? "",
+                u.User.Avatar ?? Array.Empty<byte>(),
+                u.User.PhoneNumber ?? "",
+                u.User.Status
+            ))
+            .ToListAsync();
+        return userList;
     }
 
 }

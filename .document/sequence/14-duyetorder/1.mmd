@@ -1,0 +1,33 @@
+# Quản lý đơn hàng
+
+```mermaid
+sequenceDiagram
+    Nhân vien· ->> Trang chủ admin: Nhân viên nhấp chọn quản lý đơn hàng trên side menu
+    Trang chủ Nhân viên ->> Trang quản lý đơn hàng: Hiển thì trang quản lý đơn hàng
+    Nhân viên->>+Trang quản lý tài khoản: Nhân viên nhấp chọn "Duyệt" với đơn mong muốn ngoại trừ các đơn bị decline
+    Trang quản lý đơn hàng ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Trang chi tiết sản phẩm: Trả về biến admin
+    alt đơn có trạng thai là "Accepted"
+        Trang chi tiết sản phẩm ->> Hộp thoại duyệt đơn: Hiển thị hộp thoại
+        Nhân viên ->> Hộp thoại duyệt đơn: Người dùng nhập vào ngày dự kiến sớm nhất và trễ nhất
+        Trang chi tiết sản phẩm ->> APIController: Gửi token từ biến admin kèm theo ngày sớm nhất, trễ nhất và trạng thái "Deliver".
+        APIController ->> APIController: Kiểm tra token
+       alt token sai
+    APIController -->> Trang chi tiết sản phẩm: Trả kết quả sai token
+    Trang chi tiết sản phẩm ->> Nhân viên: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Cập nhật thông tin về ngày và trạng thái mới
+    APIController -->> Trang chi tiết sản phẩm: Trả kết quả thành công
+    Trang chi tiết sản phẩm ->> Nhân viên: Tái hiển thị để cập nhật order mới
+    else đơn có trạng thái là "Delivered"
+    Trang chi tiết sản phẩm ->> APIController: Gửi token từ biến admin và trạng thái "Receive".
+    APIController ->> APIController: Kiểm tra token
+    alt token sai
+    APIController -->> Trang chi tiết sản phẩm: Trả kết quả sai token
+    Trang chi tiết sản phẩm ->> Nhân viên: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Cập nhật trạng thái mới
+    APIController -->> Trang chi tiết sản phẩm: Trả kết quả thành công
+    Trang chi tiết sản phẩm ->> Nhân viên: Tái hiển thị để cập nhật order mới
+end
+```

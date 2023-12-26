@@ -1,0 +1,27 @@
+# Đăng ký tài khoản người dùng dựa trên email và mật khẩu
+
+```mermaid
+
+sequenceDiagram
+    Người dùng->>+Trang chủ: Người dùng chọn vào nút đăng ký ở trên trang chủ
+    Trang chủ ->>+Trang đăng ký: Hệ thống hiển thị trang đăng ký
+
+
+        
+                Người dùng ->>+Trang đăng ký: Người dùng nhập thông tin vào và nhấn nút đăng ký
+                Trang đăng ký ->>+ Trang đăng ký: Hệ thống kiểm tra thông tin có được nhập đầy đủ và hợp lệ
+                alt sai
+                Trang đăng ký -->> Người dùng: Yêu cầu người dùng nhập lại
+        else đúng
+            Trang đăng ký ->>+ APIController: Thông tin được gửi đi
+        end
+    APIController ->>+ APIController: Hệ thống kiểm tra thông tin người dùng xem có tồn tại và hợp lý, nếu không thì lưu vào hệ thống
+    APIController -->> Trang đăng ký: Hệ thống trả kết quả.
+    alt sai
+    Trang đăng ký -->> Người dùng: Yêu cầu nhập lại
+    else đúng
+    APIController ->>+ APIController: Thông tin xác thực người dùng gửi qua email đăng ký
+    Trang đăng ký -->> Người dùng: Hiển thị thông báo thành công
+  end
+   
+```

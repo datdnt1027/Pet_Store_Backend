@@ -1,0 +1,104 @@
+classDiagram
+  class ValueObject {
+    +GetEqualityComponents()
+  }
+
+  class UserId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class UserRoleId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class UserPermissionId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class Gender {
+    +Male
+    +Female
+    +NonBinary
+    +Other
+  }
+
+  class ProductId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class Price {
+    +Double Amount
+    +String Currency
+    +Double Discount
+  }
+
+  class CategoryId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class OrderId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class OrderProductId {
+    +Guid Value
+    +CreateUnique()
+    +Create(value: Guid)
+    +GetEqualityComponents()
+  }
+
+  class OrderProductStatus {
+    +Ordered
+    +Completed
+    +Cancelled
+  }
+
+  class DeliveryDate {
+    +DateTime StartDate
+    +DateTime EndDate
+  }
+
+  class OrderStatus {
+    +Accepted
+    +Declined
+    +Deliver
+    +Receive
+  }
+
+  class PaymentStatus {
+    +Cancelled
+    +COD
+    +E_Wallet
+  }
+
+  ValueObject <|-- UserId
+  ValueObject <|-- UserRoleId
+  ValueObject <|-- UserPermissionId
+  ValueObject <|-- ProductId
+  ValueObject <|-- CategoryId
+  ValueObject <|-- Price
+  ValueObject <|-- OrderId
+  ValueObject <|-- OrderProductId
+  ValueObject <|-- DeliveryDate
+  Enum <|-- Gender
+  Enum <|-- OrderProductStatus
+  Enum <|-- OrderStatus
+  Enum <|-- PaymentStatus

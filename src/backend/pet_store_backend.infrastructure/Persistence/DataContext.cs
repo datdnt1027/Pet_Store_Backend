@@ -21,16 +21,16 @@ public class DataContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
-    public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<pet_store_backend.domain.Entities.Orders.Order> Orders { get; set; } = null!;
     public DbSet<OrderProduct> OrderProducts { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
         SeedAdminData(modelBuilder);
+        SeedUserData(modelBuilder);
         SeedGuestData(modelBuilder);
         base.OnModelCreating(modelBuilder);
     }
-
     public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using var hmac = new HMACSHA512();
@@ -94,6 +94,39 @@ public class DataContext : DbContext
         user.UpdateUserRoleId(userRole.Id);
         modelBuilder.Entity<User>().HasData(user);
     }
+
+    private void SeedUserData(ModelBuilder modelBuilder)
+    {
+        var userRole = UserRole.Create(UserRoleKey.SaleRoleName, null!, null!);
+        List<UserPermission> userPermissions = new();
+        userPermissions.Add(UserPermission.CreatePermission(
+            TableKey.Orders,
+            true,
+            true,
+            true,
+            true,
+            userRole.Id
+        ));
+        userPermissions.Add(UserPermission.CreatePermission(
+            TableKey.Categories,
+            true,
+            true,
+            false,
+            false,
+            userRole.Id
+        ));
+        userPermissions.Add(UserPermission.CreatePermission(
+            TableKey.Products,
+            true,
+            true,
+            false,
+            false,
+            userRole.Id
+        ));
+        modelBuilder.Entity<UserRole>().HasData(userRole);
+        modelBuilder.Entity<UserPermission>().HasData(userPermissions);
+    }
+
 
 
     private static void SeedGuestData(ModelBuilder modelBuilder)

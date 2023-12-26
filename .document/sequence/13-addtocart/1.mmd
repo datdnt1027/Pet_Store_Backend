@@ -1,0 +1,19 @@
+# Thêm sản phẩm vào trong giỏ hàng
+
+```mermaid
+sequenceDiagram
+    Người dùng->>+Trang chủ: Người dùng nhấp chọn sản phẩm muốn thêm vào giỏ hàng
+    Trang chủ ->> Trang chi tiết sản phẩm: Hiển thị trang chi tiết sản phẩm
+    Người dùng ->> Trang chi tiết sản phẩm: Người dùng nhập số lượng mong muốn và ấn thêm
+    Trang chi tiết sản phẩm ->> Trình duyệt: Lấy biến user có trong local storage
+    Trình duyệt -->> Trang chi tiết sản phẩm: Trả về biến user
+    Trang chi tiết sản phẩm ->> APIController: Gửi token từ biến user kèm theo số lượng và mã sản phẩm 
+    APIController ->> APIController: Kiểm tra token
+    alt token sai
+    APIController -->> Trang chi tiết sản phẩm: Trả kết quả sai token
+    Trang chi tiết sản phẩm ->> Người dùng: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Thêm item với số lượng vào giỏ hàng của người dùng
+    APIController -->> Trang chi tiết sản phẩm: Trả kết quả thành công
+    Trang chi tiết sản phẩm ->> Người dùng: Hiển thị thông báo đã thêm
+```

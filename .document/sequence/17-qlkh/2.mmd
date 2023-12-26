@@ -1,0 +1,30 @@
+# Chỉnh sửa trạng thái khách hàng
+
+```mermaid
+sequenceDiagram
+    Admin ->> Trang chủ admin: Admin nhấp chọn quản lý khách hàng trên side menu
+    Trang chủ admin ->> Trang quản lý khách hàng: Hiển thị trang quản lý khách hàng
+    Admin ->> Trang quản lý khách hàng: Nhập email hoặc số điện thoại của khách hàng và ấn chọn tìm kiếm dựa theo thông tin tương ứng.
+    Trang quản lý khách hàng ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Trang quản lý khách hàng: Trả về biến admin
+    Trang quản lý khách hàng ->> APIController: Gửi lên token và từ khóa tìm kiếm từ biến admin lên API
+    APIController ->> APIController: Xác nhận token đó
+    alt token sai
+    APIController -->> Trang quản lý khách hàng: Trả kết quả sai token
+   Trang quản lý khách hàng ->> Admin: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController -->> Trang quản lý khách hàng: Trả kết quả thành công kèm thông tin khách hàng
+    Trang quản lý khách hàng ->> Admin: Hiển thị khách hàng có từ kết quả trả về
+    Admin ->> Trang quản lý khách hàng: Ấn chọn Unblock/Block để gỡ chặn/chặn đăng nhập từ khách hàng
+    Trang quản lý khách hàng ->> Trình duyệt: Lấy biến admin có trong session storage
+    Trình duyệt -->> Trang quản lý khách hàng: Trả về biến admin
+    Trang quản lý khách hàng ->> APIController: Gửi lên token từ biến admin và customerId, trạng thái mới bằng 1 hoặc 0 lên API
+    APIController ->> APIController: Xác nhận token đó
+     alt token sai
+    APIController -->> Trang quản lý khách hàng: Trả kết quả sai token
+    Trang quản lý khách hàng ->> Admin: Hiển thị thông báo yêu cầu đăng nhập lại
+    end
+    APIController ->> APIController: Cập nhật trạng thái mới cho khách hàng
+    APIController -->> Trang quản lý khách hàng: Trả kết quả thành công
+    Trang quản lý khách hàng ->> Admin: Tái hiển thị lại thông tin khách hàng
+```

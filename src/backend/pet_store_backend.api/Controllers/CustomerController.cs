@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pet_store_backend.application.Customer.Commands;
 using pet_store_backend.application.Customer.Queries;
-using pet_store_backend.application.PetProducts.PetProduct.Queries;
+using pet_store_backend.application.Order.Queries;
 using pet_store_backend.contracts;
 using pet_store_backend.contracts.Order;
 using pet_store_backend.contracts.User;
@@ -51,7 +51,7 @@ public class CustomerController : ApiController
     [Route("orders")]
     public async Task<IActionResult> RetrieveCustomerOrderHistory([FromQuery] int page = 1)
     {
-        var query = new OrderByBatchQuery(page);
+        var query = new OrderProductByBatchQuery(page);
         var orderHistoryByBatch = await _mediator.Send(query);
 
         return orderHistoryByBatch.Match(order => Ok(_mapper.Map<List<OrderResponse>>(order)),

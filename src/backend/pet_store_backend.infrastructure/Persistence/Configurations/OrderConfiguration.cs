@@ -31,7 +31,6 @@ namespace pet_store_backend.infrastructure.Persistence.Configurations
                 .HasConversion<string>();
 
             builder.Property(o => o.PaymentStatus)
-                .IsRequired()
                 .HasConversion<string>();
 
             // Configure the ExpectedDelivery value object

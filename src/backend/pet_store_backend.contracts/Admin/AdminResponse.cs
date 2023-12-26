@@ -36,3 +36,16 @@ public record FindCustomerResponse(
     string PhoneNumber,
     string Status
 );
+
+public record UserProfileWithStatusResponse(
+    string UserRoleName,
+    string UserId,
+    string FirstName,
+    string LastName,
+    string Sex,
+    string Email,
+    string Address,
+    string Avatar,
+    string PhoneNumber,
+    string Status
+);

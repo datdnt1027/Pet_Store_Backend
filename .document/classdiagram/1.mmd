@@ -1,0 +1,160 @@
+classDiagram
+  class Entity {
+    +EntityId
+  }
+
+  class AggregateRoot {
+    +UserRoleId
+  }
+
+  class User {
+    +UserId UserId
+    +String FirstName
+    +String LastName
+    +String Email
+    +Byte PasswordHash
+    +Byte PasswordSalt
+    +UserRole UserRole
+    +UserRoleId UserRoleId
+    +List<Products> UserProducts
+    +String VerificationToken
+    +DateTime VerifiedAt
+    +string PasswordResetToken
+    +DateTime TokenExpires
+    +Byte Avatar
+    +String PhoneNumber
+    +String Address
+    +Bool Status
+    +Create(UserId, FirstName, LastNamem Email, Avatar, PhoneNumber, Address) User
+    +UpdateVerifiedAt(VerifiedAt)
+    +CreateVerificationToken(VerificationToken, TokenExpires)
+    +UpdateUserRoleId(UserRoleId)
+    +UpdateFirstName(FirstName)
+    +UpdateLastName(LastName)
+    +UpdateAvatar(Avatar)
+    +UpdatePhoneNumber(PhoneNumber)
+    +UpdateAddress(Address)
+    +UpdateGender(Gender)
+  }
+
+  class Customer {
+    +UserId
+    +String FirstName
+    +String LastName
+    +String Email
+    +Byte PasswordHash
+    +Byte PasswordSalt
+    +UserRole UserRole
+    +UserRoleId UserRoleId
+    +List<Products> UserProducts
+    +String VerificationToken
+    +DateTime VerifiedAt
+    +string PasswordResetToken
+    +DateTime TokenExpires
+    +Byte Avatar
+    +String PhoneNumber
+    +String Address
+    +Bool Status
+    +Create(UserId, FirstName, LastNamem Email, Avatar, PhoneNumber, Address) User
+    +UpdateVerifiedAt(VerifiedAt)
+    +CreateVerificationToken(VerificationToken, TokenExpires)
+    +UpdateUserRoleId(UserRoleId)
+    +UpdateFirstName(FirstName)
+    +UpdateLastName(LastName)
+    +UpdateAvatar(Avatar)
+    +UpdatePhoneNumber(PhoneNumber)
+    +UpdateAddress(Address)
+    +UpdateGender(Gender)
+  }
+
+  class UserPermission {
+    +UserPermissionId UserPermissionId
+    +UserRoleId UserRoleId
+    +UserRole UserRole
+    +String TableName
+    +Bool Read
+    +Bool Create
+    +Bool Update
+    +Bool Deactivate
+    +CreatePermission(TableName, Create, Read, Update, Deactivate) UserPermission
+  }
+
+  class UserRole {
+    +UserRoleId UserRoleId
+    +String UserRoleName
+    +List<UserPermission> UserPermissions
+    +List<Users> Users
+    +List<Customers> Customers
+    +Bool Status
+    +CreateUserRole(UserRoleName, User, UserPermission) UserRole
+  }
+
+  class Product {
+    +ProductId ProductId
+    +CategoryId CategoryId
+    +String ProductName
+    +String ProductDetail
+    +Integer ProductQuantity
+    +ProductPrice ProductPrice
+    +Byte ImageData
+    +Bool Status
+    +DateTime CreatedDateTime
+    +DateTime UpdatedDateTime
+    +List<OrderProduct> UserProducts
+    +Create(ProductName, ProductDetail, ProductQuantity, ProductPrice, ImageData) Product
+  }
+
+  class Category {
+    +CategoryId CategoryId
+    +String CategoryName
+    +List<Product> Products
+    +DateTime CreatedDateTime
+    +DateTime UpdatedDateTime
+    +CreateCategory(CategoryName, Products, CreatedDateTime, UpdatedDateTime) Category
+  }
+
+  class Order {
+    +OrderId OrderId
+    +User User
+    +UserId UserId
+    +DateTime OrderDate
+    +OrderStatus OrderStatus
+    +PaymentStatus PaymentStatus
+    +DeliveryDate ExpectedDelivery
+    +List<OrderProduct> OrderProducts
+    +CreateOrder(OrderDate, OrderStatus, UserId, PaymentStatus) Order
+    +UpdatePaymentStatus(PaymentStatus)
+    +UpdateOrderStatus(OrderStatus)
+    +UpdateOrderDelivery(ExpectedDeliveryDateStart, ExpectedDeliveryDateEnd)
+  }
+
+  class OrderProduct {
+    +OrderProductId OrderProductId
+    +Customer Customer
+    +CustomerId CustomerId
+    +OrderId OrderId
+    +Order Order
+    +Product Product
+    +ProductId ProductId
+    +Integer Quantity
+    +OrderProductStatus OrderProductStatus
+    +CreateOrderProduct(CustomerId, ProductId, OrderProductStatus) OrderProduct
+    +UpdateQuantityOrderProduct(Quantity)
+    +CompletedOrder(OrderId)
+  }
+  
+  Entity <|-- Product
+  Entity <|-- OrderProduct
+  Entity <|-- User
+  Entity <|-- Customer
+  Entity <|-- UserPermission
+  AggregateRoot <|-- Order
+  AggregateRoot <|-- UserRole
+  AggregateRoot <|-- Category
+  UserPermission "1" -- "0..*" UserRole
+  UserPermission "1" -- "0..*" User
+  UserPermission "1" -- "0..*" Customer
+  UserRole "1" -- "0..*" User
+  UserRole "1" -- "0..*" Customer
+  Category "1" -- "0..*" Product
+  Order "1" -- "0..*" OrderProduct
