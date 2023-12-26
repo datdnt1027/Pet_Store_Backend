@@ -183,10 +183,8 @@ public class OrderRepository : IOrderRepository
         // Assuming _dbContext is your DbContext with DbSet<Order> and DbSet<OrderProduct>
         var ordersWithProducts = await _dbContext.Orders
             .OrderByDescending(order => order.OrderDate)  // Add an OrderBy clause
-            .AsNoTracking()
-            .Skip(ordersToSkip)
-            .GroupJoin(
-                _dbContext.OrderProducts.Where(orderProduct => orderProduct.CustomerId == CustomerId.Create(customerId)),
+            .Join(
+                _dbContext.OrderProducts.Where(o => o.CustomerId == CustomerId.Create(customerId)),
                 order => order.Id,
                 orderProduct => orderProduct.OrderId,
                 (order, orderProducts) => new OrderResult(
@@ -204,7 +202,8 @@ public class OrderRepository : IOrderRepository
                     op.Quantity
                     )
                 )
-            ))
+            )).AsNoTracking()
+            .Skip(ordersToSkip)
             .ToListAsync();
         return ordersWithProducts;
     }
