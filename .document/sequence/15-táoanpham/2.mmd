@@ -1,4 +1,6 @@
+# Chỉnh sửa sản phẩm
 
+```mermaid
 sequenceDiagram
     Nhân viên ->> Trang quản lý sản phẩm: Click chọn nút Edit tại sản phẩm mong muốn để chỉnh sửa
     Trang quản lý sản phẩm ->> Form chỉnh sửa sản phẩm: Hiển thị form chỉnh sửa sản phẩm
@@ -14,5 +16,4 @@ sequenceDiagram
     APIController ->> APIController: Cập nhật sản phẩm
     APIController -->> Form chỉnh sửa sản phẩm: Trả kết quả thành công
     Form chỉnh sửa sản phẩm ->> Trang quản lý sản phẩm: Hiển thị lại list product
-
-
+```

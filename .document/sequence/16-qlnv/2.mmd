@@ -1,4 +1,6 @@
+# Xem thông tin nhân viên
 
+```mermaid
 sequenceDiagram
     Admin ->> Trang chủ admin: Admin nhấp chọn quản lý nhân viên trên side menu
     Trang chủ admin ->> Trang quản lý nhân viên: Hiển thị trang quản lý nhân viên
@@ -12,4 +14,4 @@ sequenceDiagram
     end
     APIController -->> Trang quản lý nhân viên: Trả kết quả thành công kèm với list các nhân viên
     Trang quản lý nhân viên ->> Admin: Hiển thị các nhân viên có từ kết quả trả về
-
+```

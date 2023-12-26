@@ -1,4 +1,8 @@
-Nhân viên ->> Trang quản lý sản phẩm: Click chọn nút create để thêm sản phẩm
+# Tạo sản phẩm
+
+```mermaid
+sequenceDiagram
+    Nhân viên ->> Trang quản lý sản phẩm: Click chọn nút create để thêm sản phẩm
     Trang quản lý sản phẩm ->> Form tạo sản phẩm: Hiển thị form tạo sản phẩm
     Nhân viên ->> Form tạo sản phẩm: Người dùng nhập vào các thông tin cần thiết và nhấn tạo.
     Form tạo sản phẩm  ->> Trình duyệt: Lấy biến admin có trong session storage
@@ -12,3 +16,4 @@ Nhân viên ->> Trang quản lý sản phẩm: Click chọn nút create để th
     APIController ->> APIController: Tạo sản phẩm mới
     APIController -->> Form tạo sản phẩm: Trả kết quả thành công
     Form tạo sản phẩm ->> Trang quản lý sản phẩm: Hiển thị lại list product
+```

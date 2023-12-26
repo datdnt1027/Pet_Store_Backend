@@ -1,4 +1,6 @@
+# Tạo nhân viên
 
+```mermaid
 sequenceDiagram
     Trang quản lý nhân viên ->> Form tạo nhân viên: Hiển thị form tạo nhân viên
     Admin ->> Form tạo nhân viên: Người dùng nhập vào các thông tin cần thiết và nhấn tạo.
@@ -13,3 +15,4 @@ sequenceDiagram
     APIController ->> APIController: Tạo nhân viên mới
     APIController -->> Form tạo nhân viên: Trả kết quả thành công
     Form tạo nhân viên ->> Trang quản lý nhân viên: Hiển thị lại list nhân viên
+```

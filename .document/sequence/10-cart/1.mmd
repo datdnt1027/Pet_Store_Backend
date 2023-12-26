@@ -1,4 +1,6 @@
+# Xem danh sách sản phẩm trong cart
 
+```mermaid
 sequenceDiagram
     Người dùng->>+Trang check out: Người dùng truy cập vào trang check out
     Trang check out ->> Trình duyệt: Lấy biến user có trong local storage
@@ -11,3 +13,4 @@ sequenceDiagram
     end
     APIController -->> Trang check out: Trả kết quả thành công kèm với tất cả item trong cart của người dùng
     Trang check out ->> Người dùng: Hiển thị các cart
+```

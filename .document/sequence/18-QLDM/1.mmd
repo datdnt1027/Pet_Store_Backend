@@ -1,4 +1,5 @@
-
+# Quản lý loại sản phẩm
+```mermaid
 sequenceDiagram
     Admin ->> Trang chủ admin: Admin nhấp chọn quản lý danh mục trên side menu
     Trang chủ admin ->> Trang quản lý danh mục: Hiển thị trang quản lý danh mục
@@ -26,3 +27,4 @@ sequenceDiagram
     APIController ->> APIController: Sử dụng tên đó để tạo danh mục mới với id ngẫu nhiên và độc nhất
     APIController -->> Trang quản lý danh mục: Trả kết quả thành công
     Trang quản lý danh mục ->> Admin: Tái hiển thị lại thông tin danh mục
+```

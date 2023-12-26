@@ -53,9 +53,12 @@ def process_sequence_diagram():
 
             image_path = render_mmd_to_img(content)
 
-            document.add_heading(title, 2)
+             # Thay đổi kích thước tiêu đề và cỡ chữ
+            title_heading = document.add_heading(title, 2)
+            title_heading.bold = True
+            title_heading.style.font.size = Pt(16)  # Thay đổi cỡ chữ của tiêu đề
 
-            document.add_picture(image_path, Mm(120))
+            document.add_picture(image_path, Mm(180))
 
     os.makedirs('output', exist_ok=True)
 

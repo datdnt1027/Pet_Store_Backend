@@ -1,0 +1,108 @@
+erDiagram
+    USER{
+        UserId UserId
+        String FirstName
+        String LastName
+        String Email
+        Byte PasswordHash
+        Byte PasswordSalt
+        UserRole UserRole
+        UserRoleId UserRoleId
+        String VerificationToken
+        DateTime VerifiedAt
+        string PasswordResetToken
+        DateTime TokenExpires
+        Byte Avatar
+        String PhoneNumber
+        String Address
+        Bool Status
+    }
+
+    CUSTOMER{
+        CustomerId CustomerId
+        String FirstName
+        String LastName
+        String Email
+        Byte PasswordHash
+        Byte PasswordSalt
+        UserRole UserRole
+        UserRoleId UserRoleId
+        String VerificationToken
+        DateTime VerifiedAt
+        string PasswordResetToken
+        DateTime TokenExpires
+        Byte Avatar
+        String PhoneNumber
+        String Address
+        Bool Status
+    }
+
+    USER_PERMISSION {
+        UserPermissionId UserPermissionId
+        UserRoleId UserRoleId
+        UserRole UserRole
+        String TableName
+        Bool Read
+        Bool Create
+        Bool Update
+        Bool Deactivate
+    }
+
+    USER_ROLE {
+        UserRoleId UserRoleId
+        String UserRoleName
+        Bool Status
+    }
+
+    PRODUCT{
+        ProductId ProductId
+        CategoryId CategoryId
+        String ProductName
+        String ProductDetail
+        Integer ProductQuantity
+        Double ProductPrice_Amount
+        String ProductPrice_Currency
+        Double ProductPrice_Discount
+        Byte ImageData
+        Bool Status
+        DateTime CreatedDateTime
+        DateTime UpdatedDateTime
+    }
+
+    CATEGORY {
+        CategoryId CategoryId
+        String CategoryName
+        DateTime CreatedDateTime
+        DateTime UpdatedDateTime
+    }
+
+    ORDER{
+        OrderId OrderId
+        UserId UserId
+        DateTime OrderDate
+        OrderStatus OrderStatus
+        PaymentStatus PaymentStatus
+        DateTime ExpectedDeliveryDateStart
+        DateTime ExpectedDeliveryDateEnd
+    }
+
+    
+    ORDER_PRODUCT{
+        OrderProductId OrderProductId
+        CustomerId CustomerId
+        OrderId OrderId
+        Order Order
+        ProductId ProductId
+        Integer Quantity
+        OrderProductStatus OrderProductStatus
+    }
+
+    USER ||--o{ USER_ROLE : "Has"
+    CUSTOMER ||--o{ USER_ROLE : "Has"
+    USER_ROLE ||--o{ USER_PERMISSION : "Contains"
+    USER ||--o{ PRODUCT : "Has"
+    CUSTOMER ||--o{ PRODUCT : "Has"
+    CATEGORY ||--o{ PRODUCT : "Contains"
+    USER ||--o{ ORDER : "Places"
+    CUSTOMER ||--o{ ORDER : "Places"
+    ORDER ||--o{ ORDER_PRODUCT : "Includes"

@@ -1,4 +1,6 @@
+# Thêm sản phẩm vào trong giỏ hàng
 
+```mermaid
 sequenceDiagram
     Người dùng->>+Trang chủ: Người dùng nhấp chọn sản phẩm muốn thêm vào giỏ hàng
     Trang chủ ->> Trang chi tiết sản phẩm: Hiển thị trang chi tiết sản phẩm
@@ -14,3 +16,4 @@ sequenceDiagram
     APIController ->> APIController: Thêm item với số lượng vào giỏ hàng của người dùng
     APIController -->> Trang chi tiết sản phẩm: Trả kết quả thành công
     Trang chi tiết sản phẩm ->> Người dùng: Hiển thị thông báo đã thêm
+```

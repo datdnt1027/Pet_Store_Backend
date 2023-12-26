@@ -1,4 +1,6 @@
+# Chỉnh sửa trạng thái khách hàng
 
+```mermaid
 sequenceDiagram
     Admin ->> Trang chủ admin: Admin nhấp chọn quản lý khách hàng trên side menu
     Trang chủ admin ->> Trang quản lý khách hàng: Hiển thị trang quản lý khách hàng
@@ -25,3 +27,4 @@ sequenceDiagram
     APIController ->> APIController: Cập nhật trạng thái mới cho khách hàng
     APIController -->> Trang quản lý khách hàng: Trả kết quả thành công
     Trang quản lý khách hàng ->> Admin: Tái hiển thị lại thông tin khách hàng
+```

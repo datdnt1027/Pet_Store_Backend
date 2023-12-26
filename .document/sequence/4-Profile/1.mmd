@@ -1,14 +1,11 @@
-# Đăng nhậpf bằng google
+# Chỉnh sửa Profile
 
 ```mermaid
-
-
-
 sequenceDiagram
-    Người dùng->>+UserNavbar: Người dùng lia chuột vào ô Profile
-    UserNavbar ->> UserDropdownMenu: Hệ thống hiển thị hộp thoại drop down gồm các nút profile, order và logout
-    Người dùng ->> UserDropdownMenu: Người dùng chọn Profile
-    UserDropdownMenu ->> Trang Profile: Điều hướng tới trang
+    Người dùng->>+Header Page: Người dùng lia chuột vào ô Profile
+    Header Page ->> Profile User: Hệ thống hiển thị hộp thoại drop down gồm các nút profile, order và logout
+    Người dùng ->> Profile User: Người dùng chọn Profile
+    Profile User ->> Trang Profile: Điều hướng tới trang
     Trang Profile ->> Trình duyệt: Láy biến user có trong local storage
     Trình duyệt-->>  Trang Profile: Trả về biến user
     Trang Profile ->> APIController: Gửi token từ biến user để lấy thông tin tài khoản
@@ -27,7 +24,4 @@ sequenceDiagram
     APIController -->> Trang Profile: Trả về thành công
     Trang Profile -->> Người dùng: Hiển thị thông báo thành công
     end
-
-
-
 ```

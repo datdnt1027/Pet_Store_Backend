@@ -1,0 +1,11 @@
+# Đăng xuất
+```mermaid
+
+sequenceDiagram
+    Người dùng->>+Header Page: Người dùng trỏ chuột vào ô Profile
+    Header Page ->> User Profile: Hệ thống hiển thị hộp thoại drop down gồm các nút profile, order và logout
+    Người dùng ->> User Profile: Người dùng chọn Logout
+    User Profile ->> Trình duyệt: Xóa thông tin người dùng ra khỏi storage
+    User Profile ->> Trang chủ: Điều hướng về trang chủ với tài khoản đã logout 
+
+```

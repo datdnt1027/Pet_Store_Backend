@@ -8,24 +8,20 @@ sequenceDiagram
 
 
         
-                Người dùng ->>+Trang đăng ký: Người dùng nhập thông tin vào và nhất nút đăng ký
-                Trang đăng ký ->>+ Trang đăng ký: Hệ thống kiểm tra thông tin có được nhập đầy đủ
+                Người dùng ->>+Trang đăng ký: Người dùng nhập thông tin vào và nhấn nút đăng ký
+                Trang đăng ký ->>+ Trang đăng ký: Hệ thống kiểm tra thông tin có được nhập đầy đủ và hợp lệ
                 alt sai
                 Trang đăng ký -->> Người dùng: Yêu cầu người dùng nhập lại
         else đúng
-            Trang đăng ký ->>+ APIController: Gửi thông tin lên
+            Trang đăng ký ->>+ APIController: Thông tin được gửi đi
         end
-    APIController ->>+ APIController: Hệ thống kiểm tra thông tin người dùng xem có tồn tại và hợp lý, nếu có thì lưu vào hệ thống
+    APIController ->>+ APIController: Hệ thống kiểm tra thông tin người dùng xem có tồn tại và hợp lý, nếu không thì lưu vào hệ thống
     APIController -->> Trang đăng ký: Hệ thống trả kết quả.
     alt sai
     Trang đăng ký -->> Người dùng: Yêu cầu nhập lại
     else đúng
+    APIController ->>+ APIController: Thông tin xác thực người dùng gửi qua email đăng ký
     Trang đăng ký -->> Người dùng: Hiển thị thông báo thành công
   end
-
-    
-    Người dùng ->> Trang đăng ký: Người dùng xác nhận
-    Trang đăng ký ->> Trang đăng nhập: Hệ thống điều hướng tới trang đăng nhập.
    
-    
 ```

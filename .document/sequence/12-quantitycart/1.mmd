@@ -1,14 +1,16 @@
+# Cập nhật số lượng vào trong giỏ hàng
 
+```mermaid
 sequenceDiagram
-    Người dùng->>+Trang check out: Người dùng chọn item cần được xóa khỏi cart
+    Người dùng->>+Trang check out: Người dùng nhấp chọn "+" hoạc "-" để tăng giảm số lượng
     Trang check out ->> Trình duyệt: Lấy biến user có trong local storage
     Trình duyệt -->> Trang check out: Trả về biến user
-    Trang check out ->> APIController: Gửi token từ biến user kèm với id của sản phẩm cần xóa
-    APIController ->> APIController: Xác minh token
+    Trang check out ->> APIController: Gửi token từ biến user kèm với id của sản phẩm và số lượng mới cần
     alt token sai
     APIController -->> Trang check out: Trả kết quả sai token
     Trang check out ->> Người dùng: Hiển thị thông báo yêu cầu đăng nhập lại
     end
-    APIController -->> APIController: Tiến hành xóa sản phẩm ra khỏi cart
+    APIController -->> APIController: Tiến hành cập nhật số lượng mới của sản phẩm trong giỏ hàng 
     APIController -->> Trang check out: Thông báo kết quả thành công
     Trang check out ->> Người dùng: Tái hiển thị lại cart
+```
